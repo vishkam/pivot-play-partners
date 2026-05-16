@@ -14,7 +14,7 @@ interface Props {
   brandName: string;
   campaign?: { id: string; name: string; goals: string | null } | null;
   match: MatchScore;
-  onSent?: () => void;
+  onSent?: (proposalId?: string) => void;
 }
 
 export function ProposalModal({
