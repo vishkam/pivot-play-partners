@@ -186,8 +186,13 @@ async function createMatches(userId: string, campaign: CampaignRow, brandValues:
     .maybeSingle();
 
   const brand: BrandForMatch = {
-    ...(brandProfile ?? {}),
     values: brandValues.length ? brandValues : brandProfile?.values,
+    esg_priorities: brandProfile?.esg_priorities,
+    industry: brandProfile?.industry,
+    consumer_demographics:
+      brandProfile?.consumer_demographics && typeof brandProfile.consumer_demographics === "object" && !Array.isArray(brandProfile.consumer_demographics)
+        ? (brandProfile.consumer_demographics as BrandForMatch["consumer_demographics"])
+        : null,
   };
   const athletes = await buildAthletePool();
   const ranked = rankAthletes(athletes, brand, campaign as CampaignForMatch).slice(0, 12);
