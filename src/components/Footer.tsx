@@ -5,7 +5,7 @@ export function Footer() {
         <div className="col-span-2">
           <div className="flex items-center gap-2 text-cream">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-gold font-display text-lg font-semibold text-plum-deep">
-              A
+              P
             </span>
             <span className="font-display text-xl">Pegasus</span>
           </div>
