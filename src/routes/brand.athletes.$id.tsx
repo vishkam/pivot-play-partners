@@ -39,9 +39,10 @@ function AthleteView() {
       setAthlete(a.data as never);
       if (b.data) setBrand(b.data as never);
       if (a.data && p.data) {
+        const ad = a.data as Record<string, unknown>;
         setMatch(
           scoreAthlete(
-            { user_id: id, full_name: p.data.full_name, country: p.data.country, ...(a.data as never) } as never,
+            { ...ad, user_id: id, full_name: p.data.full_name, country: p.data.country } as never,
             (b.data ?? {}) as BrandForMatch,
             null,
           ),
