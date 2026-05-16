@@ -288,7 +288,12 @@ async function seedMarketplace(athleteId: string, brandId: string) {
   const completedContract = insertedContracts?.find((c) => c.status === "completed");
 
   // Payments
-  const paymentsPayload = [];
+  const paymentsPayload: Array<{
+    contract_id: string; brand_id: string; athlete_id: string; amount: number;
+    platform_fee: number; athlete_payout: number;
+    status: "released" | "pending" | "escrow" | "failed" | "refunded";
+    milestone_label: string; due_date: string;
+  }> = [];
   if (activeContract) {
     paymentsPayload.push(
       { contract_id: activeContract.id, brand_id: brandId, athlete_id: athleteId, amount: 7000,
