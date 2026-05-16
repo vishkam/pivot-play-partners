@@ -256,24 +256,141 @@ function AthleteOnboarding() {
               <Combobox
                 label="Sport"
                 value={data.sport}
-                onChange={upd("sport")}
+                onChange={(e) => setData((d) => ({ ...d, sport: e.target.value, discipline: "" }))}
                 options={sportSuggestions}
                 listId="sport-options"
-                placeholder="Start typing — suggestions from our roster"
+                placeholder="Start typing — e.g. 'swi' → Swimming"
+                hint="Pick from the list to unlock discipline suggestions."
               />
-              <Input label="Discipline" value={data.discipline} onChange={upd("discipline")} placeholder="400m hurdles" />
+              <div className="md:col-span-2">
+                <span className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  Discipline{disciplineOptions.length > 0 && " — pick all that apply"}
+                </span>
+                {disciplineOptions.length > 0 ? (
+                  <>
+                    <div className="flex flex-wrap gap-2">
+                      {disciplineOptions.map((opt) => {
+                        const active = selectedDisciplines.includes(opt);
+                        return (
+                          <button
+                            type="button"
+                            key={opt}
+                            onClick={() => toggleDiscipline(opt)}
+                            className={`rounded-full border px-3.5 py-1.5 text-xs transition ${
+                              active
+                                ? "border-plum bg-plum text-cream shadow-sm"
+                                : "border-border bg-background text-foreground hover:border-plum/60"
+                            }`}
+                          >
+                            {active && <Check className="mr-1 inline h-3 w-3" />}
+                            {opt}
+                          </button>
+                        );
+                      })}
+                    </div>
+                    <input
+                      value={data.discipline}
+                      onChange={upd("discipline")}
+                      placeholder="Or add a discipline not listed (comma-separated)"
+                      className="mt-3 w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm focus:border-plum focus:outline-none"
+                    />
+                    <p className="mt-1.5 text-xs text-muted-foreground">
+                      Multiple disciplines welcome — many athletes compete across events.
+                    </p>
+                  </>
+                ) : (
+                  <>
+                    <input
+                      value={data.discipline}
+                      onChange={upd("discipline")}
+                      placeholder={data.sport ? "e.g. 400m hurdles, sprint relay" : "Pick a sport first to see suggestions"}
+                      className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm focus:border-plum focus:outline-none"
+                    />
+                    <p className="mt-1.5 text-xs text-muted-foreground">
+                      No preset disciplines for this sport yet — list your events separated by commas.
+                    </p>
+                  </>
+                )}
+              </div>
               <Select label="Professional level" value={data.professional_level} onChange={upd("professional_level")}
                 options={["Amateur", "Semi-pro", "Professional", "National team", "Olympic / World"]} />
-              <Input label="Team / Federation" value={data.team_federation} onChange={upd("team_federation")} />
+              <Input label="Team / Federation" value={data.team_federation} onChange={upd("team_federation")} placeholder="USA Swimming, FC Barcelona Femení…" />
               <Textarea label="Rankings" value={data.rankings} onChange={upd("rankings")} placeholder="World #14, National #2..." />
               <Textarea label="Achievements" value={data.achievements} onChange={upd("achievements")} placeholder="Olympic finalist 2024, NCAA Champion..." />
             </Grid>
           )}
           {step === 2 && (
             <Grid>
-              <Textarea label="Certifications" value={data.certifications} onChange={upd("certifications")} placeholder="USATF certified, federation IDs..." />
-              <div className="rounded-xl border border-dashed border-border bg-background p-6 text-center text-sm text-muted-foreground">
-                File uploads (passport, federation cert, contracts) — coming online for verification team review.
+              <Textarea
+                label="Certifications & credentials"
+                value={data.certifications}
+                onChange={upd("certifications")}
+                placeholder="USATF certified, federation IDs, governing-body license #s…"
+              />
+              <div className="md:col-span-2">
+                <span className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                  Verification documents
+                </span>
+                <label
+                  htmlFor="verification-upload"
+                  className="group flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl border-2 border-dashed border-plum/30 bg-gradient-to-b from-plum/5 to-cream p-8 text-center transition hover:border-plum hover:bg-plum/10"
+                >
+                  <div className="rounded-full bg-plum/10 p-3 text-plum transition group-hover:bg-plum group-hover:text-cream">
+                    <UploadCloud className="h-6 w-6" />
+                  </div>
+                  <p className="font-display text-base text-foreground">Upload certification or verification documents</p>
+                  <p className="text-xs text-muted-foreground">
+                    Drag &amp; drop or click to select. Reviewed privately by our verification team.
+                  </p>
+                  <span className="mt-1 inline-flex items-center gap-2 rounded-full border border-plum/30 bg-cream px-4 py-1.5 text-xs font-medium text-plum">
+                    Choose files
+                  </span>
+                  <input
+                    id="verification-upload"
+                    type="file"
+                    multiple
+                    accept=".jpg,.jpeg,.png,.pdf"
+                    className="sr-only"
+                    onChange={(e) => {
+                      const incoming = Array.from(e.target.files ?? []);
+                      const valid = incoming.filter((f) => f.size <= 10 * 1024 * 1024);
+                      if (valid.length < incoming.length) {
+                        toast.error("Some files exceeded 10MB and were skipped.");
+                      }
+                      setVerificationFiles((prev) => [...prev, ...valid]);
+                      e.target.value = "";
+                    }}
+                  />
+                </label>
+                <p className="mt-2 text-xs text-muted-foreground">
+                  Accepted formats: JPG, PNG, PDF. You may upload multiple files. Maximum file size: 10MB per file.
+                </p>
+                {verificationFiles.length > 0 && (
+                  <ul className="mt-3 space-y-2">
+                    {verificationFiles.map((f, i) => (
+                      <li
+                        key={`${f.name}-${i}`}
+                        className="flex items-center justify-between gap-3 rounded-xl border border-border bg-background px-3 py-2 text-sm"
+                      >
+                        <span className="flex min-w-0 items-center gap-2 text-foreground">
+                          <FileText className="h-4 w-4 shrink-0 text-plum" />
+                          <span className="truncate">{f.name}</span>
+                          <span className="shrink-0 text-xs text-muted-foreground">
+                            {(f.size / 1024 / 1024).toFixed(2)} MB
+                          </span>
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => setVerificationFiles((prev) => prev.filter((_, idx) => idx !== i))}
+                          className="rounded-full p-1 text-muted-foreground hover:bg-secondary hover:text-foreground"
+                          aria-label={`Remove ${f.name}`}
+                        >
+                          <X className="h-4 w-4" />
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
+                )}
               </div>
             </Grid>
           )}
