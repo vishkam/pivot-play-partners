@@ -234,7 +234,7 @@ function Section({ icon, title, hint, children }: { icon: React.ReactNode; title
 function Grid({ children }: { children: React.ReactNode }) {
   return <div className="grid grid-cols-1 gap-4 md:grid-cols-2">{children}</div>;
 }
-function Input({ label, required, type = "text", ...rest }: { label: string; required?: boolean } & React.InputHTMLAttributes<HTMLInputElement>) {
+function Input({ label, required, invalid, type = "text", ...rest }: { label: string; required?: boolean; invalid?: boolean } & React.InputHTMLAttributes<HTMLInputElement>) {
   return (
     <label className="block">
       <span className="mb-1.5 block text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
@@ -243,33 +243,49 @@ function Input({ label, required, type = "text", ...rest }: { label: string; req
       <input
         type={type}
         {...rest}
-        className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm shadow-sm transition focus:border-plum focus:outline-none focus:ring-2 focus:ring-plum/20"
+        aria-invalid={invalid || undefined}
+        className={`w-full rounded-xl border bg-background px-3.5 py-2.5 text-sm shadow-sm transition focus:outline-none focus:ring-2 ${
+          invalid ? "border-destructive focus:border-destructive focus:ring-destructive/20" : "border-border focus:border-plum focus:ring-plum/20"
+        }`}
       />
+      {invalid && <span className="mt-1 block text-[11px] font-medium text-destructive">Required for Launch & Match</span>}
     </label>
   );
 }
-function Textarea({ label, ...rest }: { label: string } & React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
+function Textarea({ label, required, invalid, ...rest }: { label: string; required?: boolean; invalid?: boolean } & React.TextareaHTMLAttributes<HTMLTextAreaElement>) {
   return (
     <label className="block md:col-span-2">
-      <span className="mb-1.5 block text-[11px] font-medium uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="mb-1.5 block text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+        {label} {required && <span className="text-[--gold]">*</span>}
+      </span>
       <textarea
         rows={3}
         {...rest}
-        className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm shadow-sm transition focus:border-plum focus:outline-none focus:ring-2 focus:ring-plum/20"
+        aria-invalid={invalid || undefined}
+        className={`w-full rounded-xl border bg-background px-3.5 py-2.5 text-sm shadow-sm transition focus:outline-none focus:ring-2 ${
+          invalid ? "border-destructive focus:border-destructive focus:ring-destructive/20" : "border-border focus:border-plum focus:ring-plum/20"
+        }`}
       />
+      {invalid && <span className="mt-1 block text-[11px] font-medium text-destructive">Required for Launch & Match</span>}
     </label>
   );
 }
-function Select({ label, options, ...rest }: { label: string; options: string[] } & React.SelectHTMLAttributes<HTMLSelectElement>) {
+function Select({ label, required, invalid, options, ...rest }: { label: string; required?: boolean; invalid?: boolean; options: string[] } & React.SelectHTMLAttributes<HTMLSelectElement>) {
   return (
     <label className="block">
-      <span className="mb-1.5 block text-[11px] font-medium uppercase tracking-wider text-muted-foreground">{label}</span>
+      <span className="mb-1.5 block text-[11px] font-medium uppercase tracking-wider text-muted-foreground">
+        {label} {required && <span className="text-[--gold]">*</span>}
+      </span>
       <select
         {...rest}
-        className="w-full rounded-xl border border-border bg-background px-3.5 py-2.5 text-sm shadow-sm transition focus:border-plum focus:outline-none focus:ring-2 focus:ring-plum/20"
+        aria-invalid={invalid || undefined}
+        className={`w-full rounded-xl border bg-background px-3.5 py-2.5 text-sm shadow-sm transition focus:outline-none focus:ring-2 ${
+          invalid ? "border-destructive focus:border-destructive focus:ring-destructive/20" : "border-border focus:border-plum focus:ring-plum/20"
+        }`}
       >
         {options.map((o) => <option key={o} value={o}>{o}</option>)}
       </select>
+      {invalid && <span className="mt-1 block text-[11px] font-medium text-destructive">Required for Launch & Match</span>}
     </label>
   );
 }
