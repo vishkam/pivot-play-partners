@@ -91,7 +91,6 @@ function AthleteDashboard() {
           </Card>
         </div>
       </DashboardShell>
-    </RequireAuth>
   );
 }
 
