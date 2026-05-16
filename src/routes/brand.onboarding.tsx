@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Loader2, ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { toast } from "sonner";
 import { RequireAuth } from "@/components/auth/RequireAuth";
+import { OnboardingHeader } from "@/components/onboarding/OnboardingHeader";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 
