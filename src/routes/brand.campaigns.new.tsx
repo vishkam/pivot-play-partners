@@ -1,12 +1,12 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useServerFn } from "@tanstack/react-start";
 import { useState } from "react";
 import { Loader2, ArrowLeft, Rocket, Sparkles, Target, Users, Wallet, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { RequireAuth } from "@/components/auth/RequireAuth";
 import { DashboardShell } from "@/components/dashboard/DashboardShell";
 import { useAuth } from "@/hooks/use-auth";
-import { supabase } from "@/integrations/supabase/client";
-import { rankAthletes, type AthleteForMatch, type BrandForMatch } from "@/lib/matching";
+import { submitCampaignLaunch } from "@/lib/campaign-launch.functions";
 
 export const Route = createFileRoute("/brand/campaigns/new")({
   component: () => (
@@ -32,106 +32,63 @@ const INIT: F = {
 function NewCampaign() {
   const { user } = useAuth();
   const navigate = useNavigate();
+  const submitCampaign = useServerFn(submitCampaignLaunch);
   const [d, setD] = useState<F>(INIT);
   const [saving, setSaving] = useState(false);
   const [matching, setMatching] = useState(false);
+  const [missingFields, setMissingFields] = useState<Set<keyof F>>(new Set());
   const upd = <K extends keyof F>(k: K) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
     setD((s) => ({ ...s, [k]: e.target.value }));
 
+  const requiredForLaunch: Array<keyof F> = [
+    "name", "goals", "description", "audience", "values", "sports", "geo",
+    "partnership_structure", "product_category", "budget_min", "budget_max", "timeline",
+  ];
+
+  function validate(mode: "draft" | "active") {
+    const required = mode === "draft" ? (["name"] as Array<keyof F>) : requiredForLaunch;
+    const missing = required.filter((key) => !d[key].trim());
+    const next = new Set(missing);
+    setMissingFields(next);
+    if (missing.length) {
+      toast.error("Campaign could not be launched. Please check required fields.");
+      console.warn("[Pegasus Launch] client validation failed", { mode, missing });
+      return false;
+    }
+    const min = Number(d.budget_min);
+    const max = Number(d.budget_max);
+    if (mode === "active" && (!Number.isFinite(min) || !Number.isFinite(max) || min > max)) {
+      setMissingFields(new Set(["budget_min", "budget_max"]));
+      toast.error("Campaign could not be launched. Please check required fields.");
+      console.warn("[Pegasus Launch] client budget validation failed", { min: d.budget_min, max: d.budget_max });
+      return false;
+    }
+    return true;
+  }
+
   async function launch(status: "draft" | "active") {
     if (!user) return;
-    if (!d.name.trim()) {
-      toast.error("Give your campaign a name.");
-      return;
-    }
-    if (status === "active" && (!d.goals.trim() || !d.budget_min || !d.budget_max)) {
-      toast.error("Goal and budget range are required to launch matching.");
-      return;
-    }
+    if (saving) return;
+    if (!validate(status)) return;
     setSaving(true);
+    setMatching(status === "active");
+    console.log("[Pegasus Launch] submitting", { status, fields: d });
     try {
-      const split = (s: string) => s.split(",").map((x) => x.trim()).filter(Boolean);
-      const brandValues = split(d.values);
-      const { data: campaign, error } = await supabase
-        .from("campaigns")
-        .insert({
-          brand_id: user.id,
-          name: d.name,
-          description: d.description,
-          goals: d.goals,
-          preferred_athlete_types: split(d.audience),
-          sports: split(d.sports),
-          geographic_reach: split(d.geo),
-          partnership_structure: d.partnership_structure,
-          content_deliverables: d.deliverables,
-          timeline: d.timeline,
-          product_category: d.product_category,
-          budget_min: d.budget_min ? Number(d.budget_min) : null,
-          budget_max: d.budget_max ? Number(d.budget_max) : null,
-          notes: d.notes,
-          status,
-        })
-        .select("*")
-        .single();
-      if (error) throw error;
-
+      const result = await submitCampaign({ data: { ...d, mode: status === "active" ? "launch" : "draft" } });
+      console.log("[Pegasus Launch] completed", result);
       if (status === "draft") {
-        toast.success("Saved as draft");
-        navigate({ to: "/brand/campaigns/$id", params: { id: campaign.id } });
+        toast.success("Campaign draft saved");
+        navigate({ to: "/brand/pipeline" });
         return;
       }
-
-      // ── Launch & Match ── persist match records so the demo feels real
-      setMatching(true);
-
-      // Merge brand values into the brand profile so matching has signal
-      if (brandValues.length) {
-        await supabase
-          .from("brand_profiles")
-          .update({ values: brandValues })
-          .eq("user_id", user.id);
-      }
-
-      const [brandRes, athleteRes] = await Promise.all([
-        supabase
-          .from("brand_profiles")
-          .select("values, esg_priorities, industry, consumer_demographics")
-          .eq("user_id", user.id)
-          .maybeSingle(),
-        supabase
-          .from("athlete_profiles")
-          .select("user_id, sport, values, causes, audience_demographics, pricing_min, pricing_max, partnership_types, geographic_preferences, verification_status")
-          .eq("verification_status", "verified"),
-      ]);
-
-      const brand: BrandForMatch = (brandRes.data as never) ?? {};
-      const athletes = (athleteRes.data ?? []) as AthleteForMatch[];
-
-      if (athletes.length) {
-        const ranked = rankAthletes(athletes, brand, campaign as never).slice(0, 12);
-        const rows = ranked.map((m) => ({
-          athlete_id: m.athlete_id,
-          brand_id: user.id,
-          campaign_id: campaign.id,
-          score: m.score,
-          values_score: m.values_score,
-          audience_score: m.audience_score,
-          budget_score: m.budget_score,
-          sport_score: m.sport_score,
-          campaign_score: m.campaign_score,
-          explanation: m.explanation,
-        }));
-        if (rows.length) await supabase.from("matches").insert(rows);
-      }
-
-      // Brief AI flourish so the moment lands in demo
       await new Promise((r) => setTimeout(r, 1400));
-
-      toast.success("Campaign launched. Pegasus found your strongest athlete matches.");
-      navigate({ to: "/brand/campaigns/$id", params: { id: campaign.id } });
-    } catch (e) {
-      console.error(e);
-      toast.error("Couldn't create campaign");
+      if (result.matchingError) toast.warning(result.matchingError);
+      else toast.success(`Campaign saved. ${result.matchCount} athlete matches generated.`);
+      navigate({ to: "/brand/campaigns/$id", params: { id: result.campaignId } });
+    } catch (e: unknown) {
+      console.error("[Pegasus Launch] submission failed", e);
+      const message = e instanceof Error ? e.message : "Campaign could not be launched. Please check required fields.";
+      toast.error(message.includes("Database error") ? "Database error — campaign not saved." : message);
     } finally {
       setSaving(false);
       setMatching(false);
