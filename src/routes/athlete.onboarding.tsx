@@ -200,7 +200,7 @@ function AthleteOnboarding() {
       if (markComplete) {
         await supabase.from("profiles").update({ onboarding_completed: true }).eq("id", user.id);
         await refreshProfile();
-        toast.success("Profile complete — welcome to Allyance.");
+        toast.success("Profile complete — welcome to Pegasus.");
         navigate({ to: "/athlete/dashboard" });
       } else {
         toast.success("Progress saved");
@@ -520,7 +520,7 @@ function AthleteOnboarding() {
                 disabled={saving}
                 className="flex items-center gap-2 rounded-full bg-gradient-gold px-5 py-2.5 text-sm font-medium text-plum-deep shadow-gold"
               >
-                {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />} Finish & enter Allyance
+                {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />} Finish & enter Pegasus
               </button>
             )}
           </div>

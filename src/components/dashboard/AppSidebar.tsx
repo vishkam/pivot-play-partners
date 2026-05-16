@@ -85,7 +85,7 @@ export function AppSidebar() {
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-gold text-plum-deep font-display text-lg font-semibold">
             A
           </span>
-          <span className="font-display text-xl">Allyance</span>
+          <span className="font-display text-xl">Pegasus</span>
         </Link>
       </div>
 
@@ -150,7 +150,7 @@ export function MobileTopbar() {
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-gold text-plum-deep font-display text-sm font-semibold">
           A
         </span>
-        <span className="font-display">Allyance</span>
+        <span className="font-display">Pegasus</span>
       </Link>
       <div className="flex items-center gap-3">
         <span className="text-xs text-cream/60">{profile?.email}</span>

@@ -22,7 +22,7 @@ export function buildPlainSummary(i: ContractInput): string {
   return [
     `${i.brandName} is partnering with ${i.athleteName}${i.campaignName ? ` on the "${i.campaignName}" campaign` : ""}.`,
     `${i.athleteName} will deliver ${i.deliverables || "the agreed campaign deliverables"} over ${i.timeline || "the agreed timeline"}.`,
-    `Total compensation is $${i.compensation.toLocaleString()}. After Allyance's ${(i.platformFeePct ?? 10)}% platform fee ($${fee.toLocaleString()}), ${i.athleteName} receives $${payout.toLocaleString()}.`,
+    `Total compensation is $${i.compensation.toLocaleString()}. After Pegasus's ${(i.platformFeePct ?? 10)}% platform fee ($${fee.toLocaleString()}), ${i.athleteName} receives $${payout.toLocaleString()}.`,
     `Payment is held in escrow on contract signing and released when the campaign is marked complete.`,
     `Either party may cancel before signing; after signing, cancellation follows the terms below.`,
   ].join(" ");

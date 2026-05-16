@@ -12,8 +12,8 @@ export const Route = createFileRoute("/auth")({
   }),
   head: () => ({
     meta: [
-      { title: "Sign in or join — Allyance" },
-      { name: "description", content: "Join Allyance as an athlete or brand and start building authentic, values-aligned partnerships." },
+      { title: "Sign in or join — Pegasus" },
+      { name: "description", content: "Join Pegasus as an athlete or brand and start building authentic, values-aligned partnerships." },
     ],
   }),
   component: AuthPage,
@@ -50,7 +50,7 @@ function AuthPage() {
       if (mode === "signup") {
         const { error } = await signUp(email, password, fullName, role);
         if (error) toast.error(error);
-        else toast.success("Welcome to Allyance — let's build your profile.");
+        else toast.success("Welcome to Pegasus — let's build your profile.");
       } else {
         const { error } = await signIn(email, password);
         if (error) toast.error(error);
@@ -66,7 +66,7 @@ function AuthPage() {
       <div className="relative hidden overflow-hidden bg-gradient-hero p-12 text-cream lg:flex lg:flex-col lg:justify-between grain">
         <Link to="/" className="flex items-center gap-2">
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-gold text-plum-deep font-display text-lg font-semibold">A</span>
-          <span className="font-display text-xl">Allyance</span>
+          <span className="font-display text-xl">Pegasus</span>
         </Link>
         <div>
           <p className="text-xs uppercase tracking-[0.3em] text-gold">For athletes & brands</p>
@@ -78,7 +78,7 @@ function AuthPage() {
             Verified profiles. Transparent matching. Fair contracts. The infrastructure layer for women's sports.
           </p>
         </div>
-        <p className="text-xs uppercase tracking-widest text-cream/40">© Allyance — Founding cohort 2026</p>
+        <p className="text-xs uppercase tracking-widest text-cream/40">© Pegasus — Founding cohort 2026</p>
       </div>
 
       {/* Right: form */}
@@ -86,16 +86,16 @@ function AuthPage() {
         <div className="w-full max-w-md">
           <Link to="/" className="mb-8 inline-flex items-center gap-2 text-foreground lg:hidden">
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-gold text-plum-deep font-display font-semibold">A</span>
-            <span className="font-display text-lg">Allyance</span>
+            <span className="font-display text-lg">Pegasus</span>
           </Link>
 
           <h1 className="font-display text-3xl">
-            {mode === "signup" ? "Join Allyance" : "Welcome back"}
+            {mode === "signup" ? "Join Pegasus" : "Welcome back"}
           </h1>
           <p className="mt-2 text-sm text-muted-foreground">
             {mode === "signup"
               ? "Free for athletes — always. Brands start with a 14-day trial."
-              : "Sign in to your Allyance workspace."}
+              : "Sign in to your Pegasus workspace."}
           </p>
 
           {mode === "signup" && (
@@ -188,7 +188,7 @@ function AuthPage() {
           </button>
 
           <p className="mt-6 text-center text-sm text-muted-foreground">
-            {mode === "signup" ? "Already have an account?" : "New to Allyance?"}{" "}
+            {mode === "signup" ? "Already have an account?" : "New to Pegasus?"}{" "}
             <button
               type="button"
               onClick={() => setMode(mode === "signup" ? "signin" : "signup")}

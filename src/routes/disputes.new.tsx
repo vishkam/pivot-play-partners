@@ -42,7 +42,7 @@ function NewDispute() {
   }
 
   return (
-    <DashboardShell title="File a dispute" subtitle="Tell us what happened — Allyance moderators review every report.">
+    <DashboardShell title="File a dispute" subtitle="Tell us what happened — Pegasus moderators review every report.">
       <div className="max-w-2xl rounded-2xl border border-border bg-cream p-8 shadow-sm">
         <div className="flex items-start gap-3 rounded-xl bg-destructive/5 p-4 text-sm text-destructive">
           <AlertOctagon className="mt-0.5 h-4 w-4 shrink-0" />

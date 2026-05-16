@@ -1,7 +1,7 @@
 const faqs = [
   { q: "Who can join as an athlete?", a: "Any woman athlete competing at a national, semi-pro, professional, college, or Olympic level — across all sports and geographies. Verification is free." },
-  { q: "How does Allyance differ from an influencer marketplace?", a: "We're built on competitive performance and values, not follower counts. Our matching engine prioritizes alignment, audience quality, and long-term fit over reach." },
-  { q: "What does it cost athletes?", a: "Nothing to join, build a profile, or receive matches. Allyance takes a 10% commission only on successfully closed partnerships." },
+  { q: "How does Pegasus differ from an influencer marketplace?", a: "We're built on competitive performance and values, not follower counts. Our matching engine prioritizes alignment, audience quality, and long-term fit over reach." },
+  { q: "What does it cost athletes?", a: "Nothing to join, build a profile, or receive matches. Pegasus takes a 10% commission only on successfully closed partnerships." },
   { q: "How is matching done?", a: "A weighted model: 40% values, 20% audience, 15% budget, 15% sport fit, 10% campaign type. Every score includes a plain-English explanation." },
   { q: "Are contracts and payments handled in-platform?", a: "Yes — simplified contracts, e-signatures, milestone tracking, and protected payouts are all native." },
 ];

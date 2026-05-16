@@ -37,7 +37,7 @@ function AthleteDashboard() {
   return (
       <DashboardShell
         title={`Welcome, ${profile?.full_name?.split(" ")[0] || "Athlete"}.`}
-        subtitle="Your Allyance workspace — partnerships, inbox and earnings."
+        subtitle="Your Pegasus workspace — partnerships, inbox and earnings."
         actions={
           <Link to="/athlete/onboarding"
             className="inline-flex items-center gap-2 rounded-full border border-plum px-4 py-2 text-sm text-plum hover:bg-plum/5">
