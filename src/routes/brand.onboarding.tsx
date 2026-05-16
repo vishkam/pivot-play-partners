@@ -106,6 +106,7 @@ function BrandOnboarding() {
 
   return (
     <div className="min-h-screen bg-secondary">
+      <OnboardingHeader />
       <div className="mx-auto max-w-3xl px-6 py-12">
         <p className="text-xs uppercase tracking-[0.3em] text-plum">Brand onboarding</p>
         <h1 className="mt-2 font-display text-4xl text-foreground">Build your brand workspace</h1>
