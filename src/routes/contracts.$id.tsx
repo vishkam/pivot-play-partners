@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { notify } from "@/components/NotificationBell";
 import { calcPayout, DEFAULT_USAGE_RIGHTS, DEFAULT_EXCLUSIVITY, DEFAULT_CANCELLATION, DEFAULT_PAYMENT_SCHEDULE } from "@/lib/contract-template";
+import { generatePostDealStrategies } from "@/lib/post-deal-strategies";
 import { StatusChip } from "./athlete.contracts";
 
 export const Route = createFileRoute("/contracts/$id")({
