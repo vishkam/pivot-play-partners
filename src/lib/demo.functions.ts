@@ -29,6 +29,19 @@ const EXTRA_ATHLETES = [
     rankings: "IFSC top 15", achievements: "World Cup podium · 2x national champion",
     values: ["Conservation", "Inclusion", "Mental health"], country: "India",
     favorite_brands: ["La Sportiva", "Patagonia", "Black Diamond"], pricing_min: 4500, pricing_max: 38000, completeness: 79 },
+  // UK wellness-friendly micro-tier (age 30–35, IG-ready, £500–£2,000 per post)
+  { email: "demo-a-isla@pegasus.app", full_name: "Isla Thompson", sport: "Swimming", discipline: "Open-water · Masters",
+    rankings: "UK Masters top 5 · 32 yrs", achievements: "British Masters champion · open-water marathon finisher",
+    values: ["Wellness", "Women's health", "Sustainability"], country: "United Kingdom",
+    favorite_brands: ["Speedo", "Lululemon", "Form Goggles"], pricing_min: 500, pricing_max: 2000, completeness: 86 },
+  { email: "demo-a-harriet@pegasus.app", full_name: "Harriet Boateng", sport: "Marathon", discipline: "Road running · Half + full",
+    rankings: "UK sub-elite · 34 yrs", achievements: "London Marathon GFA · 1:18 half PB",
+    values: ["Wellness", "Mental health", "Inclusive fitness"], country: "United Kingdom",
+    favorite_brands: ["Hoka", "Tracksmith", "Form Nutrition"], pricing_min: 600, pricing_max: 1800, completeness: 82 },
+  { email: "demo-a-niamh@pegasus.app", full_name: "Niamh O'Connor", sport: "Trail Running", discipline: "Ultra + trail",
+    rankings: "UK trail series podium · 30 yrs", achievements: "Lakeland 50 podium · UTMB CCC finisher",
+    values: ["Wellness", "Nature", "Women's health"], country: "United Kingdom",
+    favorite_brands: ["Salomon", "Inov-8", "Wild Nutrition"], pricing_min: 750, pricing_max: 2000, completeness: 84 },
 ];
 
 const EXTRA_BRANDS = [
