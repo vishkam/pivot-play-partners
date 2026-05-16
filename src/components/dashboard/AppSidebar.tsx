@@ -30,6 +30,7 @@ interface NavItem {
 const ATHLETE_NAV: NavItem[] = [
   { label: "Overview", to: "/athlete/dashboard", icon: LayoutDashboard },
   { label: "Opportunities", to: "/athlete/opportunities", icon: Inbox },
+  { label: "Open deals", to: "/athlete/deals", icon: Sparkles },
   { label: "Messages", to: "/messages", icon: MessageSquare },
   { label: "Contracts", to: "/athlete/contracts", icon: FileText },
   { label: "Earnings", to: "/athlete/earnings", icon: Wallet },
