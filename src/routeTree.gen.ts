@@ -16,6 +16,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MessagesIdRouteImport } from './routes/messages.$id'
+import { Route as ContractsIdRouteImport } from './routes/contracts.$id'
 import { Route as BrandSavedRouteImport } from './routes/brand.saved'
 import { Route as BrandProposalsRouteImport } from './routes/brand.proposals'
 import { Route as BrandOnboardingRouteImport } from './routes/brand.onboarding'
@@ -65,6 +66,11 @@ const MessagesIdRoute = MessagesIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => MessagesRoute,
+} as any)
+const ContractsIdRoute = ContractsIdRouteImport.update({
+  id: '/contracts/$id',
+  path: '/contracts/$id',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const BrandSavedRoute = BrandSavedRouteImport.update({
   id: '/brand/saved',
@@ -155,6 +161,7 @@ export interface FileRoutesByFullPath {
   '/brand/onboarding': typeof BrandOnboardingRoute
   '/brand/proposals': typeof BrandProposalsRoute
   '/brand/saved': typeof BrandSavedRoute
+  '/contracts/$id': typeof ContractsIdRoute
   '/messages/$id': typeof MessagesIdRoute
   '/brand/athletes/$id': typeof BrandAthletesIdRoute
   '/brand/campaigns/$id': typeof BrandCampaignsIdRoute
@@ -178,6 +185,7 @@ export interface FileRoutesByTo {
   '/brand/onboarding': typeof BrandOnboardingRoute
   '/brand/proposals': typeof BrandProposalsRoute
   '/brand/saved': typeof BrandSavedRoute
+  '/contracts/$id': typeof ContractsIdRoute
   '/messages/$id': typeof MessagesIdRoute
   '/brand/athletes/$id': typeof BrandAthletesIdRoute
   '/brand/campaigns/$id': typeof BrandCampaignsIdRoute
@@ -202,6 +210,7 @@ export interface FileRoutesById {
   '/brand/onboarding': typeof BrandOnboardingRoute
   '/brand/proposals': typeof BrandProposalsRoute
   '/brand/saved': typeof BrandSavedRoute
+  '/contracts/$id': typeof ContractsIdRoute
   '/messages/$id': typeof MessagesIdRoute
   '/brand/athletes/$id': typeof BrandAthletesIdRoute
   '/brand/campaigns/$id': typeof BrandCampaignsIdRoute
@@ -227,6 +236,7 @@ export interface FileRouteTypes {
     | '/brand/onboarding'
     | '/brand/proposals'
     | '/brand/saved'
+    | '/contracts/$id'
     | '/messages/$id'
     | '/brand/athletes/$id'
     | '/brand/campaigns/$id'
@@ -250,6 +260,7 @@ export interface FileRouteTypes {
     | '/brand/onboarding'
     | '/brand/proposals'
     | '/brand/saved'
+    | '/contracts/$id'
     | '/messages/$id'
     | '/brand/athletes/$id'
     | '/brand/campaigns/$id'
@@ -273,6 +284,7 @@ export interface FileRouteTypes {
     | '/brand/onboarding'
     | '/brand/proposals'
     | '/brand/saved'
+    | '/contracts/$id'
     | '/messages/$id'
     | '/brand/athletes/$id'
     | '/brand/campaigns/$id'
@@ -297,6 +309,7 @@ export interface RootRouteChildren {
   BrandOnboardingRoute: typeof BrandOnboardingRoute
   BrandProposalsRoute: typeof BrandProposalsRoute
   BrandSavedRoute: typeof BrandSavedRoute
+  ContractsIdRoute: typeof ContractsIdRoute
   BrandAthletesIdRoute: typeof BrandAthletesIdRoute
   BrandCampaignsIdRoute: typeof BrandCampaignsIdRoute
   BrandCampaignsNewRoute: typeof BrandCampaignsNewRoute
@@ -352,6 +365,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/messages/$id'
       preLoaderRoute: typeof MessagesIdRouteImport
       parentRoute: typeof MessagesRoute
+    }
+    '/contracts/$id': {
+      id: '/contracts/$id'
+      path: '/contracts/$id'
+      fullPath: '/contracts/$id'
+      preLoaderRoute: typeof ContractsIdRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/brand/saved': {
       id: '/brand/saved'
@@ -484,6 +504,7 @@ const rootRouteChildren: RootRouteChildren = {
   BrandOnboardingRoute: BrandOnboardingRoute,
   BrandProposalsRoute: BrandProposalsRoute,
   BrandSavedRoute: BrandSavedRoute,
+  ContractsIdRoute: ContractsIdRoute,
   BrandAthletesIdRoute: BrandAthletesIdRoute,
   BrandCampaignsIdRoute: BrandCampaignsIdRoute,
   BrandCampaignsNewRoute: BrandCampaignsNewRoute,
