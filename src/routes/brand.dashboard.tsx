@@ -40,9 +40,9 @@ function BrandDashboard() {
       title={profile?.full_name ? `${profile.full_name.split(" ")[0]}'s workspace` : "Brand workspace"}
       subtitle="Discover, message and partner with women athletes."
       actions={
-        <button className="rounded-full bg-plum-deep px-5 py-2.5 text-sm font-medium text-cream hover:opacity-90">
+        <Link to="/brand/campaigns/new" className="rounded-full bg-plum-deep px-5 py-2.5 text-sm font-medium text-cream hover:opacity-90">
           + New campaign
-        </button>
+        </Link>
       }
     >
       <div className="grid gap-5 lg:grid-cols-4">
@@ -64,7 +64,7 @@ function BrandDashboard() {
                 No campaigns yet. Launch your first one to start matching with athletes.
               </div>
             ) : campaigns.map((c) => (
-              <div key={c.id} className="flex items-center justify-between rounded-xl border border-border bg-background px-4 py-3">
+              <Link key={c.id} to="/brand/campaigns/$id" params={{ id: c.id }} className="flex items-center justify-between rounded-xl border border-border bg-background px-4 py-3 hover:border-plum">
                 <div>
                   <p className="font-medium text-foreground">{c.name}</p>
                   <p className="text-xs text-muted-foreground">
@@ -72,8 +72,11 @@ function BrandDashboard() {
                     {c.budget_max ? ` – $${c.budget_max.toLocaleString()}` : ""}
                   </p>
                 </div>
-                <span className="rounded-full bg-plum/10 px-3 py-1 text-xs uppercase tracking-wider text-plum">{c.status}</span>
-              </div>
+                <div className="flex items-center gap-3">
+                  <span className="rounded-full bg-plum/10 px-3 py-1 text-xs uppercase tracking-wider text-plum">{c.status}</span>
+                  <ArrowRight className="h-4 w-4 text-plum" />
+                </div>
+              </Link>
             ))}
           </div>
         </div>
@@ -88,10 +91,11 @@ function BrandDashboard() {
       </div>
 
       <div className="mt-6 rounded-2xl border border-border bg-cream p-6 shadow-sm">
-        <h3 className="font-display text-lg">Athlete discovery</h3>
-        <div className="mt-4 rounded-xl border border-dashed border-border bg-background p-8 text-center text-sm text-muted-foreground">
-          The AI match engine launches with Phase 3. Your campaign brief will surface ranked athletes here.
+        <div className="flex items-center justify-between">
+          <h3 className="font-display text-lg">Athlete discovery</h3>
+          <Link to="/brand/matches" className="text-xs font-medium text-plum hover:underline">Open discovery →</Link>
         </div>
+        <p className="mt-3 text-sm text-muted-foreground">Browse verified women athletes ranked by values, audience and budget fit.</p>
       </div>
     </DashboardShell>
   );

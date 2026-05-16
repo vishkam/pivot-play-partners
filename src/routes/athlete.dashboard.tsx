@@ -80,7 +80,8 @@ function AthleteDashboard() {
           </Card>
           <Card>
             <CardHead icon={Inbox} label="Opportunities inbox" />
-            <EmptyState text="No outreach yet — brands typically reach out within 14 days of going live." />
+            <EmptyState text="Brand proposals will land here." />
+            <Link to="/athlete/opportunities" className="mt-3 inline-block text-xs font-medium text-plum hover:underline">Open inbox →</Link>
           </Card>
         </div>
 
