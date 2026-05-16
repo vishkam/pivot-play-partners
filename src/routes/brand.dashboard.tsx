@@ -1,6 +1,6 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { Megaphone, Users, Bookmark, FileText, Wallet } from "lucide-react";
+import { Megaphone, Users, Bookmark, FileText, Wallet, ArrowRight } from "lucide-react";
 import { RequireAuth } from "@/components/auth/RequireAuth";
 import { DashboardShell } from "@/components/dashboard/DashboardShell";
 import { useAuth } from "@/hooks/use-auth";
