@@ -41,52 +41,52 @@
 }
 
 :root {
-  --radius: 0.75rem;
+  --radius: 0.85rem;
 
-  /* Cream / off-white canvas */
-  --background: oklch(0.985 0.008 70);
-  --foreground: oklch(0.18 0.04 350);
+  /* Light lilac canvas */
+  --background: #F7F0FF;
+  --foreground: #22111F;
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.04 350);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.04 350);
+  --card: #FFFFFF;
+  --card-foreground: #22111F;
+  --popover: #FFFFFF;
+  --popover-foreground: #22111F;
 
-  /* Deep burgundy / plum */
-  --primary: oklch(0.32 0.09 350);
-  --primary-foreground: oklch(0.985 0.008 70);
+  /* Royal purple primary */
+  --primary: #5B1A6B;
+  --primary-foreground: #FFF9F3;
 
-  --plum: oklch(0.38 0.11 350);
-  --plum-deep: oklch(0.22 0.07 350);
+  --plum: #5B1A6B;
+  --plum-deep: #3B0A45;
 
-  --secondary: oklch(0.94 0.012 70);
-  --secondary-foreground: oklch(0.22 0.07 350);
+  --secondary: #E9D8FD;
+  --secondary-foreground: #3B0A45;
 
-  --muted: oklch(0.95 0.01 70);
-  --muted-foreground: oklch(0.45 0.02 350);
+  --muted: #EFE3FB;
+  --muted-foreground: #6B4E78;
 
-  --accent: oklch(0.93 0.025 60);
-  --accent-foreground: oklch(0.22 0.07 350);
+  --accent: #E9D8FD;
+  --accent-foreground: #3B0A45;
 
-  /* Gold */
-  --gold: oklch(0.78 0.12 80);
-  --gold-foreground: oklch(0.22 0.07 350);
+  /* Gold accent */
+  --gold: #D4A017;
+  --gold-foreground: #3B0A45;
 
-  --cream: oklch(0.97 0.015 70);
+  --cream: #FFF9F3;
 
   --destructive: oklch(0.55 0.22 27);
-  --destructive-foreground: oklch(0.985 0 0);
+  --destructive-foreground: #FFF9F3;
 
-  --border: oklch(0.9 0.015 60);
-  --input: oklch(0.9 0.015 60);
-  --ring: oklch(0.38 0.11 350);
+  --border: #E3D2F2;
+  --input: #E3D2F2;
+  --ring: #5B1A6B;
 
   /* Reusable design tokens */
-  --gradient-hero: linear-gradient(135deg, oklch(0.22 0.07 350) 0%, oklch(0.32 0.09 350) 50%, oklch(0.42 0.13 20) 100%);
-  --gradient-gold: linear-gradient(135deg, oklch(0.82 0.13 85) 0%, oklch(0.72 0.14 70) 100%);
-  --gradient-soft: linear-gradient(180deg, oklch(0.985 0.008 70) 0%, oklch(0.95 0.02 60) 100%);
-  --shadow-elegant: 0 20px 60px -20px oklch(0.22 0.07 350 / 0.35);
-  --shadow-gold: 0 10px 40px -10px oklch(0.78 0.12 80 / 0.5);
+  --gradient-hero: linear-gradient(135deg, #3B0A45 0%, #5B1A6B 55%, #D4A017 100%);
+  --gradient-gold: linear-gradient(135deg, #F0C75A 0%, #D4A017 100%);
+  --gradient-soft: linear-gradient(180deg, #F7F0FF 0%, #E9D8FD 100%);
+  --shadow-elegant: 0 20px 60px -20px rgba(59, 10, 69, 0.35);
+  --shadow-gold: 0 10px 40px -10px rgba(212, 160, 23, 0.45);
   --transition-smooth: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
