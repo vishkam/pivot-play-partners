@@ -100,7 +100,7 @@ function Opportunities() {
         user_id: row.brand_id, kind: "proposal",
         title: "Changes requested", body: row.brand_name ? `${row.brand_name} proposal` : "Proposal",
         link: "/brand/proposals",
-      }).catch(() => {});
+      });
       toast.success("Sent back for revisions");
     } else {
       toast.success("Declined");
@@ -108,7 +108,7 @@ function Opportunities() {
         await supabase.from("notifications").insert({
           user_id: row.brand_id, kind: "proposal",
           title: "Proposal declined", body: row.brand_name ?? "", link: "/brand/proposals",
-        }).catch(() => {});
+        });
       }
     }
     setBusy(null);
