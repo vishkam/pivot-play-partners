@@ -91,8 +91,8 @@ function NewCampaign() {
       }
       await new Promise((r) => setTimeout(r, 1400));
       if (result.matchingError) toast.warning(result.matchingError);
-      else toast.success(`Campaign saved. ${result.matchCount} athlete matches generated.`);
-      navigate({ to: "/brand/campaigns/$id", params: { id: result.campaignId } });
+      else toast.success(`Campaign launched live · ${result.matchCount} matches`);
+      navigate({ to: "/brand/campaigns/$id/launched", params: { id: result.campaignId } });
     } catch (e: unknown) {
       console.error("[Pegasus Launch] submission failed", e);
       const message = e instanceof Error ? e.message : "Campaign could not be launched. Please check required fields.";

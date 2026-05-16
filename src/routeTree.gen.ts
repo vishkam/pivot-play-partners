@@ -42,6 +42,7 @@ import { Route as AdminContractsRouteImport } from './routes/admin.contracts'
 import { Route as BrandCampaignsNewRouteImport } from './routes/brand.campaigns.new'
 import { Route as BrandCampaignsIdRouteImport } from './routes/brand.campaigns.$id'
 import { Route as BrandAthletesIdRouteImport } from './routes/brand.athletes.$id'
+import { Route as BrandCampaignsIdLaunchedRouteImport } from './routes/brand.campaigns.$id.launched'
 
 const SubscriptionRoute = SubscriptionRouteImport.update({
   id: '/subscription',
@@ -208,6 +209,12 @@ const BrandAthletesIdRoute = BrandAthletesIdRouteImport.update({
   path: '/brand/athletes/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BrandCampaignsIdLaunchedRoute =
+  BrandCampaignsIdLaunchedRouteImport.update({
+    id: '/launched',
+    path: '/launched',
+    getParentRoute: () => BrandCampaignsIdRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -241,8 +248,9 @@ export interface FileRoutesByFullPath {
   '/disputes/new': typeof DisputesNewRoute
   '/messages/$id': typeof MessagesIdRoute
   '/brand/athletes/$id': typeof BrandAthletesIdRoute
-  '/brand/campaigns/$id': typeof BrandCampaignsIdRoute
+  '/brand/campaigns/$id': typeof BrandCampaignsIdRouteWithChildren
   '/brand/campaigns/new': typeof BrandCampaignsNewRoute
+  '/brand/campaigns/$id/launched': typeof BrandCampaignsIdLaunchedRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -276,8 +284,9 @@ export interface FileRoutesByTo {
   '/disputes/new': typeof DisputesNewRoute
   '/messages/$id': typeof MessagesIdRoute
   '/brand/athletes/$id': typeof BrandAthletesIdRoute
-  '/brand/campaigns/$id': typeof BrandCampaignsIdRoute
+  '/brand/campaigns/$id': typeof BrandCampaignsIdRouteWithChildren
   '/brand/campaigns/new': typeof BrandCampaignsNewRoute
+  '/brand/campaigns/$id/launched': typeof BrandCampaignsIdLaunchedRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -312,8 +321,9 @@ export interface FileRoutesById {
   '/disputes/new': typeof DisputesNewRoute
   '/messages/$id': typeof MessagesIdRoute
   '/brand/athletes/$id': typeof BrandAthletesIdRoute
-  '/brand/campaigns/$id': typeof BrandCampaignsIdRoute
+  '/brand/campaigns/$id': typeof BrandCampaignsIdRouteWithChildren
   '/brand/campaigns/new': typeof BrandCampaignsNewRoute
+  '/brand/campaigns/$id/launched': typeof BrandCampaignsIdLaunchedRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -351,6 +361,7 @@ export interface FileRouteTypes {
     | '/brand/athletes/$id'
     | '/brand/campaigns/$id'
     | '/brand/campaigns/new'
+    | '/brand/campaigns/$id/launched'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -386,6 +397,7 @@ export interface FileRouteTypes {
     | '/brand/athletes/$id'
     | '/brand/campaigns/$id'
     | '/brand/campaigns/new'
+    | '/brand/campaigns/$id/launched'
   id:
     | '__root__'
     | '/'
@@ -421,6 +433,7 @@ export interface FileRouteTypes {
     | '/brand/athletes/$id'
     | '/brand/campaigns/$id'
     | '/brand/campaigns/new'
+    | '/brand/campaigns/$id/launched'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -454,7 +467,7 @@ export interface RootRouteChildren {
   ContractsIdRoute: typeof ContractsIdRoute
   DisputesNewRoute: typeof DisputesNewRoute
   BrandAthletesIdRoute: typeof BrandAthletesIdRoute
-  BrandCampaignsIdRoute: typeof BrandCampaignsIdRoute
+  BrandCampaignsIdRoute: typeof BrandCampaignsIdRouteWithChildren
   BrandCampaignsNewRoute: typeof BrandCampaignsNewRoute
 }
 
@@ -691,6 +704,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrandAthletesIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/brand/campaigns/$id/launched': {
+      id: '/brand/campaigns/$id/launched'
+      path: '/launched'
+      fullPath: '/brand/campaigns/$id/launched'
+      preLoaderRoute: typeof BrandCampaignsIdLaunchedRouteImport
+      parentRoute: typeof BrandCampaignsIdRoute
+    }
   }
 }
 
@@ -705,6 +725,17 @@ const MessagesRouteChildren: MessagesRouteChildren = {
 const MessagesRouteWithChildren = MessagesRoute._addFileChildren(
   MessagesRouteChildren,
 )
+
+interface BrandCampaignsIdRouteChildren {
+  BrandCampaignsIdLaunchedRoute: typeof BrandCampaignsIdLaunchedRoute
+}
+
+const BrandCampaignsIdRouteChildren: BrandCampaignsIdRouteChildren = {
+  BrandCampaignsIdLaunchedRoute: BrandCampaignsIdLaunchedRoute,
+}
+
+const BrandCampaignsIdRouteWithChildren =
+  BrandCampaignsIdRoute._addFileChildren(BrandCampaignsIdRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -737,7 +768,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContractsIdRoute: ContractsIdRoute,
   DisputesNewRoute: DisputesNewRoute,
   BrandAthletesIdRoute: BrandAthletesIdRoute,
-  BrandCampaignsIdRoute: BrandCampaignsIdRoute,
+  BrandCampaignsIdRoute: BrandCampaignsIdRouteWithChildren,
   BrandCampaignsNewRoute: BrandCampaignsNewRoute,
 }
 export const routeTree = rootRouteImport
