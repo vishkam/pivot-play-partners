@@ -51,7 +51,10 @@ export type Database = {
           competition_history: string | null
           created_at: string
           discipline: string | null
+          favorite_brands: string[]
+          favorite_products: string | null
           geographic_preferences: string[] | null
+          material_preferences: string[]
           media: Json | null
           partnership_types: string[] | null
           pricing_max: number | null
@@ -79,7 +82,10 @@ export type Database = {
           competition_history?: string | null
           created_at?: string
           discipline?: string | null
+          favorite_brands?: string[]
+          favorite_products?: string | null
           geographic_preferences?: string[] | null
+          material_preferences?: string[]
           media?: Json | null
           partnership_types?: string[] | null
           pricing_max?: number | null
@@ -107,7 +113,10 @@ export type Database = {
           competition_history?: string | null
           created_at?: string
           discipline?: string | null
+          favorite_brands?: string[]
+          favorite_products?: string | null
           geographic_preferences?: string[] | null
+          material_preferences?: string[]
           media?: Json | null
           partnership_types?: string[] | null
           pricing_max?: number | null
