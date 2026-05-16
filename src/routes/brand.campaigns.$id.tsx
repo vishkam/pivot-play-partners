@@ -6,7 +6,7 @@ import { RequireAuth } from "@/components/auth/RequireAuth";
 import { DashboardShell } from "@/components/dashboard/DashboardShell";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
-import { rankAthletes, type AthleteForMatch, type BrandForMatch, type CampaignForMatch, type MatchScore } from "@/lib/matching";
+import { rankAthletes, scoreAthlete, type AthleteForMatch, type BrandForMatch, type CampaignForMatch, type MatchScore } from "@/lib/matching";
 import { AthleteCard } from "@/components/AthleteCard";
 import { ProposalModal } from "@/components/ProposalModal";
 
@@ -22,6 +22,16 @@ interface AthleteRow extends AthleteForMatch {
   full_name: string | null;
   verification_status: string | null;
 }
+interface PersistedMatch {
+  athlete_id: string;
+  score: number;
+  values_score: number | null;
+  audience_score: number | null;
+  budget_score: number | null;
+  sport_score: number | null;
+  campaign_score: number | null;
+  explanation: string | null;
+}
 
 function CampaignDetail() {
   const { id } = Route.useParams();
@@ -30,23 +40,26 @@ function CampaignDetail() {
   const [campaign, setCampaign] = useState<(CampaignForMatch & { name: string; description: string | null; status: string }) | null>(null);
   const [brand, setBrand] = useState<BrandForMatch & { brand_name: string | null }>({ brand_name: null });
   const [athletes, setAthletes] = useState<AthleteRow[]>([]);
+  const [persistedMatches, setPersistedMatches] = useState<PersistedMatch[]>([]);
   const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
   const [proposeFor, setProposeFor] = useState<{ athlete: AthleteRow; match: MatchScore } | null>(null);
 
   useEffect(() => {
     if (!user) return;
     (async () => {
-      const [c, b, a, s] = await Promise.all([
+      const [c, b, a, m, s] = await Promise.all([
         supabase.from("campaigns").select("*").eq("id", id).maybeSingle(),
         supabase.from("brand_profiles").select("brand_name, values, esg_priorities, industry, consumer_demographics").eq("user_id", user.id).maybeSingle(),
         supabase
           .from("athlete_profiles")
           .select("user_id, sport, values, causes, audience_demographics, pricing_min, pricing_max, partnership_types, geographic_preferences, verification_status")
           .eq("verification_status", "verified"),
+        supabase.from("matches").select("athlete_id, score, values_score, audience_score, budget_score, sport_score, campaign_score, explanation").eq("campaign_id", id).eq("brand_id", user.id).order("score", { ascending: false }),
         supabase.from("saved_athletes").select("athlete_id").eq("brand_id", user.id),
       ]);
       if (c.data) setCampaign(c.data as never);
       if (b.data) setBrand(b.data as never);
+      setPersistedMatches((m.data ?? []) as PersistedMatch[]);
 
       const profileIds = (a.data ?? []).map((x) => x.user_id);
       const { data: profs } = profileIds.length
@@ -64,7 +77,30 @@ function CampaignDetail() {
     })();
   }, [id, user]);
 
-  const ranked = useMemo(() => (campaign ? rankAthletes(athletes, brand, campaign) : []), [athletes, brand, campaign]);
+  const ranked = useMemo(() => {
+    if (!campaign) return [];
+    if (!persistedMatches.length) return rankAthletes(athletes, brand, campaign);
+    const athleteById = new Map(athletes.map((athlete) => [athlete.user_id, athlete]));
+    return persistedMatches
+      .map((row) => {
+        const athlete = athleteById.get(row.athlete_id);
+        if (!athlete) return null;
+        const computed = scoreAthlete(athlete, brand, campaign);
+        const score = row.score ?? computed.score;
+        return {
+          ...computed,
+          score,
+          category: score >= 78 ? "Strong Match" : score >= 60 ? "Good Match" : "Emerging Match",
+          values_score: row.values_score ?? computed.values_score,
+          audience_score: row.audience_score ?? computed.audience_score,
+          budget_score: row.budget_score ?? computed.budget_score,
+          sport_score: row.sport_score ?? computed.sport_score,
+          campaign_score: row.campaign_score ?? computed.campaign_score,
+          explanation: row.explanation ?? computed.explanation,
+        } as MatchScore;
+      })
+      .filter((match): match is MatchScore => Boolean(match));
+  }, [athletes, brand, campaign, persistedMatches]);
 
   async function toggleSave(aid: string) {
     if (!user) return;
