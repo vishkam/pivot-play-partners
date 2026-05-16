@@ -76,11 +76,27 @@ function ContractDetail() {
   async function markComplete() {
     if (!c || !user) return;
     setBusy(true);
-    await supabase.from("contracts").update({ status: "completed" }).eq("id", c.id);
+    // Generate post-deal strategies if not already present
+    let strategiesUpdate: { post_deal_strategies?: string } = {};
+    if (!c.post_deal_strategies) {
+      const { data: ap } = await supabase
+        .from("athlete_profiles").select("sport, values").eq("user_id", c.athlete_id).maybeSingle();
+      const { data: bp } = await supabase
+        .from("brand_profiles").select("brand_name").eq("user_id", c.brand_id).maybeSingle();
+      strategiesUpdate = {
+        post_deal_strategies: generatePostDealStrategies({
+          partnershipType: c.exclusivity,
+          athleteSport: ap?.sport ?? null,
+          brandName: bp?.brand_name ?? null,
+          values: (ap?.values as string[] | null) ?? [],
+        }),
+      };
+    }
+    await supabase.from("contracts").update({ status: "completed", ...strategiesUpdate }).eq("id", c.id);
     await supabase.from("payments").update({ status: "released" }).eq("contract_id", c.id).eq("status", "escrow");
     await supabase.from("payments").update({ status: "released" }).eq("contract_id", c.id).eq("status", "pending");
     setBusy(false);
-    toast.success("Marked complete — funds released.");
+    toast.success("Marked complete — funds released & next-step strategies generated.");
     load();
     setReviewOpen(true);
   }
