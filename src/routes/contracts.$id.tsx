@@ -151,6 +151,18 @@ function ContractDetail() {
             </div>
           </Card>
 
+          <LegalEthicalCard contract={c} onSaved={load} canEdit={(role === "athlete" && user?.id === c.athlete_id) || (role === "brand" && user?.id === c.brand_id)} />
+
+          {c.status === "completed" && c.post_deal_strategies && (
+            <Card>
+              <h3 className="font-display text-xl">What's next — aligned strategies</h3>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Auto-generated playbook to convert this win into the next one.
+              </p>
+              <pre className="mt-4 whitespace-pre-wrap rounded-xl bg-secondary p-4 text-sm leading-relaxed text-foreground/85 font-sans">{c.post_deal_strategies}</pre>
+            </Card>
+          )}
+
           <Card>
             <h3 className="font-display text-xl">Signatures</h3>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
