@@ -16,6 +16,7 @@ import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MessagesIdRouteImport } from './routes/messages.$id'
+import { Route as DisputesNewRouteImport } from './routes/disputes.new'
 import { Route as ContractsIdRouteImport } from './routes/contracts.$id'
 import { Route as BrandSavedRouteImport } from './routes/brand.saved'
 import { Route as BrandProposalsRouteImport } from './routes/brand.proposals'
@@ -66,6 +67,11 @@ const MessagesIdRoute = MessagesIdRouteImport.update({
   id: '/$id',
   path: '/$id',
   getParentRoute: () => MessagesRoute,
+} as any)
+const DisputesNewRoute = DisputesNewRouteImport.update({
+  id: '/disputes/new',
+  path: '/disputes/new',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ContractsIdRoute = ContractsIdRouteImport.update({
   id: '/contracts/$id',
@@ -162,6 +168,7 @@ export interface FileRoutesByFullPath {
   '/brand/proposals': typeof BrandProposalsRoute
   '/brand/saved': typeof BrandSavedRoute
   '/contracts/$id': typeof ContractsIdRoute
+  '/disputes/new': typeof DisputesNewRoute
   '/messages/$id': typeof MessagesIdRoute
   '/brand/athletes/$id': typeof BrandAthletesIdRoute
   '/brand/campaigns/$id': typeof BrandCampaignsIdRoute
@@ -186,6 +193,7 @@ export interface FileRoutesByTo {
   '/brand/proposals': typeof BrandProposalsRoute
   '/brand/saved': typeof BrandSavedRoute
   '/contracts/$id': typeof ContractsIdRoute
+  '/disputes/new': typeof DisputesNewRoute
   '/messages/$id': typeof MessagesIdRoute
   '/brand/athletes/$id': typeof BrandAthletesIdRoute
   '/brand/campaigns/$id': typeof BrandCampaignsIdRoute
@@ -211,6 +219,7 @@ export interface FileRoutesById {
   '/brand/proposals': typeof BrandProposalsRoute
   '/brand/saved': typeof BrandSavedRoute
   '/contracts/$id': typeof ContractsIdRoute
+  '/disputes/new': typeof DisputesNewRoute
   '/messages/$id': typeof MessagesIdRoute
   '/brand/athletes/$id': typeof BrandAthletesIdRoute
   '/brand/campaigns/$id': typeof BrandCampaignsIdRoute
@@ -237,6 +246,7 @@ export interface FileRouteTypes {
     | '/brand/proposals'
     | '/brand/saved'
     | '/contracts/$id'
+    | '/disputes/new'
     | '/messages/$id'
     | '/brand/athletes/$id'
     | '/brand/campaigns/$id'
@@ -261,6 +271,7 @@ export interface FileRouteTypes {
     | '/brand/proposals'
     | '/brand/saved'
     | '/contracts/$id'
+    | '/disputes/new'
     | '/messages/$id'
     | '/brand/athletes/$id'
     | '/brand/campaigns/$id'
@@ -285,6 +296,7 @@ export interface FileRouteTypes {
     | '/brand/proposals'
     | '/brand/saved'
     | '/contracts/$id'
+    | '/disputes/new'
     | '/messages/$id'
     | '/brand/athletes/$id'
     | '/brand/campaigns/$id'
@@ -310,6 +322,7 @@ export interface RootRouteChildren {
   BrandProposalsRoute: typeof BrandProposalsRoute
   BrandSavedRoute: typeof BrandSavedRoute
   ContractsIdRoute: typeof ContractsIdRoute
+  DisputesNewRoute: typeof DisputesNewRoute
   BrandAthletesIdRoute: typeof BrandAthletesIdRoute
   BrandCampaignsIdRoute: typeof BrandCampaignsIdRoute
   BrandCampaignsNewRoute: typeof BrandCampaignsNewRoute
@@ -365,6 +378,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/messages/$id'
       preLoaderRoute: typeof MessagesIdRouteImport
       parentRoute: typeof MessagesRoute
+    }
+    '/disputes/new': {
+      id: '/disputes/new'
+      path: '/disputes/new'
+      fullPath: '/disputes/new'
+      preLoaderRoute: typeof DisputesNewRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/contracts/$id': {
       id: '/contracts/$id'
@@ -505,6 +525,7 @@ const rootRouteChildren: RootRouteChildren = {
   BrandProposalsRoute: BrandProposalsRoute,
   BrandSavedRoute: BrandSavedRoute,
   ContractsIdRoute: ContractsIdRoute,
+  DisputesNewRoute: DisputesNewRoute,
   BrandAthletesIdRoute: BrandAthletesIdRoute,
   BrandCampaignsIdRoute: BrandCampaignsIdRoute,
   BrandCampaignsNewRoute: BrandCampaignsNewRoute,
@@ -512,3 +533,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
