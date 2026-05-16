@@ -1,11 +1,24 @@
 import card1 from "@/assets/athlete-card-1.jpg";
 import card2 from "@/assets/athlete-card-2.jpg";
 import card3 from "@/assets/athlete-card-3.jpg";
+import { ShieldCheck, TrendingUp, Star } from "lucide-react";
 
 const athletes = [
-  { img: card1, name: "Amara K.", sport: "Track & Field", country: "Kenya", score: 96, tags: ["Sustainability", "Youth"] },
-  { img: card2, name: "Léa M.", sport: "Tennis", country: "France", score: 91, tags: ["Wellness", "Mentorship"] },
-  { img: card3, name: "Sienna O.", sport: "Cycling", country: "USA", score: 88, tags: ["Climate", "Equity"] },
+  {
+    img: card1, name: "Amara K.", sport: "Track & Field", discipline: "400m Hurdles",
+    country: "Kenya", score: 96, popularity: 88, deals: 7, earnings: "$112k",
+    followers: "248k", rating: 4.9, brands: ["Lumen", "Orla", "Halo"], tags: ["Sustainability", "Youth"],
+  },
+  {
+    img: card2, name: "Léa M.", sport: "Tennis", discipline: "WTA Tour",
+    country: "France", score: 91, popularity: 94, deals: 12, earnings: "$284k",
+    followers: "612k", rating: 4.8, brands: ["Maison Rue", "Aura"], tags: ["Wellness", "Mentorship"],
+  },
+  {
+    img: card3, name: "Sienna O.", sport: "Cycling", discipline: "Gravel + Road",
+    country: "USA", score: 88, popularity: 81, deals: 5, earnings: "$74k",
+    followers: "163k", rating: 4.9, brands: ["Feral", "North&Co"], tags: ["Climate", "Equity"],
+  },
 ];
 
 export function MatchEngine() {
@@ -60,10 +73,39 @@ export function MatchEngine() {
                     <span className="absolute right-3 top-3 rounded-full bg-gradient-gold px-2.5 py-1 text-xs font-semibold text-plum-deep">
                       {a.score}% match
                     </span>
+                    <span className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full bg-plum-deep/80 px-2 py-1 text-[10px] font-medium uppercase tracking-wider text-cream backdrop-blur">
+                      <ShieldCheck className="h-3 w-3 text-gold" /> Verified
+                    </span>
                   </div>
                   <div className="p-4">
-                    <h3 className="font-display text-lg leading-tight">{a.name}</h3>
-                    <p className="text-xs text-muted-foreground">{a.sport} · {a.country}</p>
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-display text-lg leading-tight">{a.name}</h3>
+                      <span className="inline-flex items-center gap-0.5 text-xs text-plum">
+                        <Star className="h-3 w-3 fill-gold text-gold" /> {a.rating}
+                      </span>
+                    </div>
+                    <p className="text-xs text-muted-foreground">{a.sport} · {a.discipline} · {a.country}</p>
+
+                    <div className="mt-3 grid grid-cols-3 gap-2 rounded-xl bg-secondary p-2 text-center">
+                      <div>
+                        <p className="font-display text-sm text-plum-deep">{a.deals}</p>
+                        <p className="text-[9px] uppercase tracking-wider text-muted-foreground">Deals</p>
+                      </div>
+                      <div>
+                        <p className="font-display text-sm text-plum-deep">{a.earnings}</p>
+                        <p className="text-[9px] uppercase tracking-wider text-muted-foreground">Earned</p>
+                      </div>
+                      <div>
+                        <p className="font-display text-sm text-plum-deep">{a.followers}</p>
+                        <p className="text-[9px] uppercase tracking-wider text-muted-foreground">Reach</p>
+                      </div>
+                    </div>
+
+                    <div className="mt-3 flex items-center gap-1.5 text-[10px] text-muted-foreground">
+                      <TrendingUp className="h-3 w-3 text-gold" />
+                      Popularity {a.popularity}/100
+                    </div>
+
                     <div className="mt-3 flex flex-wrap gap-1.5">
                       {a.tags.map((t) => (
                         <span key={t} className="rounded-full bg-secondary px-2 py-0.5 text-[10px] uppercase tracking-wider text-plum">

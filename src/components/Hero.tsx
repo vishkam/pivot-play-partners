@@ -1,5 +1,6 @@
 import heroImg from "@/assets/hero-athlete.jpg";
 import { Link } from "@tanstack/react-router";
+import { Sparkles, Brain, FileSignature, TrendingUp } from "lucide-react";
 
 export function Hero() {
   return (
@@ -7,20 +8,20 @@ export function Hero() {
       <div className="mx-auto grid max-w-7xl grid-cols-1 items-center gap-16 px-6 lg:grid-cols-12 lg:px-10">
         <div className="lg:col-span-7">
           <span className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/5 px-4 py-1.5 text-xs uppercase tracking-[0.2em] text-gold">
-            <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-            The partnership infrastructure for women's sports
+            <Sparkles className="h-3 w-3" />
+            AI sponsorship infrastructure for women's sports
           </span>
 
           <h1 className="mt-8 font-display text-5xl leading-[1.02] text-balance sm:text-6xl lg:text-7xl xl:text-[5.5rem]">
-            Where women athletes
-            <span className="block italic text-gold">meet the brands</span>
-            that believe in them.
+            Your personal
+            <span className="block italic text-gold">AI sponsorship manager</span>
+            for smarter brand partnerships.
           </h1>
 
           <p className="mt-8 max-w-xl text-lg text-cream/75 lg:text-xl">
-            Pegasus is the AI-powered marketplace pairing women athletes —
-            from rising stars to Olympians — with values-aligned brands.
-            Authentic partnerships. Fair pricing. Zero gatekeeping.
+            Pegasus pairs elite women athletes with values-aligned brands through
+            intelligent matchmaking — then automates proposals, contracts, payments
+            and growth strategy. The agent, lawyer and strategist in one platform.
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
@@ -29,22 +30,29 @@ export function Hero() {
               search={{ mode: "signup", role: "athlete", redirect: "/dashboard" } as never}
               className="rounded-full bg-gradient-gold px-7 py-3.5 font-medium text-plum-deep shadow-gold transition-transform hover:scale-[1.03]"
             >
-              Join as an athlete
+              Find sponsorships
             </Link>
             <Link
               to="/auth"
               search={{ mode: "signup", role: "brand", redirect: "/dashboard" } as never}
               className="rounded-full border border-cream/30 px-7 py-3.5 font-medium text-cream transition-colors hover:border-gold hover:text-gold"
             >
-              Partner as a brand →
+              Discover athletes →
             </Link>
           </div>
 
-          <dl className="mt-14 grid max-w-lg grid-cols-3 gap-6 border-t border-cream/15 pt-8">
+          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs uppercase tracking-widest text-cream/60">
+            <span className="inline-flex items-center gap-2"><Brain className="h-3.5 w-3.5 text-gold" /> AI matching</span>
+            <span className="inline-flex items-center gap-2"><Sparkles className="h-3.5 w-3.5 text-gold" /> Proposal generator</span>
+            <span className="inline-flex items-center gap-2"><FileSignature className="h-3.5 w-3.5 text-gold" /> Legal + escrow</span>
+            <span className="inline-flex items-center gap-2"><TrendingUp className="h-3.5 w-3.5 text-gold" /> Growth strategy</span>
+          </div>
+
+          <dl className="mt-10 grid max-w-lg grid-cols-3 gap-6 border-t border-cream/15 pt-8">
             {[
-              ["97%", "of sponsorship $ goes to men"],
-              ["12k+", "verified athletes waitlisted"],
-              ["8min", "from brief to first match"],
+              ["12,400+", "verified athletes"],
+              ["$4.2M", "deals facilitated"],
+              ["94%", "match satisfaction"],
             ].map(([n, l]) => (
               <div key={l}>
                 <dt className="font-display text-3xl text-gold">{n}</dt>
@@ -66,10 +74,12 @@ export function Hero() {
             <div className="absolute inset-0 bg-gradient-to-t from-plum-deep/60 via-transparent to-transparent" />
           </div>
 
-          {/* Floating match card */}
+          {/* Floating AI match card */}
           <div className="absolute -bottom-6 -left-4 w-72 rounded-2xl bg-cream p-5 text-foreground shadow-elegant animate-float lg:-left-12">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold uppercase tracking-widest text-plum">Match score</span>
+              <span className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-plum">
+                <Brain className="h-3 w-3" /> AI match
+              </span>
               <span className="rounded-full bg-gradient-gold px-2.5 py-0.5 text-xs font-semibold text-plum-deep">94%</span>
             </div>
             <p className="mt-3 font-display text-lg leading-snug">
@@ -87,10 +97,13 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="absolute -top-4 -right-2 hidden w-56 rounded-2xl border border-gold/30 bg-plum-deep/80 p-4 text-cream backdrop-blur-md md:block">
-            <p className="text-xs uppercase tracking-widest text-gold">AI proposal</p>
+          <div className="absolute -top-4 -right-2 hidden w-60 rounded-2xl border border-gold/30 bg-plum-deep/80 p-4 text-cream backdrop-blur-md md:block">
+            <p className="inline-flex items-center gap-1.5 text-xs uppercase tracking-widest text-gold">
+              <Sparkles className="h-3 w-3" /> AI proposal · drafted
+            </p>
             <p className="mt-2 text-sm leading-snug">
-              "Hi Maya — your story around recovery and clean nutrition aligns with our spring campaign…"
+              "Hi Maya — your story around recovery and clean nutrition aligns
+              with our spring campaign. Proposed: $14k + product, 6 weeks…"
             </p>
           </div>
         </div>

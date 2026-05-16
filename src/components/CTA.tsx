@@ -3,11 +3,12 @@ export function CTA() {
     <section id="cta" className="relative overflow-hidden bg-gradient-hero py-28 text-cream lg:py-36 grain">
       <div className="mx-auto max-w-4xl px-6 text-center lg:px-10">
         <h2 className="font-display text-5xl leading-[1.05] text-balance sm:text-6xl lg:text-7xl">
-          Build the partnership economy
-          <span className="block italic text-gold">women athletes deserve.</span>
+          Let AI build smarter
+          <span className="block italic text-gold">partnerships, together.</span>
         </h2>
         <p className="mx-auto mt-8 max-w-xl text-lg text-cream/75">
-          Join the founding cohort. Athletes get lifetime free access. Brands get first pick of the roster.
+          Join the founding cohort. Athletes get lifetime free access to their AI sponsorship team.
+          Brands get first pick of a verified, intelligently ranked roster.
         </p>
 
         <form className="mx-auto mt-10 flex max-w-lg flex-col gap-3 sm:flex-row">

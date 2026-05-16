@@ -1,23 +1,33 @@
-const steps = [
+import { Brain, Sparkles, FileSignature, TrendingUp } from "lucide-react";
+
+const pillars = [
   {
-    n: "01",
-    title: "Profile & verify",
-    body: "Athletes build a media kit in minutes. Brands set campaign goals, values, and budget. Every account is human-verified.",
+    icon: Brain,
+    tag: "AI matching engine",
+    title: "Values-first matchmaking.",
+    body: "Brand DNA analysis, audience overlap, and opportunity ranking — every match comes with a transparent score and plain-English explanation.",
+    points: ["Values-first matching", "Brand DNA analysis", "Audience fit modeling", "Smart opportunity ranking"],
   },
   {
-    n: "02",
-    title: "AI compatibility match",
-    body: "Our engine scores partnerships across values (40%), audience, budget, sport fit, and campaign type — with plain-English explanations.",
+    icon: Sparkles,
+    tag: "AI proposal generator",
+    title: "Personalized outreach in seconds.",
+    body: "Tailored proposals, athlete-specific pricing guidance, and negotiation support written in your brand voice — ready to send or refine.",
+    points: ["Custom campaign briefs", "Pricing intelligence", "Negotiation copilot", "Outreach templates"],
   },
   {
-    n: "03",
-    title: "Outreach & proposals",
-    body: "AI drafts the first message and a tailored proposal. Athletes review, edit, and respond — no agents required.",
+    icon: FileSignature,
+    tag: "Legal + contract support",
+    title: "Contracts simplified, payments protected.",
+    body: "Plain-English contract templates, rights management, e-signatures, escrow and milestone-based payouts — built in, not bolted on.",
+    points: ["Contract templates", "AI red-flag detection", "Rights management", "Escrow + milestone payouts"],
   },
   {
-    n: "04",
-    title: "Contract, deliver, get paid",
-    body: "Simplified contracts, milestone tracking, and protected payouts. Reputation compounds with every campaign.",
+    icon: TrendingUp,
+    tag: "Social growth strategy",
+    title: "AI that compounds your career.",
+    body: "Content recommendations, audience insights and partnership scaling strategies — your sponsorships keep getting smarter over time.",
+    points: ["Content strategy", "Platform growth", "Brand amplification", "Partnership scaling"],
   },
 ];
 
@@ -27,28 +37,36 @@ export function HowItWorks() {
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="flex flex-col items-end justify-between gap-6 md:flex-row md:items-end">
           <div>
-            <span className="text-xs uppercase tracking-[0.3em] text-plum">How it works</span>
+            <span className="text-xs uppercase tracking-[0.3em] text-plum">The Pegasus AI stack</span>
             <h2 className="mt-4 font-display text-4xl text-balance sm:text-5xl lg:text-6xl">
-              From discovery to deal,
-              <span className="block italic text-plum">in days — not quarters.</span>
+              Four AI partnership managers,
+              <span className="block italic text-plum">one infrastructure layer.</span>
             </h2>
           </div>
           <p className="max-w-sm text-muted-foreground">
-            A workflow designed for the realities of modern sport — fast, transparent, and built around the athlete.
+            Pegasus replaces the agent, the lawyer and the strategist with an
+            intelligent system that learns from every deal closed on the platform.
           </p>
         </div>
 
-        <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-3xl bg-border md:grid-cols-2 lg:grid-cols-4">
-          {steps.map((s) => (
-            <div
-              key={s.n}
-              className="group relative bg-cream p-8 transition-colors hover:bg-background lg:p-10"
-            >
-              <span className="font-display text-5xl text-plum/20 transition-colors group-hover:text-gold">
-                {s.n}
-              </span>
-              <h3 className="mt-6 font-display text-2xl">{s.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{s.body}</p>
+        <div className="mt-16 grid grid-cols-1 gap-px overflow-hidden rounded-3xl bg-border md:grid-cols-2">
+          {pillars.map((p) => (
+            <div key={p.tag} className="group relative bg-cream p-8 transition-colors hover:bg-background lg:p-10">
+              <div className="flex items-center gap-3">
+                <span className="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-plum/10 text-plum transition-colors group-hover:bg-gold/20 group-hover:text-plum-deep">
+                  <p.icon className="h-5 w-5" />
+                </span>
+                <span className="text-[11px] uppercase tracking-[0.2em] text-plum/70">{p.tag}</span>
+              </div>
+              <h3 className="mt-5 font-display text-2xl lg:text-3xl">{p.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{p.body}</p>
+              <ul className="mt-5 grid grid-cols-2 gap-2">
+                {p.points.map((pt) => (
+                  <li key={pt} className="flex items-center gap-2 text-xs text-foreground/80">
+                    <span className="h-1 w-1 rounded-full bg-gold" /> {pt}
+                  </li>
+                ))}
+              </ul>
             </div>
           ))}
         </div>
