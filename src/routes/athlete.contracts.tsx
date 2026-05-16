@@ -6,51 +6,43 @@ import { DashboardShell } from "@/components/dashboard/DashboardShell";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 
-interface Row {
-  id: string; title: string; status: string; compensation_amount: number;
-  created_at: string; counterparty: string;
-}
-
-function makeRoute(path: "/athlete/contracts" | "/brand/contracts", role: "athlete" | "brand") {
-  return createFileRoute(path)({
-    component: () => (
-      <RequireAuth roles={[role]} requireOnboarding>
-        <ContractList role={role} />
-      </RequireAuth>
-    ),
-  });
-}
-
-export const Route = makeRoute("/athlete/contracts", "athlete");
-export { makeRoute as createContractListRoute };
+export const Route = createFileRoute("/athlete/contracts")({
+  component: () => (
+    <RequireAuth roles={["athlete"]} requireOnboarding>
+      <ContractList role="athlete" />
+    </RequireAuth>
+  ),
+});
 
 export function ContractList({ role }: { role: "athlete" | "brand" }) {
   const { user } = useAuth();
-  const [rows, setRows] = useState<Row[]>([]);
+  const [rows, setRows] = useState<Array<{ id: string; title: string; status: string; compensation_amount: number; created_at: string; counterparty: string }>>([]);
 
   useEffect(() => {
     if (!user) return;
     (async () => {
       const col = role === "athlete" ? "athlete_id" : "brand_id";
-      const { data } = await supabase
-        .from("contracts").select("*").eq(col, user.id).order("created_at", { ascending: false });
       const otherCol = role === "athlete" ? "brand_id" : "athlete_id";
-      const otherIds = [...new Set((data ?? []).map((d) => d[otherCol] as string))];
+      const { data } = await supabase.from("contracts").select("*").eq(col, user.id).order("created_at", { ascending: false });
+      const otherIds = [...new Set((data ?? []).map((d: Record<string, unknown>) => d[otherCol] as string))];
       const [{ data: bp }, { data: ap }] = await Promise.all([
         otherIds.length && role === "athlete"
           ? supabase.from("brand_profiles").select("user_id, brand_name").in("user_id", otherIds)
-          : Promise.resolve({ data: [] }),
+          : Promise.resolve({ data: [] as Array<{ user_id: string; brand_name: string | null }> }),
         otherIds.length && role === "brand"
           ? supabase.from("profiles").select("id, full_name").in("id", otherIds)
-          : Promise.resolve({ data: [] }),
+          : Promise.resolve({ data: [] as Array<{ id: string; full_name: string | null }> }),
       ]);
       const nameMap = new Map<string, string>();
-      (bp ?? []).forEach((b: { user_id: string; brand_name: string | null }) => nameMap.set(b.user_id, b.brand_name || "Brand"));
-      (ap ?? []).forEach((a: { id: string; full_name: string | null }) => nameMap.set(a.id, a.full_name || "Athlete"));
+      (bp ?? []).forEach((b) => nameMap.set(b.user_id, b.brand_name || "Brand"));
+      (ap ?? []).forEach((a) => nameMap.set(a.id, a.full_name || "Athlete"));
       setRows(
-        (data ?? []).map((d) => ({
-          id: d.id, title: d.title, status: d.status,
-          compensation_amount: d.compensation_amount, created_at: d.created_at,
+        (data ?? []).map((d: Record<string, unknown>) => ({
+          id: d.id as string,
+          title: d.title as string,
+          status: d.status as string,
+          compensation_amount: d.compensation_amount as number,
+          created_at: d.created_at as string,
           counterparty: nameMap.get(d[otherCol] as string) || "Member",
         }))
       );
