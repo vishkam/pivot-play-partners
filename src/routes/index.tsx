@@ -1,26 +1,50 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Navbar } from "@/components/Navbar";
+import { Hero } from "@/components/Hero";
+import { LogoMarquee } from "@/components/LogoMarquee";
+import { Mission } from "@/components/Mission";
+import { HowItWorks } from "@/components/HowItWorks";
+import { MatchEngine } from "@/components/MatchEngine";
+import { ForBrands } from "@/components/ForBrands";
+import { Pricing } from "@/components/Pricing";
+import { FAQ } from "@/components/FAQ";
+import { CTA } from "@/components/CTA";
+import { Footer } from "@/components/Footer";
 
 export const Route = createFileRoute("/")({
+  head: () => ({
+    meta: [
+      { title: "Allyance — Where women athletes meet the brands that believe in them" },
+      {
+        name: "description",
+        content:
+          "Allyance is the AI-powered marketplace connecting women athletes with values-aligned brands for authentic, fairly priced partnerships.",
+      },
+      { property: "og:title", content: "Allyance — Partnership infrastructure for women's sports" },
+      {
+        property: "og:description",
+        content:
+          "The two-sided marketplace pairing women athletes with values-led brands. Verified profiles, AI matching, transparent contracts.",
+      },
+    ],
+  }),
   component: Index,
 });
 
-// IMPORTANT: Replace this placeholder. For sites with multiple pages (About, Services, Contact, etc.),
-// create separate route files (about.tsx, services.tsx, contact.tsx) — don't put all pages in this file.
-function PlaceholderIndex() {
-  return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
-  );
-}
-
 function Index() {
-  return <PlaceholderIndex />;
+  return (
+    <main className="bg-background">
+      <Navbar />
+      <Hero />
+      <LogoMarquee />
+      <Mission />
+      <HowItWorks />
+      <MatchEngine />
+      <ForBrands />
+      <Pricing />
+      <FAQ />
+      <CTA />
+      <Footer />
+    </main>
+  );
 }
