@@ -10,19 +10,31 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MessagesIdRouteImport } from './routes/messages.$id'
+import { Route as DisputesNewRouteImport } from './routes/disputes.new'
+import { Route as ContractsIdRouteImport } from './routes/contracts.$id'
 import { Route as BrandSavedRouteImport } from './routes/brand.saved'
 import { Route as BrandProposalsRouteImport } from './routes/brand.proposals'
+import { Route as BrandPipelineRouteImport } from './routes/brand.pipeline'
 import { Route as BrandOnboardingRouteImport } from './routes/brand.onboarding'
 import { Route as BrandMatchesRouteImport } from './routes/brand.matches'
 import { Route as BrandDashboardRouteImport } from './routes/brand.dashboard'
+import { Route as BrandContractsRouteImport } from './routes/brand.contracts'
+import { Route as AthletePricingRouteImport } from './routes/athlete.pricing'
 import { Route as AthleteOpportunitiesRouteImport } from './routes/athlete.opportunities'
 import { Route as AthleteOnboardingRouteImport } from './routes/athlete.onboarding'
+import { Route as AthleteEarningsRouteImport } from './routes/athlete.earnings'
 import { Route as AthleteDashboardRouteImport } from './routes/athlete.dashboard'
+import { Route as AthleteContractsRouteImport } from './routes/athlete.contracts'
+import { Route as AdminRevenueRouteImport } from './routes/admin.revenue'
+import { Route as AdminDisputesRouteImport } from './routes/admin.disputes'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminContractsRouteImport } from './routes/admin.contracts'
 import { Route as BrandCampaignsNewRouteImport } from './routes/brand.campaigns.new'
 import { Route as BrandCampaignsIdRouteImport } from './routes/brand.campaigns.$id'
 import { Route as BrandAthletesIdRouteImport } from './routes/brand.athletes.$id'
@@ -30,6 +42,11 @@ import { Route as BrandAthletesIdRouteImport } from './routes/brand.athletes.$id
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MessagesRoute = MessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
@@ -52,6 +69,21 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MessagesIdRoute = MessagesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => MessagesRoute,
+} as any)
+const DisputesNewRoute = DisputesNewRouteImport.update({
+  id: '/disputes/new',
+  path: '/disputes/new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContractsIdRoute = ContractsIdRouteImport.update({
+  id: '/contracts/$id',
+  path: '/contracts/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BrandSavedRoute = BrandSavedRouteImport.update({
   id: '/brand/saved',
   path: '/brand/saved',
@@ -60,6 +92,11 @@ const BrandSavedRoute = BrandSavedRouteImport.update({
 const BrandProposalsRoute = BrandProposalsRouteImport.update({
   id: '/brand/proposals',
   path: '/brand/proposals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrandPipelineRoute = BrandPipelineRouteImport.update({
+  id: '/brand/pipeline',
+  path: '/brand/pipeline',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BrandOnboardingRoute = BrandOnboardingRouteImport.update({
@@ -77,6 +114,16 @@ const BrandDashboardRoute = BrandDashboardRouteImport.update({
   path: '/brand/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BrandContractsRoute = BrandContractsRouteImport.update({
+  id: '/brand/contracts',
+  path: '/brand/contracts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AthletePricingRoute = AthletePricingRouteImport.update({
+  id: '/athlete/pricing',
+  path: '/athlete/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AthleteOpportunitiesRoute = AthleteOpportunitiesRouteImport.update({
   id: '/athlete/opportunities',
   path: '/athlete/opportunities',
@@ -87,14 +134,39 @@ const AthleteOnboardingRoute = AthleteOnboardingRouteImport.update({
   path: '/athlete/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AthleteEarningsRoute = AthleteEarningsRouteImport.update({
+  id: '/athlete/earnings',
+  path: '/athlete/earnings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AthleteDashboardRoute = AthleteDashboardRouteImport.update({
   id: '/athlete/dashboard',
   path: '/athlete/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AthleteContractsRoute = AthleteContractsRouteImport.update({
+  id: '/athlete/contracts',
+  path: '/athlete/contracts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRevenueRoute = AdminRevenueRouteImport.update({
+  id: '/admin/revenue',
+  path: '/admin/revenue',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminDisputesRoute = AdminDisputesRouteImport.update({
+  id: '/admin/disputes',
+  path: '/admin/disputes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminDashboardRoute = AdminDashboardRouteImport.update({
   id: '/admin/dashboard',
   path: '/admin/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminContractsRoute = AdminContractsRouteImport.update({
+  id: '/admin/contracts',
+  path: '/admin/contracts',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BrandCampaignsNewRoute = BrandCampaignsNewRouteImport.update({
@@ -118,16 +190,28 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/messages': typeof MessagesRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
+  '/admin/contracts': typeof AdminContractsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/disputes': typeof AdminDisputesRoute
+  '/admin/revenue': typeof AdminRevenueRoute
+  '/athlete/contracts': typeof AthleteContractsRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
+  '/athlete/earnings': typeof AthleteEarningsRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
+  '/athlete/pricing': typeof AthletePricingRoute
+  '/brand/contracts': typeof BrandContractsRoute
   '/brand/dashboard': typeof BrandDashboardRoute
   '/brand/matches': typeof BrandMatchesRoute
   '/brand/onboarding': typeof BrandOnboardingRoute
+  '/brand/pipeline': typeof BrandPipelineRoute
   '/brand/proposals': typeof BrandProposalsRoute
   '/brand/saved': typeof BrandSavedRoute
+  '/contracts/$id': typeof ContractsIdRoute
+  '/disputes/new': typeof DisputesNewRoute
+  '/messages/$id': typeof MessagesIdRoute
   '/brand/athletes/$id': typeof BrandAthletesIdRoute
   '/brand/campaigns/$id': typeof BrandCampaignsIdRoute
   '/brand/campaigns/new': typeof BrandCampaignsNewRoute
@@ -137,16 +221,28 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/messages': typeof MessagesRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
+  '/admin/contracts': typeof AdminContractsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/disputes': typeof AdminDisputesRoute
+  '/admin/revenue': typeof AdminRevenueRoute
+  '/athlete/contracts': typeof AthleteContractsRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
+  '/athlete/earnings': typeof AthleteEarningsRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
+  '/athlete/pricing': typeof AthletePricingRoute
+  '/brand/contracts': typeof BrandContractsRoute
   '/brand/dashboard': typeof BrandDashboardRoute
   '/brand/matches': typeof BrandMatchesRoute
   '/brand/onboarding': typeof BrandOnboardingRoute
+  '/brand/pipeline': typeof BrandPipelineRoute
   '/brand/proposals': typeof BrandProposalsRoute
   '/brand/saved': typeof BrandSavedRoute
+  '/contracts/$id': typeof ContractsIdRoute
+  '/disputes/new': typeof DisputesNewRoute
+  '/messages/$id': typeof MessagesIdRoute
   '/brand/athletes/$id': typeof BrandAthletesIdRoute
   '/brand/campaigns/$id': typeof BrandCampaignsIdRoute
   '/brand/campaigns/new': typeof BrandCampaignsNewRoute
@@ -157,16 +253,28 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/messages': typeof MessagesRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
+  '/admin/contracts': typeof AdminContractsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/disputes': typeof AdminDisputesRoute
+  '/admin/revenue': typeof AdminRevenueRoute
+  '/athlete/contracts': typeof AthleteContractsRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
+  '/athlete/earnings': typeof AthleteEarningsRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
+  '/athlete/pricing': typeof AthletePricingRoute
+  '/brand/contracts': typeof BrandContractsRoute
   '/brand/dashboard': typeof BrandDashboardRoute
   '/brand/matches': typeof BrandMatchesRoute
   '/brand/onboarding': typeof BrandOnboardingRoute
+  '/brand/pipeline': typeof BrandPipelineRoute
   '/brand/proposals': typeof BrandProposalsRoute
   '/brand/saved': typeof BrandSavedRoute
+  '/contracts/$id': typeof ContractsIdRoute
+  '/disputes/new': typeof DisputesNewRoute
+  '/messages/$id': typeof MessagesIdRoute
   '/brand/athletes/$id': typeof BrandAthletesIdRoute
   '/brand/campaigns/$id': typeof BrandCampaignsIdRoute
   '/brand/campaigns/new': typeof BrandCampaignsNewRoute
@@ -178,16 +286,28 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/forgot-password'
+    | '/messages'
     | '/reset-password'
+    | '/admin/contracts'
     | '/admin/dashboard'
+    | '/admin/disputes'
+    | '/admin/revenue'
+    | '/athlete/contracts'
     | '/athlete/dashboard'
+    | '/athlete/earnings'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
+    | '/athlete/pricing'
+    | '/brand/contracts'
     | '/brand/dashboard'
     | '/brand/matches'
     | '/brand/onboarding'
+    | '/brand/pipeline'
     | '/brand/proposals'
     | '/brand/saved'
+    | '/contracts/$id'
+    | '/disputes/new'
+    | '/messages/$id'
     | '/brand/athletes/$id'
     | '/brand/campaigns/$id'
     | '/brand/campaigns/new'
@@ -197,16 +317,28 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/forgot-password'
+    | '/messages'
     | '/reset-password'
+    | '/admin/contracts'
     | '/admin/dashboard'
+    | '/admin/disputes'
+    | '/admin/revenue'
+    | '/athlete/contracts'
     | '/athlete/dashboard'
+    | '/athlete/earnings'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
+    | '/athlete/pricing'
+    | '/brand/contracts'
     | '/brand/dashboard'
     | '/brand/matches'
     | '/brand/onboarding'
+    | '/brand/pipeline'
     | '/brand/proposals'
     | '/brand/saved'
+    | '/contracts/$id'
+    | '/disputes/new'
+    | '/messages/$id'
     | '/brand/athletes/$id'
     | '/brand/campaigns/$id'
     | '/brand/campaigns/new'
@@ -216,16 +348,28 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/forgot-password'
+    | '/messages'
     | '/reset-password'
+    | '/admin/contracts'
     | '/admin/dashboard'
+    | '/admin/disputes'
+    | '/admin/revenue'
+    | '/athlete/contracts'
     | '/athlete/dashboard'
+    | '/athlete/earnings'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
+    | '/athlete/pricing'
+    | '/brand/contracts'
     | '/brand/dashboard'
     | '/brand/matches'
     | '/brand/onboarding'
+    | '/brand/pipeline'
     | '/brand/proposals'
     | '/brand/saved'
+    | '/contracts/$id'
+    | '/disputes/new'
+    | '/messages/$id'
     | '/brand/athletes/$id'
     | '/brand/campaigns/$id'
     | '/brand/campaigns/new'
@@ -236,16 +380,27 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DashboardRoute: typeof DashboardRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  MessagesRoute: typeof MessagesRouteWithChildren
   ResetPasswordRoute: typeof ResetPasswordRoute
+  AdminContractsRoute: typeof AdminContractsRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminDisputesRoute: typeof AdminDisputesRoute
+  AdminRevenueRoute: typeof AdminRevenueRoute
+  AthleteContractsRoute: typeof AthleteContractsRoute
   AthleteDashboardRoute: typeof AthleteDashboardRoute
+  AthleteEarningsRoute: typeof AthleteEarningsRoute
   AthleteOnboardingRoute: typeof AthleteOnboardingRoute
   AthleteOpportunitiesRoute: typeof AthleteOpportunitiesRoute
+  AthletePricingRoute: typeof AthletePricingRoute
+  BrandContractsRoute: typeof BrandContractsRoute
   BrandDashboardRoute: typeof BrandDashboardRoute
   BrandMatchesRoute: typeof BrandMatchesRoute
   BrandOnboardingRoute: typeof BrandOnboardingRoute
+  BrandPipelineRoute: typeof BrandPipelineRoute
   BrandProposalsRoute: typeof BrandProposalsRoute
   BrandSavedRoute: typeof BrandSavedRoute
+  ContractsIdRoute: typeof ContractsIdRoute
+  DisputesNewRoute: typeof DisputesNewRoute
   BrandAthletesIdRoute: typeof BrandAthletesIdRoute
   BrandCampaignsIdRoute: typeof BrandCampaignsIdRoute
   BrandCampaignsNewRoute: typeof BrandCampaignsNewRoute
@@ -258,6 +413,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/messages': {
+      id: '/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof MessagesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password': {
@@ -288,6 +450,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/messages/$id': {
+      id: '/messages/$id'
+      path: '/$id'
+      fullPath: '/messages/$id'
+      preLoaderRoute: typeof MessagesIdRouteImport
+      parentRoute: typeof MessagesRoute
+    }
+    '/disputes/new': {
+      id: '/disputes/new'
+      path: '/disputes/new'
+      fullPath: '/disputes/new'
+      preLoaderRoute: typeof DisputesNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contracts/$id': {
+      id: '/contracts/$id'
+      path: '/contracts/$id'
+      fullPath: '/contracts/$id'
+      preLoaderRoute: typeof ContractsIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/brand/saved': {
       id: '/brand/saved'
       path: '/brand/saved'
@@ -300,6 +483,13 @@ declare module '@tanstack/react-router' {
       path: '/brand/proposals'
       fullPath: '/brand/proposals'
       preLoaderRoute: typeof BrandProposalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brand/pipeline': {
+      id: '/brand/pipeline'
+      path: '/brand/pipeline'
+      fullPath: '/brand/pipeline'
+      preLoaderRoute: typeof BrandPipelineRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/brand/onboarding': {
@@ -323,6 +513,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrandDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/brand/contracts': {
+      id: '/brand/contracts'
+      path: '/brand/contracts'
+      fullPath: '/brand/contracts'
+      preLoaderRoute: typeof BrandContractsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/athlete/pricing': {
+      id: '/athlete/pricing'
+      path: '/athlete/pricing'
+      fullPath: '/athlete/pricing'
+      preLoaderRoute: typeof AthletePricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/athlete/opportunities': {
       id: '/athlete/opportunities'
       path: '/athlete/opportunities'
@@ -337,6 +541,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AthleteOnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/athlete/earnings': {
+      id: '/athlete/earnings'
+      path: '/athlete/earnings'
+      fullPath: '/athlete/earnings'
+      preLoaderRoute: typeof AthleteEarningsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/athlete/dashboard': {
       id: '/athlete/dashboard'
       path: '/athlete/dashboard'
@@ -344,11 +555,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AthleteDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/athlete/contracts': {
+      id: '/athlete/contracts'
+      path: '/athlete/contracts'
+      fullPath: '/athlete/contracts'
+      preLoaderRoute: typeof AthleteContractsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/revenue': {
+      id: '/admin/revenue'
+      path: '/admin/revenue'
+      fullPath: '/admin/revenue'
+      preLoaderRoute: typeof AdminRevenueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/disputes': {
+      id: '/admin/disputes'
+      path: '/admin/disputes'
+      fullPath: '/admin/disputes'
+      preLoaderRoute: typeof AdminDisputesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/dashboard': {
       id: '/admin/dashboard'
       path: '/admin/dashboard'
       fullPath: '/admin/dashboard'
       preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/contracts': {
+      id: '/admin/contracts'
+      path: '/admin/contracts'
+      fullPath: '/admin/contracts'
+      preLoaderRoute: typeof AdminContractsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/brand/campaigns/new': {
@@ -375,21 +614,44 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface MessagesRouteChildren {
+  MessagesIdRoute: typeof MessagesIdRoute
+}
+
+const MessagesRouteChildren: MessagesRouteChildren = {
+  MessagesIdRoute: MessagesIdRoute,
+}
+
+const MessagesRouteWithChildren = MessagesRoute._addFileChildren(
+  MessagesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   DashboardRoute: DashboardRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  MessagesRoute: MessagesRouteWithChildren,
   ResetPasswordRoute: ResetPasswordRoute,
+  AdminContractsRoute: AdminContractsRoute,
   AdminDashboardRoute: AdminDashboardRoute,
+  AdminDisputesRoute: AdminDisputesRoute,
+  AdminRevenueRoute: AdminRevenueRoute,
+  AthleteContractsRoute: AthleteContractsRoute,
   AthleteDashboardRoute: AthleteDashboardRoute,
+  AthleteEarningsRoute: AthleteEarningsRoute,
   AthleteOnboardingRoute: AthleteOnboardingRoute,
   AthleteOpportunitiesRoute: AthleteOpportunitiesRoute,
+  AthletePricingRoute: AthletePricingRoute,
+  BrandContractsRoute: BrandContractsRoute,
   BrandDashboardRoute: BrandDashboardRoute,
   BrandMatchesRoute: BrandMatchesRoute,
   BrandOnboardingRoute: BrandOnboardingRoute,
+  BrandPipelineRoute: BrandPipelineRoute,
   BrandProposalsRoute: BrandProposalsRoute,
   BrandSavedRoute: BrandSavedRoute,
+  ContractsIdRoute: ContractsIdRoute,
+  DisputesNewRoute: DisputesNewRoute,
   BrandAthletesIdRoute: BrandAthletesIdRoute,
   BrandCampaignsIdRoute: BrandCampaignsIdRoute,
   BrandCampaignsNewRoute: BrandCampaignsNewRoute,

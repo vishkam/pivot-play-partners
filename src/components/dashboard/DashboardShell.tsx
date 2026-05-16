@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { AppSidebar, MobileTopbar } from "./AppSidebar";
+import { NotificationBell } from "@/components/NotificationBell";
 
 interface DashboardShellProps {
   title: string;
@@ -20,7 +21,10 @@ export function DashboardShell({ title, subtitle, actions, children }: Dashboard
               <h1 className="font-display text-3xl text-foreground sm:text-4xl">{title}</h1>
               {subtitle && <p className="mt-1 text-sm text-muted-foreground">{subtitle}</p>}
             </div>
-            {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
+            <div className="flex flex-wrap items-center gap-2">
+              {actions}
+              <NotificationBell />
+            </div>
           </div>
         </header>
         <main className="flex-1 px-6 py-8 lg:px-10">{children}</main>
@@ -28,3 +32,4 @@ export function DashboardShell({ title, subtitle, actions, children }: Dashboard
     </div>
   );
 }
+

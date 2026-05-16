@@ -14,6 +14,10 @@ import {
   AlertTriangle,
   LineChart,
   LogOut,
+  MessageSquare,
+  Tag,
+  KanbanSquare,
+  Star,
 } from "lucide-react";
 import { useAuth, type AppRole } from "@/hooks/use-auth";
 
@@ -26,29 +30,31 @@ interface NavItem {
 const ATHLETE_NAV: NavItem[] = [
   { label: "Overview", to: "/athlete/dashboard", icon: LayoutDashboard },
   { label: "Opportunities", to: "/athlete/opportunities", icon: Inbox },
+  { label: "Messages", to: "/messages", icon: MessageSquare },
+  { label: "Contracts", to: "/athlete/contracts", icon: FileText },
+  { label: "Earnings", to: "/athlete/earnings", icon: Wallet },
+  { label: "Rate card", to: "/athlete/pricing", icon: Tag },
   { label: "Edit profile", to: "/athlete/onboarding", icon: Sparkles },
-  { label: "Contracts", to: "/athlete/dashboard", icon: FileText },
-  { label: "Earnings", to: "/athlete/dashboard", icon: Wallet },
-  { label: "Analytics", to: "/athlete/dashboard", icon: BarChart3 },
-  { label: "Settings", to: "/athlete/dashboard", icon: Settings },
 ];
 
 const BRAND_NAV: NavItem[] = [
   { label: "Overview", to: "/brand/dashboard", icon: LayoutDashboard },
   { label: "New campaign", to: "/brand/campaigns/new", icon: Megaphone },
-  { label: "Discover athletes", to: "/brand/matches", icon: Users },
+  { label: "Discover", to: "/brand/matches", icon: Users },
   { label: "Shortlist", to: "/brand/saved", icon: Bookmark },
-  { label: "Proposals", to: "/brand/proposals", icon: Inbox },
-  { label: "Analytics", to: "/brand/dashboard", icon: BarChart3 },
+  { label: "Pipeline", to: "/brand/pipeline", icon: KanbanSquare },
+  { label: "Messages", to: "/messages", icon: MessageSquare },
+  { label: "Contracts", to: "/brand/contracts", icon: FileText },
   { label: "Settings", to: "/brand/dashboard", icon: Settings },
 ];
 
 const ADMIN_NAV: NavItem[] = [
   { label: "Overview", to: "/admin/dashboard", icon: LayoutDashboard },
   { label: "Verification", to: "/admin/dashboard", icon: ShieldCheck },
-  { label: "Users", to: "/admin/dashboard", icon: Users },
-  { label: "Fraud monitor", to: "/admin/dashboard", icon: AlertTriangle },
-  { label: "Revenue", to: "/admin/dashboard", icon: LineChart },
+  { label: "Contracts", to: "/admin/contracts", icon: FileText },
+  { label: "Revenue", to: "/admin/revenue", icon: LineChart },
+  { label: "Disputes", to: "/admin/disputes", icon: AlertTriangle },
+  { label: "Reviews", to: "/admin/dashboard", icon: Star },
   { label: "Settings", to: "/admin/dashboard", icon: Settings },
 ];
 
