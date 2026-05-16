@@ -5,9 +5,7 @@ export function Navbar() {
     <header className="absolute top-0 left-0 right-0 z-50">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10">
         <Link to="/" className="flex items-center gap-2 text-cream">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-gold text-plum-deep font-display text-lg font-semibold">
-            A
-          </span>
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-gold text-plum-deep font-display text-lg font-semibold">A</span>
           <span className="font-display text-xl tracking-tight">Allyance</span>
         </Link>
         <nav className="hidden items-center gap-10 text-sm text-cream/80 md:flex">
@@ -18,18 +16,20 @@ export function Navbar() {
           <a href="#pricing" className="hover:text-gold transition-colors">Pricing</a>
         </nav>
         <div className="flex items-center gap-3">
-          <a
-            href="#cta"
+          <Link
+            to="/auth"
+            search={{ mode: "signin", redirect: "/dashboard" } as never}
             className="hidden rounded-full border border-cream/20 px-5 py-2 text-sm text-cream/90 transition-colors hover:border-gold hover:text-gold sm:inline-block"
           >
             Sign in
-          </a>
-          <a
-            href="#cta"
+          </Link>
+          <Link
+            to="/auth"
+            search={{ mode: "signup", role: "athlete", redirect: "/dashboard" } as never}
             className="rounded-full bg-gradient-gold px-5 py-2 text-sm font-medium text-plum-deep shadow-gold transition-transform hover:scale-[1.03]"
           >
             Get early access
-          </a>
+          </Link>
         </div>
       </div>
     </header>

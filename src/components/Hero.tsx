@@ -1,4 +1,5 @@
 import heroImg from "@/assets/hero-athlete.jpg";
+import { Link } from "@tanstack/react-router";
 
 export function Hero() {
   return (
@@ -23,18 +24,20 @@ export function Hero() {
           </p>
 
           <div className="mt-10 flex flex-wrap items-center gap-4">
-            <a
-              href="#cta"
+            <Link
+              to="/auth"
+              search={{ mode: "signup", role: "athlete", redirect: "/dashboard" } as never}
               className="rounded-full bg-gradient-gold px-7 py-3.5 font-medium text-plum-deep shadow-gold transition-transform hover:scale-[1.03]"
             >
               Join as an athlete
-            </a>
-            <a
-              href="#cta"
+            </Link>
+            <Link
+              to="/auth"
+              search={{ mode: "signup", role: "brand", redirect: "/dashboard" } as never}
               className="rounded-full border border-cream/30 px-7 py-3.5 font-medium text-cream transition-colors hover:border-gold hover:text-gold"
             >
               Partner as a brand →
-            </a>
+            </Link>
           </div>
 
           <dl className="mt-14 grid max-w-lg grid-cols-3 gap-6 border-t border-cream/15 pt-8">
