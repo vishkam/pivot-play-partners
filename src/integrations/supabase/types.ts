@@ -46,6 +46,7 @@ export type Database = {
           achievements: string | null
           audience_demographics: Json | null
           availability: string | null
+          brand_categories: Json
           causes: string[] | null
           certifications: string | null
           competition_history: string | null
@@ -57,12 +58,14 @@ export type Database = {
           material_preferences: string[]
           media: Json | null
           partnership_types: string[] | null
+          personality: string | null
           pricing_max: number | null
           pricing_min: number | null
           professional_level: string | null
           profile_completeness: number
           profile_image: string | null
           rankings: string | null
+          sizing: Json
           social_links: Json | null
           sponsorship_categories: string[] | null
           sport: string | null
@@ -77,6 +80,7 @@ export type Database = {
           achievements?: string | null
           audience_demographics?: Json | null
           availability?: string | null
+          brand_categories?: Json
           causes?: string[] | null
           certifications?: string | null
           competition_history?: string | null
@@ -88,12 +92,14 @@ export type Database = {
           material_preferences?: string[]
           media?: Json | null
           partnership_types?: string[] | null
+          personality?: string | null
           pricing_max?: number | null
           pricing_min?: number | null
           professional_level?: string | null
           profile_completeness?: number
           profile_image?: string | null
           rankings?: string | null
+          sizing?: Json
           social_links?: Json | null
           sponsorship_categories?: string[] | null
           sport?: string | null
@@ -108,6 +114,7 @@ export type Database = {
           achievements?: string | null
           audience_demographics?: Json | null
           availability?: string | null
+          brand_categories?: Json
           causes?: string[] | null
           certifications?: string | null
           competition_history?: string | null
@@ -119,12 +126,14 @@ export type Database = {
           material_preferences?: string[]
           media?: Json | null
           partnership_types?: string[] | null
+          personality?: string | null
           pricing_max?: number | null
           pricing_min?: number | null
           professional_level?: string | null
           profile_completeness?: number
           profile_image?: string | null
           rankings?: string | null
+          sizing?: Json
           social_links?: Json | null
           sponsorship_categories?: string[] | null
           sport?: string | null
@@ -260,11 +269,14 @@ export type Database = {
           compensation_amount: number
           created_at: string
           deliverables: string | null
+          ethical_notes: string | null
           exclusivity: string | null
           id: string
+          legal_notes: string | null
           payment_schedule: string | null
           plain_summary: string | null
           platform_fee_pct: number
+          post_deal_strategies: string | null
           proposal_id: string | null
           signed_by_athlete_at: string | null
           signed_by_brand_at: string | null
@@ -282,11 +294,14 @@ export type Database = {
           compensation_amount?: number
           created_at?: string
           deliverables?: string | null
+          ethical_notes?: string | null
           exclusivity?: string | null
           id?: string
+          legal_notes?: string | null
           payment_schedule?: string | null
           plain_summary?: string | null
           platform_fee_pct?: number
+          post_deal_strategies?: string | null
           proposal_id?: string | null
           signed_by_athlete_at?: string | null
           signed_by_brand_at?: string | null
@@ -304,11 +319,14 @@ export type Database = {
           compensation_amount?: number
           created_at?: string
           deliverables?: string | null
+          ethical_notes?: string | null
           exclusivity?: string | null
           id?: string
+          legal_notes?: string | null
           payment_schedule?: string | null
           plain_summary?: string | null
           platform_fee_pct?: number
+          post_deal_strategies?: string | null
           proposal_id?: string | null
           signed_by_athlete_at?: string | null
           signed_by_brand_at?: string | null

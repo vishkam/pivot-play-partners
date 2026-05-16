@@ -29,6 +29,7 @@ import { Route as AthletePricingRouteImport } from './routes/athlete.pricing'
 import { Route as AthleteOpportunitiesRouteImport } from './routes/athlete.opportunities'
 import { Route as AthleteOnboardingRouteImport } from './routes/athlete.onboarding'
 import { Route as AthleteEarningsRouteImport } from './routes/athlete.earnings'
+import { Route as AthleteDealsRouteImport } from './routes/athlete.deals'
 import { Route as AthleteDashboardRouteImport } from './routes/athlete.dashboard'
 import { Route as AthleteContractsRouteImport } from './routes/athlete.contracts'
 import { Route as AdminRevenueRouteImport } from './routes/admin.revenue'
@@ -139,6 +140,11 @@ const AthleteEarningsRoute = AthleteEarningsRouteImport.update({
   path: '/athlete/earnings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AthleteDealsRoute = AthleteDealsRouteImport.update({
+  id: '/athlete/deals',
+  path: '/athlete/deals',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AthleteDashboardRoute = AthleteDashboardRouteImport.update({
   id: '/athlete/dashboard',
   path: '/athlete/dashboard',
@@ -198,6 +204,7 @@ export interface FileRoutesByFullPath {
   '/admin/revenue': typeof AdminRevenueRoute
   '/athlete/contracts': typeof AthleteContractsRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
+  '/athlete/deals': typeof AthleteDealsRoute
   '/athlete/earnings': typeof AthleteEarningsRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
@@ -229,6 +236,7 @@ export interface FileRoutesByTo {
   '/admin/revenue': typeof AdminRevenueRoute
   '/athlete/contracts': typeof AthleteContractsRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
+  '/athlete/deals': typeof AthleteDealsRoute
   '/athlete/earnings': typeof AthleteEarningsRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
@@ -261,6 +269,7 @@ export interface FileRoutesById {
   '/admin/revenue': typeof AdminRevenueRoute
   '/athlete/contracts': typeof AthleteContractsRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
+  '/athlete/deals': typeof AthleteDealsRoute
   '/athlete/earnings': typeof AthleteEarningsRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
@@ -294,6 +303,7 @@ export interface FileRouteTypes {
     | '/admin/revenue'
     | '/athlete/contracts'
     | '/athlete/dashboard'
+    | '/athlete/deals'
     | '/athlete/earnings'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
@@ -325,6 +335,7 @@ export interface FileRouteTypes {
     | '/admin/revenue'
     | '/athlete/contracts'
     | '/athlete/dashboard'
+    | '/athlete/deals'
     | '/athlete/earnings'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
@@ -356,6 +367,7 @@ export interface FileRouteTypes {
     | '/admin/revenue'
     | '/athlete/contracts'
     | '/athlete/dashboard'
+    | '/athlete/deals'
     | '/athlete/earnings'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
@@ -388,6 +400,7 @@ export interface RootRouteChildren {
   AdminRevenueRoute: typeof AdminRevenueRoute
   AthleteContractsRoute: typeof AthleteContractsRoute
   AthleteDashboardRoute: typeof AthleteDashboardRoute
+  AthleteDealsRoute: typeof AthleteDealsRoute
   AthleteEarningsRoute: typeof AthleteEarningsRoute
   AthleteOnboardingRoute: typeof AthleteOnboardingRoute
   AthleteOpportunitiesRoute: typeof AthleteOpportunitiesRoute
@@ -548,6 +561,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AthleteEarningsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/athlete/deals': {
+      id: '/athlete/deals'
+      path: '/athlete/deals'
+      fullPath: '/athlete/deals'
+      preLoaderRoute: typeof AthleteDealsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/athlete/dashboard': {
       id: '/athlete/dashboard'
       path: '/athlete/dashboard'
@@ -639,6 +659,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminRevenueRoute: AdminRevenueRoute,
   AthleteContractsRoute: AthleteContractsRoute,
   AthleteDashboardRoute: AthleteDashboardRoute,
+  AthleteDealsRoute: AthleteDealsRoute,
   AthleteEarningsRoute: AthleteEarningsRoute,
   AthleteOnboardingRoute: AthleteOnboardingRoute,
   AthleteOpportunitiesRoute: AthleteOpportunitiesRoute,

@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
 import { notify } from "@/components/NotificationBell";
 import { calcPayout, DEFAULT_USAGE_RIGHTS, DEFAULT_EXCLUSIVITY, DEFAULT_CANCELLATION, DEFAULT_PAYMENT_SCHEDULE } from "@/lib/contract-template";
+import { generatePostDealStrategies } from "@/lib/post-deal-strategies";
 import { StatusChip } from "./athlete.contracts";
 
 export const Route = createFileRoute("/contracts/$id")({
@@ -25,6 +26,8 @@ interface Contract {
   cancellation_terms: string | null; payment_schedule: string | null;
   plain_summary: string | null; status: string;
   signed_by_brand_at: string | null; signed_by_athlete_at: string | null;
+  legal_notes: string | null; ethical_notes: string | null;
+  post_deal_strategies: string | null;
 }
 
 function ContractDetail() {
@@ -73,11 +76,27 @@ function ContractDetail() {
   async function markComplete() {
     if (!c || !user) return;
     setBusy(true);
-    await supabase.from("contracts").update({ status: "completed" }).eq("id", c.id);
+    // Generate post-deal strategies if not already present
+    let strategiesUpdate: { post_deal_strategies?: string } = {};
+    if (!c.post_deal_strategies) {
+      const { data: ap } = await supabase
+        .from("athlete_profiles").select("sport, values").eq("user_id", c.athlete_id).maybeSingle();
+      const { data: bp } = await supabase
+        .from("brand_profiles").select("brand_name").eq("user_id", c.brand_id).maybeSingle();
+      strategiesUpdate = {
+        post_deal_strategies: generatePostDealStrategies({
+          partnershipType: c.exclusivity,
+          athleteSport: ap?.sport ?? null,
+          brandName: bp?.brand_name ?? null,
+          values: (ap?.values as string[] | null) ?? [],
+        }),
+      };
+    }
+    await supabase.from("contracts").update({ status: "completed", ...strategiesUpdate }).eq("id", c.id);
     await supabase.from("payments").update({ status: "released" }).eq("contract_id", c.id).eq("status", "escrow");
     await supabase.from("payments").update({ status: "released" }).eq("contract_id", c.id).eq("status", "pending");
     setBusy(false);
-    toast.success("Marked complete — funds released.");
+    toast.success("Marked complete — funds released & next-step strategies generated.");
     load();
     setReviewOpen(true);
   }
@@ -131,6 +150,18 @@ function ContractDetail() {
               <Term label="Cancellation" value={c.cancellation_terms || DEFAULT_CANCELLATION} />
             </div>
           </Card>
+
+          <LegalEthicalCard contract={c} onSaved={load} canEdit={(role === "athlete" && user?.id === c.athlete_id) || (role === "brand" && user?.id === c.brand_id)} />
+
+          {c.status === "completed" && c.post_deal_strategies && (
+            <Card>
+              <h3 className="font-display text-xl">What's next — aligned strategies</h3>
+              <p className="mt-1 text-xs text-muted-foreground">
+                Auto-generated playbook to convert this win into the next one.
+              </p>
+              <pre className="mt-4 whitespace-pre-wrap rounded-xl bg-secondary p-4 text-sm leading-relaxed text-foreground/85 font-sans">{c.post_deal_strategies}</pre>
+            </Card>
+          )}
 
           <Card>
             <h3 className="font-display text-xl">Signatures</h3>
@@ -276,6 +307,76 @@ function ReviewModal({ contractId, athleteId, brandId, onClose }: { contractId: 
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function LegalEthicalCard({ contract, onSaved, canEdit }: { contract: Contract; onSaved: () => void; canEdit: boolean }) {
+  const [legal, setLegal] = useState(contract.legal_notes ?? "");
+  const [ethical, setEthical] = useState(contract.ethical_notes ?? "");
+  const [busy, setBusy] = useState(false);
+  const [editing, setEditing] = useState(false);
+
+  async function save() {
+    setBusy(true);
+    const { error } = await supabase
+      .from("contracts")
+      .update({ legal_notes: legal.slice(0, 4000), ethical_notes: ethical.slice(0, 4000) })
+      .eq("id", contract.id);
+    setBusy(false);
+    if (error) { toast.error(error.message); return; }
+    toast.success("Notes saved");
+    setEditing(false);
+    onSaved();
+  }
+
+  return (
+    <div className="rounded-2xl border border-border bg-cream p-6 shadow-sm">
+      <div className="flex items-center justify-between">
+        <h3 className="font-display text-xl">Legal & ethical notes</h3>
+        {canEdit && !editing && (
+          <button onClick={() => setEditing(true)} className="text-xs text-plum hover:underline">Edit</button>
+        )}
+      </div>
+      <p className="mt-1 text-xs text-muted-foreground">
+        Compliance commitments, IP, FTC disclosures, ethics guardrails — kept on-record for both parties.
+      </p>
+
+      {editing ? (
+        <div className="mt-4 space-y-4">
+          <label className="block">
+            <span className="mb-1.5 block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Legal notes</span>
+            <textarea value={legal} onChange={(e) => setLegal(e.target.value.slice(0, 4000))} rows={4} maxLength={4000}
+              placeholder="Jurisdiction, IP ownership, FTC #ad disclosure required, indemnity, governing law…"
+              className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm focus:border-plum focus:outline-none" />
+          </label>
+          <label className="block">
+            <span className="mb-1.5 block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Ethical notes</span>
+            <textarea value={ethical} onChange={(e) => setEthical(e.target.value.slice(0, 4000))} rows={4} maxLength={4000}
+              placeholder="No greenwashing claims, no body-image retouching, no anti-LGBTQ partnerships, child-safety clauses…"
+              className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm focus:border-plum focus:outline-none" />
+          </label>
+          <div className="flex justify-end gap-2">
+            <button onClick={() => { setLegal(contract.legal_notes ?? ""); setEthical(contract.ethical_notes ?? ""); setEditing(false); }}
+              className="rounded-full border border-border px-4 py-1.5 text-xs">Cancel</button>
+            <button onClick={save} disabled={busy}
+              className="rounded-full bg-plum-deep px-4 py-1.5 text-xs font-medium text-cream disabled:opacity-50">
+              {busy ? "Saving…" : "Save notes"}
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="mt-4 grid gap-4 text-sm">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Legal</p>
+            <p className="mt-1 whitespace-pre-wrap text-foreground/85">{contract.legal_notes || "No legal notes recorded yet."}</p>
+          </div>
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Ethical</p>
+            <p className="mt-1 whitespace-pre-wrap text-foreground/85">{contract.ethical_notes || "No ethical notes recorded yet."}</p>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
