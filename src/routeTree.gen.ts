@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -30,6 +31,11 @@ import { Route as BrandAthletesIdRouteImport } from './routes/brand.athletes.$id
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MessagesRoute = MessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/messages': typeof MessagesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
@@ -137,6 +144,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/messages': typeof MessagesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
@@ -157,6 +165,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
+  '/messages': typeof MessagesRoute
   '/reset-password': typeof ResetPasswordRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
@@ -178,6 +187,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/forgot-password'
+    | '/messages'
     | '/reset-password'
     | '/admin/dashboard'
     | '/athlete/dashboard'
@@ -197,6 +207,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/forgot-password'
+    | '/messages'
     | '/reset-password'
     | '/admin/dashboard'
     | '/athlete/dashboard'
@@ -216,6 +227,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/dashboard'
     | '/forgot-password'
+    | '/messages'
     | '/reset-password'
     | '/admin/dashboard'
     | '/athlete/dashboard'
@@ -236,6 +248,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DashboardRoute: typeof DashboardRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
+  MessagesRoute: typeof MessagesRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AthleteDashboardRoute: typeof AthleteDashboardRoute
@@ -258,6 +271,13 @@ declare module '@tanstack/react-router' {
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/messages': {
+      id: '/messages'
+      path: '/messages'
+      fullPath: '/messages'
+      preLoaderRoute: typeof MessagesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/forgot-password': {
@@ -380,6 +400,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   DashboardRoute: DashboardRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
+  MessagesRoute: MessagesRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AthleteDashboardRoute: AthleteDashboardRoute,
@@ -397,3 +418,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
