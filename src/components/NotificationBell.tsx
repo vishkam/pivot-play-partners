@@ -73,10 +73,10 @@ export function NotificationBell() {
             {items.map((n) => (
               <li key={n.id} className="px-4 py-3 text-sm hover:bg-secondary">
                 {n.link ? (
-                  <Link to={n.link} onClick={() => setOpen(false)} className="block">
+                  <a href={n.link} onClick={() => setOpen(false)} className="block">
                     <p className="font-medium text-foreground">{n.title}</p>
                     {n.body && <p className="mt-0.5 text-xs text-muted-foreground">{n.body}</p>}
-                  </Link>
+                  </a>
                 ) : (
                   <>
                     <p className="font-medium text-foreground">{n.title}</p>
