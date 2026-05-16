@@ -14,6 +14,11 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BrandOnboardingRouteImport } from './routes/brand.onboarding'
+import { Route as BrandDashboardRouteImport } from './routes/brand.dashboard'
+import { Route as AthleteOnboardingRouteImport } from './routes/athlete.onboarding'
+import { Route as AthleteDashboardRouteImport } from './routes/athlete.dashboard'
+import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
@@ -40,6 +45,31 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BrandOnboardingRoute = BrandOnboardingRouteImport.update({
+  id: '/brand/onboarding',
+  path: '/brand/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BrandDashboardRoute = BrandDashboardRouteImport.update({
+  id: '/brand/dashboard',
+  path: '/brand/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AthleteOnboardingRoute = AthleteOnboardingRouteImport.update({
+  id: '/athlete/onboarding',
+  path: '/athlete/onboarding',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AthleteDashboardRoute = AthleteDashboardRouteImport.update({
+  id: '/athlete/dashboard',
+  path: '/athlete/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminDashboardRoute = AdminDashboardRouteImport.update({
+  id: '/admin/dashboard',
+  path: '/admin/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -47,6 +77,11 @@ export interface FileRoutesByFullPath {
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/athlete/dashboard': typeof AthleteDashboardRoute
+  '/athlete/onboarding': typeof AthleteOnboardingRoute
+  '/brand/dashboard': typeof BrandDashboardRoute
+  '/brand/onboarding': typeof BrandOnboardingRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -54,6 +89,11 @@ export interface FileRoutesByTo {
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/athlete/dashboard': typeof AthleteDashboardRoute
+  '/athlete/onboarding': typeof AthleteOnboardingRoute
+  '/brand/dashboard': typeof BrandDashboardRoute
+  '/brand/onboarding': typeof BrandOnboardingRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -62,6 +102,11 @@ export interface FileRoutesById {
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/admin/dashboard': typeof AdminDashboardRoute
+  '/athlete/dashboard': typeof AthleteDashboardRoute
+  '/athlete/onboarding': typeof AthleteOnboardingRoute
+  '/brand/dashboard': typeof BrandDashboardRoute
+  '/brand/onboarding': typeof BrandOnboardingRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -71,8 +116,23 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/forgot-password'
     | '/reset-password'
+    | '/admin/dashboard'
+    | '/athlete/dashboard'
+    | '/athlete/onboarding'
+    | '/brand/dashboard'
+    | '/brand/onboarding'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/dashboard' | '/forgot-password' | '/reset-password'
+  to:
+    | '/'
+    | '/auth'
+    | '/dashboard'
+    | '/forgot-password'
+    | '/reset-password'
+    | '/admin/dashboard'
+    | '/athlete/dashboard'
+    | '/athlete/onboarding'
+    | '/brand/dashboard'
+    | '/brand/onboarding'
   id:
     | '__root__'
     | '/'
@@ -80,6 +140,11 @@ export interface FileRouteTypes {
     | '/dashboard'
     | '/forgot-password'
     | '/reset-password'
+    | '/admin/dashboard'
+    | '/athlete/dashboard'
+    | '/athlete/onboarding'
+    | '/brand/dashboard'
+    | '/brand/onboarding'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -88,6 +153,11 @@ export interface RootRouteChildren {
   DashboardRoute: typeof DashboardRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  AdminDashboardRoute: typeof AdminDashboardRoute
+  AthleteDashboardRoute: typeof AthleteDashboardRoute
+  AthleteOnboardingRoute: typeof AthleteOnboardingRoute
+  BrandDashboardRoute: typeof BrandDashboardRoute
+  BrandOnboardingRoute: typeof BrandOnboardingRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -127,6 +197,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/brand/onboarding': {
+      id: '/brand/onboarding'
+      path: '/brand/onboarding'
+      fullPath: '/brand/onboarding'
+      preLoaderRoute: typeof BrandOnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/brand/dashboard': {
+      id: '/brand/dashboard'
+      path: '/brand/dashboard'
+      fullPath: '/brand/dashboard'
+      preLoaderRoute: typeof BrandDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/athlete/onboarding': {
+      id: '/athlete/onboarding'
+      path: '/athlete/onboarding'
+      fullPath: '/athlete/onboarding'
+      preLoaderRoute: typeof AthleteOnboardingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/athlete/dashboard': {
+      id: '/athlete/dashboard'
+      path: '/athlete/dashboard'
+      fullPath: '/athlete/dashboard'
+      preLoaderRoute: typeof AthleteDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/dashboard': {
+      id: '/admin/dashboard'
+      path: '/admin/dashboard'
+      fullPath: '/admin/dashboard'
+      preLoaderRoute: typeof AdminDashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -136,6 +241,11 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardRoute: DashboardRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  AdminDashboardRoute: AdminDashboardRoute,
+  AthleteDashboardRoute: AthleteDashboardRoute,
+  AthleteOnboardingRoute: AthleteOnboardingRoute,
+  BrandDashboardRoute: BrandDashboardRoute,
+  BrandOnboardingRoute: BrandOnboardingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

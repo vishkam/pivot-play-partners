@@ -35,7 +35,6 @@ function AthleteDashboard() {
   }, [user]);
 
   return (
-    <RequireAuth roles={["athlete"]} requireOnboarding>
       <DashboardShell
         title={`Welcome, ${profile?.full_name?.split(" ")[0] || "Athlete"}.`}
         subtitle="Your Allyance workspace — partnerships, inbox and earnings."
