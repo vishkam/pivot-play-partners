@@ -25,8 +25,8 @@ interface NavItem {
 
 const ATHLETE_NAV: NavItem[] = [
   { label: "Overview", to: "/athlete/dashboard", icon: LayoutDashboard },
-  { label: "Brand matches", to: "/athlete/dashboard", icon: Sparkles },
-  { label: "Inbox", to: "/athlete/dashboard", icon: Inbox },
+  { label: "Opportunities", to: "/athlete/opportunities", icon: Inbox },
+  { label: "Edit profile", to: "/athlete/onboarding", icon: Sparkles },
   { label: "Contracts", to: "/athlete/dashboard", icon: FileText },
   { label: "Earnings", to: "/athlete/dashboard", icon: Wallet },
   { label: "Analytics", to: "/athlete/dashboard", icon: BarChart3 },
@@ -35,10 +35,10 @@ const ATHLETE_NAV: NavItem[] = [
 
 const BRAND_NAV: NavItem[] = [
   { label: "Overview", to: "/brand/dashboard", icon: LayoutDashboard },
-  { label: "Campaigns", to: "/brand/dashboard", icon: Megaphone },
-  { label: "Athlete matches", to: "/brand/dashboard", icon: Users },
-  { label: "Saved athletes", to: "/brand/dashboard", icon: Bookmark },
-  { label: "Proposals", to: "/brand/dashboard", icon: Inbox },
+  { label: "New campaign", to: "/brand/campaigns/new", icon: Megaphone },
+  { label: "Discover athletes", to: "/brand/matches", icon: Users },
+  { label: "Shortlist", to: "/brand/saved", icon: Bookmark },
+  { label: "Proposals", to: "/brand/proposals", icon: Inbox },
   { label: "Analytics", to: "/brand/dashboard", icon: BarChart3 },
   { label: "Settings", to: "/brand/dashboard", icon: Settings },
 ];
