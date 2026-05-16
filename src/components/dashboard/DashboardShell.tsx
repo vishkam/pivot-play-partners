@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { AppSidebar, MobileTopbar } from "./AppSidebar";
+import { AppSidebar, MobileTopbar, MobileBottomNav } from "./AppSidebar";
 import { NotificationBell } from "@/components/NotificationBell";
 
 interface DashboardShellProps {
@@ -27,7 +27,8 @@ export function DashboardShell({ title, subtitle, actions, children }: Dashboard
             </div>
           </div>
         </header>
-        <main className="flex-1 px-6 py-8 lg:px-10">{children}</main>
+        <main className="flex-1 px-6 py-8 pb-24 lg:px-10 lg:pb-8">{children}</main>
+        <MobileBottomNav />
       </div>
     </div>
   );
