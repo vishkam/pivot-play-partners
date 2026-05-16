@@ -20,6 +20,7 @@ import { Route as DisputesNewRouteImport } from './routes/disputes.new'
 import { Route as ContractsIdRouteImport } from './routes/contracts.$id'
 import { Route as BrandSavedRouteImport } from './routes/brand.saved'
 import { Route as BrandProposalsRouteImport } from './routes/brand.proposals'
+import { Route as BrandPipelineRouteImport } from './routes/brand.pipeline'
 import { Route as BrandOnboardingRouteImport } from './routes/brand.onboarding'
 import { Route as BrandMatchesRouteImport } from './routes/brand.matches'
 import { Route as BrandDashboardRouteImport } from './routes/brand.dashboard'
@@ -31,6 +32,7 @@ import { Route as AthleteEarningsRouteImport } from './routes/athlete.earnings'
 import { Route as AthleteDashboardRouteImport } from './routes/athlete.dashboard'
 import { Route as AthleteContractsRouteImport } from './routes/athlete.contracts'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
+import { Route as AdminContractsRouteImport } from './routes/admin.contracts'
 import { Route as BrandCampaignsNewRouteImport } from './routes/brand.campaigns.new'
 import { Route as BrandCampaignsIdRouteImport } from './routes/brand.campaigns.$id'
 import { Route as BrandAthletesIdRouteImport } from './routes/brand.athletes.$id'
@@ -90,6 +92,11 @@ const BrandProposalsRoute = BrandProposalsRouteImport.update({
   path: '/brand/proposals',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BrandPipelineRoute = BrandPipelineRouteImport.update({
+  id: '/brand/pipeline',
+  path: '/brand/pipeline',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BrandOnboardingRoute = BrandOnboardingRouteImport.update({
   id: '/brand/onboarding',
   path: '/brand/onboarding',
@@ -145,6 +152,11 @@ const AdminDashboardRoute = AdminDashboardRouteImport.update({
   path: '/admin/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminContractsRoute = AdminContractsRouteImport.update({
+  id: '/admin/contracts',
+  path: '/admin/contracts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BrandCampaignsNewRoute = BrandCampaignsNewRouteImport.update({
   id: '/brand/campaigns/new',
   path: '/brand/campaigns/new',
@@ -168,6 +180,7 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/messages': typeof MessagesRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
+  '/admin/contracts': typeof AdminContractsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/athlete/contracts': typeof AthleteContractsRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
@@ -179,6 +192,7 @@ export interface FileRoutesByFullPath {
   '/brand/dashboard': typeof BrandDashboardRoute
   '/brand/matches': typeof BrandMatchesRoute
   '/brand/onboarding': typeof BrandOnboardingRoute
+  '/brand/pipeline': typeof BrandPipelineRoute
   '/brand/proposals': typeof BrandProposalsRoute
   '/brand/saved': typeof BrandSavedRoute
   '/contracts/$id': typeof ContractsIdRoute
@@ -195,6 +209,7 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/messages': typeof MessagesRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
+  '/admin/contracts': typeof AdminContractsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/athlete/contracts': typeof AthleteContractsRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
@@ -206,6 +221,7 @@ export interface FileRoutesByTo {
   '/brand/dashboard': typeof BrandDashboardRoute
   '/brand/matches': typeof BrandMatchesRoute
   '/brand/onboarding': typeof BrandOnboardingRoute
+  '/brand/pipeline': typeof BrandPipelineRoute
   '/brand/proposals': typeof BrandProposalsRoute
   '/brand/saved': typeof BrandSavedRoute
   '/contracts/$id': typeof ContractsIdRoute
@@ -223,6 +239,7 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/messages': typeof MessagesRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
+  '/admin/contracts': typeof AdminContractsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/athlete/contracts': typeof AthleteContractsRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
@@ -234,6 +251,7 @@ export interface FileRoutesById {
   '/brand/dashboard': typeof BrandDashboardRoute
   '/brand/matches': typeof BrandMatchesRoute
   '/brand/onboarding': typeof BrandOnboardingRoute
+  '/brand/pipeline': typeof BrandPipelineRoute
   '/brand/proposals': typeof BrandProposalsRoute
   '/brand/saved': typeof BrandSavedRoute
   '/contracts/$id': typeof ContractsIdRoute
@@ -252,6 +270,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/messages'
     | '/reset-password'
+    | '/admin/contracts'
     | '/admin/dashboard'
     | '/athlete/contracts'
     | '/athlete/dashboard'
@@ -263,6 +282,7 @@ export interface FileRouteTypes {
     | '/brand/dashboard'
     | '/brand/matches'
     | '/brand/onboarding'
+    | '/brand/pipeline'
     | '/brand/proposals'
     | '/brand/saved'
     | '/contracts/$id'
@@ -279,6 +299,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/messages'
     | '/reset-password'
+    | '/admin/contracts'
     | '/admin/dashboard'
     | '/athlete/contracts'
     | '/athlete/dashboard'
@@ -290,6 +311,7 @@ export interface FileRouteTypes {
     | '/brand/dashboard'
     | '/brand/matches'
     | '/brand/onboarding'
+    | '/brand/pipeline'
     | '/brand/proposals'
     | '/brand/saved'
     | '/contracts/$id'
@@ -306,6 +328,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/messages'
     | '/reset-password'
+    | '/admin/contracts'
     | '/admin/dashboard'
     | '/athlete/contracts'
     | '/athlete/dashboard'
@@ -317,6 +340,7 @@ export interface FileRouteTypes {
     | '/brand/dashboard'
     | '/brand/matches'
     | '/brand/onboarding'
+    | '/brand/pipeline'
     | '/brand/proposals'
     | '/brand/saved'
     | '/contracts/$id'
@@ -334,6 +358,7 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   MessagesRoute: typeof MessagesRouteWithChildren
   ResetPasswordRoute: typeof ResetPasswordRoute
+  AdminContractsRoute: typeof AdminContractsRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AthleteContractsRoute: typeof AthleteContractsRoute
   AthleteDashboardRoute: typeof AthleteDashboardRoute
@@ -345,6 +370,7 @@ export interface RootRouteChildren {
   BrandDashboardRoute: typeof BrandDashboardRoute
   BrandMatchesRoute: typeof BrandMatchesRoute
   BrandOnboardingRoute: typeof BrandOnboardingRoute
+  BrandPipelineRoute: typeof BrandPipelineRoute
   BrandProposalsRoute: typeof BrandProposalsRoute
   BrandSavedRoute: typeof BrandSavedRoute
   ContractsIdRoute: typeof ContractsIdRoute
@@ -433,6 +459,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrandProposalsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/brand/pipeline': {
+      id: '/brand/pipeline'
+      path: '/brand/pipeline'
+      fullPath: '/brand/pipeline'
+      preLoaderRoute: typeof BrandPipelineRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/brand/onboarding': {
       id: '/brand/onboarding'
       path: '/brand/onboarding'
@@ -510,6 +543,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/contracts': {
+      id: '/admin/contracts'
+      path: '/admin/contracts'
+      fullPath: '/admin/contracts'
+      preLoaderRoute: typeof AdminContractsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/brand/campaigns/new': {
       id: '/brand/campaigns/new'
       path: '/brand/campaigns/new'
@@ -553,6 +593,7 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   MessagesRoute: MessagesRouteWithChildren,
   ResetPasswordRoute: ResetPasswordRoute,
+  AdminContractsRoute: AdminContractsRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AthleteContractsRoute: AthleteContractsRoute,
   AthleteDashboardRoute: AthleteDashboardRoute,
@@ -564,6 +605,7 @@ const rootRouteChildren: RootRouteChildren = {
   BrandDashboardRoute: BrandDashboardRoute,
   BrandMatchesRoute: BrandMatchesRoute,
   BrandOnboardingRoute: BrandOnboardingRoute,
+  BrandPipelineRoute: BrandPipelineRoute,
   BrandProposalsRoute: BrandProposalsRoute,
   BrandSavedRoute: BrandSavedRoute,
   ContractsIdRoute: ContractsIdRoute,
@@ -575,3 +617,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
