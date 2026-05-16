@@ -26,6 +26,8 @@ interface Contract {
   cancellation_terms: string | null; payment_schedule: string | null;
   plain_summary: string | null; status: string;
   signed_by_brand_at: string | null; signed_by_athlete_at: string | null;
+  legal_notes: string | null; ethical_notes: string | null;
+  post_deal_strategies: string | null;
 }
 
 function ContractDetail() {
