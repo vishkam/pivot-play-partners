@@ -1,12 +1,15 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
-import { Loader2, ArrowLeft, ArrowRight, Check } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Loader2, ArrowLeft, ArrowRight, Check, UploadCloud, X, FileText } from "lucide-react";
 import { toast } from "sonner";
 import { RequireAuth } from "@/components/auth/RequireAuth";
 import { OnboardingHeader } from "@/components/onboarding/OnboardingHeader";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
-import { COUNTRIES, SPORTS, MATERIALS } from "@/lib/onboarding-options";
+import { MATERIALS } from "@/lib/onboarding-options";
+import { COUNTRIES } from "@/data/countries";
+import { SPORTS } from "@/data/sports";
+import { getDisciplinesForSport } from "@/data/sportDisciplines";
 
 export const Route = createFileRoute("/athlete/onboarding")({
   component: () => (
