@@ -13,36 +13,50 @@ export const Route = createFileRoute("/admin/dashboard")({
   ),
 });
 
-interface Counts { athletes: number; brands: number; pending: number; }
+interface Counts { athletes: number; brands: number; pending: number; campaigns: number; matches: number; proposals: number; accepted: number; }
 
 function AdminDashboard() {
-  const [counts, setCounts] = useState<Counts>({ athletes: 0, brands: 0, pending: 0 });
+  const [c, setC] = useState<Counts>({ athletes: 0, brands: 0, pending: 0, campaigns: 0, matches: 0, proposals: 0, accepted: 0 });
 
   useEffect(() => {
     (async () => {
-      const [{ count: athletes }, { count: brands }, { count: pending }] = await Promise.all([
+      const [a, b, p, cm, m, pr, ac] = await Promise.all([
         supabase.from("athlete_profiles").select("*", { count: "exact", head: true }),
         supabase.from("brand_profiles").select("*", { count: "exact", head: true }),
         supabase.from("athlete_profiles").select("*", { count: "exact", head: true }).eq("verification_status", "pending"),
+        supabase.from("campaigns").select("*", { count: "exact", head: true }).eq("status", "active"),
+        supabase.from("matches").select("*", { count: "exact", head: true }),
+        supabase.from("proposals").select("*", { count: "exact", head: true }),
+        supabase.from("proposals").select("*", { count: "exact", head: true }).eq("status", "accepted"),
       ]);
-      setCounts({ athletes: athletes ?? 0, brands: brands ?? 0, pending: pending ?? 0 });
+      setC({
+        athletes: a.count ?? 0, brands: b.count ?? 0, pending: p.count ?? 0,
+        campaigns: cm.count ?? 0, matches: m.count ?? 0,
+        proposals: pr.count ?? 0, accepted: ac.count ?? 0,
+      });
     })();
   }, []);
 
+  const successRate = c.proposals ? Math.round((c.accepted / c.proposals) * 100) : 0;
+
   return (
-    <DashboardShell title="Admin control" subtitle="Verification queues, users and platform health.">
+    <DashboardShell title="Admin control" subtitle="Verification queues, marketplace activity and platform health.">
       <div className="grid gap-5 lg:grid-cols-4">
-        <Stat icon={Users} label="Athletes" value={counts.athletes.toString()} />
-        <Stat icon={Users} label="Brands" value={counts.brands.toString()} />
-        <Stat icon={ShieldCheck} label="Pending verifications" value={counts.pending.toString()} />
-        <Stat icon={LineChart} label="GMV (MTD)" value="$0" />
+        <Stat icon={Users} label="Athletes" value={c.athletes.toString()} />
+        <Stat icon={Users} label="Brands" value={c.brands.toString()} />
+        <Stat icon={ShieldCheck} label="Pending verifications" value={c.pending.toString()} />
+        <Stat icon={LineChart} label="Active campaigns" value={c.campaigns.toString()} />
+        <Stat icon={LineChart} label="Matches generated" value={c.matches.toString()} />
+        <Stat icon={LineChart} label="Proposals sent" value={c.proposals.toString()} />
+        <Stat icon={LineChart} label="Accepted" value={c.accepted.toString()} />
+        <Stat icon={LineChart} label="Match success rate" value={`${successRate}%`} />
       </div>
 
       <div className="mt-6 grid gap-5 lg:grid-cols-2">
         <Panel icon={ShieldCheck} title="Verification queue"
           body="Review athlete and brand verification submissions. Approve to unlock matching." />
-        <Panel icon={AlertTriangle} title="Fraud & integrity"
-          body="Anomaly signals on signups, contract terms and payment flows surface here." />
+        <Panel icon={AlertTriangle} title="Low-confidence matches"
+          body="Matches scoring under 50 are flagged here for review before brand visibility." />
         <Panel icon={Users} title="User management"
           body="Search, impersonate, and manage roles across all members." />
         <Panel icon={LineChart} title="Revenue analytics"
