@@ -38,10 +38,21 @@ interface FormState {
   certifications: string;
   values: string;
   causes: string;
+  personality: string;
   story: string;
   favorite_brands: string;
   favorite_products: string;
   material_preferences: string;
+  brands_apparel: string;
+  brands_footwear: string;
+  brands_nutrition: string;
+  brands_recovery: string;
+  brands_tech: string;
+  brands_equipment: string;
+  size_top: string;
+  size_bottom: string;
+  size_shoe: string;
+  size_wetsuit: string;
   instagram: string;
   tiktok: string;
   youtube: string;
@@ -55,8 +66,12 @@ interface FormState {
 
 const INITIAL: FormState = {
   country: "", sport: "", discipline: "", professional_level: "", team_federation: "",
-  rankings: "", achievements: "", certifications: "", values: "", causes: "", story: "",
+  rankings: "", achievements: "", certifications: "", values: "", causes: "",
+  personality: "", story: "",
   favorite_brands: "", favorite_products: "", material_preferences: "",
+  brands_apparel: "", brands_footwear: "", brands_nutrition: "",
+  brands_recovery: "", brands_tech: "", brands_equipment: "",
+  size_top: "", size_bottom: "", size_shoe: "", size_wetsuit: "",
   instagram: "", tiktok: "", youtube: "", linkedin: "", followers: "",
   partnership_types: "", pricing_min: "", pricing_max: "", availability: "",
 };
