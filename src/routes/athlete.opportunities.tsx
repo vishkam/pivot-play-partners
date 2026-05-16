@@ -56,11 +56,62 @@ function Opportunities() {
   useEffect(() => { load(); }, [user]);
 
   async function respond(id: string, status: "accepted" | "declined" | "negotiating") {
+    if (!user) return;
+    const row = rows.find((r) => r.id === id);
     setBusy(id);
     const { error } = await supabase.from("proposals").update({ status }).eq("id", id);
+    if (error) { setBusy(null); toast.error(error.message); return; }
+
+    // On accept → spin up a draft contract + notify the brand
+    if (status === "accepted" && row) {
+      const amount = row.proposed_amount ?? 0;
+      const fee = Math.round(amount * 0.1);
+      const { data: contract } = await supabase.from("contracts").insert({
+        brand_id: row.brand_id,
+        athlete_id: user.id,
+        campaign_id: row.campaign_id,
+        proposal_id: id,
+        title: `${row.campaign_name ?? row.partnership_type ?? "Partnership"} — ${row.brand_name ?? "Brand"}`,
+        status: "draft",
+        compensation_amount: amount,
+        platform_fee_pct: 10,
+        deliverables: row.deliverables ?? "",
+        timeline: row.timeline ?? "",
+        payment_schedule: "50% on signature · 50% on completion",
+        plain_summary: `${row.brand_name ?? "Brand"} × you — ready for review and signature.`,
+      }).select("id").single();
+      await Promise.all([
+        supabase.from("notifications").insert({
+          user_id: row.brand_id, kind: "proposal",
+          title: "Proposal accepted",
+          body: `$${amount.toLocaleString()} · contract draft ready`,
+          link: contract?.id ? `/contracts/${contract.id}` : "/brand/contracts",
+        }),
+        supabase.from("messages").insert({
+          sender_id: user.id, recipient_id: row.brand_id,
+          body: `Accepted — contract draft is ready to review.`,
+          proposal_id: id, contract_id: contract?.id ?? null,
+          system_event: "proposal_accepted",
+        }),
+      ]).catch((e) => console.warn("notify brand failed", e));
+      toast.success("Accepted · Contract draft ready");
+    } else if (status === "negotiating" && row) {
+      await supabase.from("notifications").insert({
+        user_id: row.brand_id, kind: "proposal",
+        title: "Changes requested", body: row.brand_name ? `${row.brand_name} proposal` : "Proposal",
+        link: "/brand/proposals",
+      }).catch(() => {});
+      toast.success("Sent back for revisions");
+    } else {
+      toast.success("Declined");
+      if (row) {
+        await supabase.from("notifications").insert({
+          user_id: row.brand_id, kind: "proposal",
+          title: "Proposal declined", body: row.brand_name ?? "", link: "/brand/proposals",
+        }).catch(() => {});
+      }
+    }
     setBusy(null);
-    if (error) { toast.error(error.message); return; }
-    toast.success(status === "accepted" ? "Accepted — we'll notify the brand." : status === "declined" ? "Declined" : "Sent back for revisions");
     load();
   }
 
