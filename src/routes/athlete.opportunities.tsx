@@ -93,7 +93,8 @@ function Opportunities() {
           proposal_id: id, contract_id: contract?.id ?? null,
           system_event: "proposal_accepted",
         }),
-      ]).catch((e) => console.warn("notify brand failed", e));
+      ]);
+      void fee;
       toast.success("Accepted · Contract draft ready");
     } else if (status === "negotiating" && row) {
       await supabase.from("notifications").insert({
