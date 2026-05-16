@@ -14,16 +14,430 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      admin_actions: {
+        Row: {
+          action: string
+          admin_id: string
+          created_at: string
+          id: string
+          notes: string | null
+          target_user_id: string | null
+        }
+        Insert: {
+          action: string
+          admin_id: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          target_user_id?: string | null
+        }
+        Update: {
+          action?: string
+          admin_id?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+          target_user_id?: string | null
+        }
+        Relationships: []
+      }
+      athlete_profiles: {
+        Row: {
+          achievements: string | null
+          audience_demographics: Json | null
+          availability: string | null
+          causes: string[] | null
+          certifications: string | null
+          competition_history: string | null
+          created_at: string
+          discipline: string | null
+          geographic_preferences: string[] | null
+          media: Json | null
+          partnership_types: string[] | null
+          pricing_max: number | null
+          pricing_min: number | null
+          professional_level: string | null
+          profile_completeness: number
+          profile_image: string | null
+          rankings: string | null
+          social_links: Json | null
+          sponsorship_categories: string[] | null
+          sport: string | null
+          story: string | null
+          team_federation: string | null
+          updated_at: string
+          user_id: string
+          values: string[] | null
+          verification_status: Database["public"]["Enums"]["verification_status"]
+        }
+        Insert: {
+          achievements?: string | null
+          audience_demographics?: Json | null
+          availability?: string | null
+          causes?: string[] | null
+          certifications?: string | null
+          competition_history?: string | null
+          created_at?: string
+          discipline?: string | null
+          geographic_preferences?: string[] | null
+          media?: Json | null
+          partnership_types?: string[] | null
+          pricing_max?: number | null
+          pricing_min?: number | null
+          professional_level?: string | null
+          profile_completeness?: number
+          profile_image?: string | null
+          rankings?: string | null
+          social_links?: Json | null
+          sponsorship_categories?: string[] | null
+          sport?: string | null
+          story?: string | null
+          team_federation?: string | null
+          updated_at?: string
+          user_id: string
+          values?: string[] | null
+          verification_status?: Database["public"]["Enums"]["verification_status"]
+        }
+        Update: {
+          achievements?: string | null
+          audience_demographics?: Json | null
+          availability?: string | null
+          causes?: string[] | null
+          certifications?: string | null
+          competition_history?: string | null
+          created_at?: string
+          discipline?: string | null
+          geographic_preferences?: string[] | null
+          media?: Json | null
+          partnership_types?: string[] | null
+          pricing_max?: number | null
+          pricing_min?: number | null
+          professional_level?: string | null
+          profile_completeness?: number
+          profile_image?: string | null
+          rankings?: string | null
+          social_links?: Json | null
+          sponsorship_categories?: string[] | null
+          sport?: string | null
+          story?: string | null
+          team_federation?: string | null
+          updated_at?: string
+          user_id?: string
+          values?: string[] | null
+          verification_status?: Database["public"]["Enums"]["verification_status"]
+        }
+        Relationships: []
+      }
+      brand_profiles: {
+        Row: {
+          brand_name: string | null
+          consumer_demographics: Json | null
+          contact_role: string | null
+          created_at: string
+          esg_priorities: string[] | null
+          industry: string | null
+          mission: string | null
+          positioning: string | null
+          revenue_stage: string | null
+          updated_at: string
+          user_id: string
+          values: string[] | null
+          verification_status: Database["public"]["Enums"]["verification_status"]
+          website: string | null
+        }
+        Insert: {
+          brand_name?: string | null
+          consumer_demographics?: Json | null
+          contact_role?: string | null
+          created_at?: string
+          esg_priorities?: string[] | null
+          industry?: string | null
+          mission?: string | null
+          positioning?: string | null
+          revenue_stage?: string | null
+          updated_at?: string
+          user_id: string
+          values?: string[] | null
+          verification_status?: Database["public"]["Enums"]["verification_status"]
+          website?: string | null
+        }
+        Update: {
+          brand_name?: string | null
+          consumer_demographics?: Json | null
+          contact_role?: string | null
+          created_at?: string
+          esg_priorities?: string[] | null
+          industry?: string | null
+          mission?: string | null
+          positioning?: string | null
+          revenue_stage?: string | null
+          updated_at?: string
+          user_id?: string
+          values?: string[] | null
+          verification_status?: Database["public"]["Enums"]["verification_status"]
+          website?: string | null
+        }
+        Relationships: []
+      }
+      campaigns: {
+        Row: {
+          brand_id: string
+          budget_max: number | null
+          budget_min: number | null
+          created_at: string
+          description: string | null
+          geographic_reach: string[] | null
+          goals: string | null
+          id: string
+          name: string
+          partnership_structure: string | null
+          preferred_athlete_types: string[] | null
+          sports: string[] | null
+          status: Database["public"]["Enums"]["campaign_status"]
+          updated_at: string
+        }
+        Insert: {
+          brand_id: string
+          budget_max?: number | null
+          budget_min?: number | null
+          created_at?: string
+          description?: string | null
+          geographic_reach?: string[] | null
+          goals?: string | null
+          id?: string
+          name: string
+          partnership_structure?: string | null
+          preferred_athlete_types?: string[] | null
+          sports?: string[] | null
+          status?: Database["public"]["Enums"]["campaign_status"]
+          updated_at?: string
+        }
+        Update: {
+          brand_id?: string
+          budget_max?: number | null
+          budget_min?: number | null
+          created_at?: string
+          description?: string | null
+          geographic_reach?: string[] | null
+          goals?: string | null
+          id?: string
+          name?: string
+          partnership_structure?: string | null
+          preferred_athlete_types?: string[] | null
+          sports?: string[] | null
+          status?: Database["public"]["Enums"]["campaign_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      matches: {
+        Row: {
+          athlete_id: string
+          audience_score: number | null
+          brand_id: string
+          budget_score: number | null
+          campaign_id: string | null
+          campaign_score: number | null
+          created_at: string
+          explanation: string | null
+          id: string
+          saved_by_brand: boolean
+          score: number
+          sport_score: number | null
+          values_score: number | null
+        }
+        Insert: {
+          athlete_id: string
+          audience_score?: number | null
+          brand_id: string
+          budget_score?: number | null
+          campaign_id?: string | null
+          campaign_score?: number | null
+          created_at?: string
+          explanation?: string | null
+          id?: string
+          saved_by_brand?: boolean
+          score?: number
+          sport_score?: number | null
+          values_score?: number | null
+        }
+        Update: {
+          athlete_id?: string
+          audience_score?: number | null
+          brand_id?: string
+          budget_score?: number | null
+          campaign_id?: string | null
+          campaign_score?: number | null
+          created_at?: string
+          explanation?: string | null
+          id?: string
+          saved_by_brand?: boolean
+          score?: number
+          sport_score?: number | null
+          values_score?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "matches_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      messages: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          read_at: string | null
+          recipient_id: string
+          sender_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          recipient_id: string
+          sender_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          read_at?: string | null
+          recipient_id?: string
+          sender_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          country: string | null
+          created_at: string
+          email: string | null
+          full_name: string | null
+          id: string
+          onboarding_completed: boolean
+          primary_role: Database["public"]["Enums"]["app_role"] | null
+          updated_at: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id: string
+          onboarding_completed?: boolean
+          primary_role?: Database["public"]["Enums"]["app_role"] | null
+          updated_at?: string
+        }
+        Update: {
+          avatar_url?: string | null
+          country?: string | null
+          created_at?: string
+          email?: string | null
+          full_name?: string | null
+          id?: string
+          onboarding_completed?: boolean
+          primary_role?: Database["public"]["Enums"]["app_role"] | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      proposals: {
+        Row: {
+          athlete_id: string
+          body: string | null
+          brand_id: string
+          campaign_id: string | null
+          created_at: string
+          id: string
+          proposed_amount: number | null
+          status: Database["public"]["Enums"]["proposal_status"]
+        }
+        Insert: {
+          athlete_id: string
+          body?: string | null
+          brand_id: string
+          campaign_id?: string | null
+          created_at?: string
+          id?: string
+          proposed_amount?: number | null
+          status?: Database["public"]["Enums"]["proposal_status"]
+        }
+        Update: {
+          athlete_id?: string
+          body?: string | null
+          brand_id?: string
+          campaign_id?: string | null
+          created_at?: string
+          id?: string
+          proposed_amount?: number | null
+          status?: Database["public"]["Enums"]["proposal_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "proposals_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_primary_role: {
+        Args: { _user_id: string }
+        Returns: Database["public"]["Enums"]["app_role"]
+      }
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "athlete" | "brand" | "admin"
+      campaign_status: "draft" | "active" | "paused" | "closed"
+      proposal_status:
+        | "sent"
+        | "viewed"
+        | "accepted"
+        | "declined"
+        | "negotiating"
+      verification_status: "pending" | "in_review" | "verified" | "rejected"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +564,17 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["athlete", "brand", "admin"],
+      campaign_status: ["draft", "active", "paused", "closed"],
+      proposal_status: [
+        "sent",
+        "viewed",
+        "accepted",
+        "declined",
+        "negotiating",
+      ],
+      verification_status: ["pending", "in_review", "verified", "rejected"],
+    },
   },
 } as const
