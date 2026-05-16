@@ -15,6 +15,7 @@ import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MessagesIdRouteImport } from './routes/messages.$id'
 import { Route as BrandSavedRouteImport } from './routes/brand.saved'
 import { Route as BrandProposalsRouteImport } from './routes/brand.proposals'
 import { Route as BrandOnboardingRouteImport } from './routes/brand.onboarding'
@@ -57,6 +58,11 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const MessagesIdRoute = MessagesIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => MessagesRoute,
 } as any)
 const BrandSavedRoute = BrandSavedRouteImport.update({
   id: '/brand/saved',
@@ -124,7 +130,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/messages': typeof MessagesRoute
+  '/messages': typeof MessagesRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
@@ -135,6 +141,7 @@ export interface FileRoutesByFullPath {
   '/brand/onboarding': typeof BrandOnboardingRoute
   '/brand/proposals': typeof BrandProposalsRoute
   '/brand/saved': typeof BrandSavedRoute
+  '/messages/$id': typeof MessagesIdRoute
   '/brand/athletes/$id': typeof BrandAthletesIdRoute
   '/brand/campaigns/$id': typeof BrandCampaignsIdRoute
   '/brand/campaigns/new': typeof BrandCampaignsNewRoute
@@ -144,7 +151,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/messages': typeof MessagesRoute
+  '/messages': typeof MessagesRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
@@ -155,6 +162,7 @@ export interface FileRoutesByTo {
   '/brand/onboarding': typeof BrandOnboardingRoute
   '/brand/proposals': typeof BrandProposalsRoute
   '/brand/saved': typeof BrandSavedRoute
+  '/messages/$id': typeof MessagesIdRoute
   '/brand/athletes/$id': typeof BrandAthletesIdRoute
   '/brand/campaigns/$id': typeof BrandCampaignsIdRoute
   '/brand/campaigns/new': typeof BrandCampaignsNewRoute
@@ -165,7 +173,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/dashboard': typeof DashboardRoute
   '/forgot-password': typeof ForgotPasswordRoute
-  '/messages': typeof MessagesRoute
+  '/messages': typeof MessagesRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
@@ -176,6 +184,7 @@ export interface FileRoutesById {
   '/brand/onboarding': typeof BrandOnboardingRoute
   '/brand/proposals': typeof BrandProposalsRoute
   '/brand/saved': typeof BrandSavedRoute
+  '/messages/$id': typeof MessagesIdRoute
   '/brand/athletes/$id': typeof BrandAthletesIdRoute
   '/brand/campaigns/$id': typeof BrandCampaignsIdRoute
   '/brand/campaigns/new': typeof BrandCampaignsNewRoute
@@ -198,6 +207,7 @@ export interface FileRouteTypes {
     | '/brand/onboarding'
     | '/brand/proposals'
     | '/brand/saved'
+    | '/messages/$id'
     | '/brand/athletes/$id'
     | '/brand/campaigns/$id'
     | '/brand/campaigns/new'
@@ -218,6 +228,7 @@ export interface FileRouteTypes {
     | '/brand/onboarding'
     | '/brand/proposals'
     | '/brand/saved'
+    | '/messages/$id'
     | '/brand/athletes/$id'
     | '/brand/campaigns/$id'
     | '/brand/campaigns/new'
@@ -238,6 +249,7 @@ export interface FileRouteTypes {
     | '/brand/onboarding'
     | '/brand/proposals'
     | '/brand/saved'
+    | '/messages/$id'
     | '/brand/athletes/$id'
     | '/brand/campaigns/$id'
     | '/brand/campaigns/new'
@@ -248,7 +260,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DashboardRoute: typeof DashboardRoute
   ForgotPasswordRoute: typeof ForgotPasswordRoute
-  MessagesRoute: typeof MessagesRoute
+  MessagesRoute: typeof MessagesRouteWithChildren
   ResetPasswordRoute: typeof ResetPasswordRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AthleteDashboardRoute: typeof AthleteDashboardRoute
@@ -307,6 +319,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/messages/$id': {
+      id: '/messages/$id'
+      path: '/$id'
+      fullPath: '/messages/$id'
+      preLoaderRoute: typeof MessagesIdRouteImport
+      parentRoute: typeof MessagesRoute
     }
     '/brand/saved': {
       id: '/brand/saved'
@@ -395,12 +414,24 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface MessagesRouteChildren {
+  MessagesIdRoute: typeof MessagesIdRoute
+}
+
+const MessagesRouteChildren: MessagesRouteChildren = {
+  MessagesIdRoute: MessagesIdRoute,
+}
+
+const MessagesRouteWithChildren = MessagesRoute._addFileChildren(
+  MessagesRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   DashboardRoute: DashboardRoute,
   ForgotPasswordRoute: ForgotPasswordRoute,
-  MessagesRoute: MessagesRoute,
+  MessagesRoute: MessagesRouteWithChildren,
   ResetPasswordRoute: ResetPasswordRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AthleteDashboardRoute: AthleteDashboardRoute,
