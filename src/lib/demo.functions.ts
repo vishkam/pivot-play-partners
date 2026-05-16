@@ -390,9 +390,11 @@ export const ensureDemoUser = createServerFn({ method: "POST" })
     await seedDemoAthlete(ids.athlete);
     await seedDemoBrand(ids.brand);
 
-    // Seed the marketplace once (idempotent)
+    // Always provision extra demo athletes/brands (idempotent upserts) so the
+    // marketplace pool reflects the latest seed list, even after first run.
     try {
-      await seedMarketplace(ids.athlete, ids.brand);
+      const { extraAthletes, extraBrands } = await seedExtraUsers();
+      await seedMarketplace(ids.athlete, ids.brand, extraAthletes, extraBrands);
     } catch (e) {
       console.error("[demo seed] marketplace seed failed:", e);
     }
