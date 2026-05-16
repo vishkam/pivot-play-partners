@@ -153,7 +153,7 @@ export function MobileTopbar() {
     <div className="flex items-center justify-between border-b border-border bg-plum-deep px-4 py-3 text-cream lg:hidden">
       <Link to="/" className="flex items-center gap-2">
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-gold text-plum-deep font-display text-sm font-semibold">
-          A
+          P
         </span>
         <span className="font-display">Pegasus</span>
       </Link>
