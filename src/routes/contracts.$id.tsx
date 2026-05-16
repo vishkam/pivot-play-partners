@@ -44,9 +44,10 @@ function ContractDetail() {
     if (!c || !user) return;
     setBusy(true);
     const field = user.id === c.brand_id ? "signed_by_brand_at" : "signed_by_athlete_at";
-    const patch: Record<string, unknown> = { [field]: new Date().toISOString() };
     const bothSigned = field === "signed_by_brand_at" ? !!c.signed_by_athlete_at : !!c.signed_by_brand_at;
-    if (bothSigned) { patch.status = "active"; }
+    const patch = bothSigned
+      ? { [field]: new Date().toISOString(), status: "active" as const }
+      : { [field]: new Date().toISOString() };
     const { error } = await supabase.from("contracts").update(patch).eq("id", c.id);
     if (!error && bothSigned) {
       const { fee, payout } = calcPayout(c.compensation_amount, c.platform_fee_pct);
