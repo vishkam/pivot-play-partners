@@ -242,6 +242,117 @@ export type Database = {
         }
         Relationships: []
       }
+      contracts: {
+        Row: {
+          athlete_id: string
+          brand_id: string
+          campaign_id: string | null
+          cancellation_terms: string | null
+          compensation_amount: number
+          created_at: string
+          deliverables: string | null
+          exclusivity: string | null
+          id: string
+          payment_schedule: string | null
+          plain_summary: string | null
+          platform_fee_pct: number
+          proposal_id: string | null
+          signed_by_athlete_at: string | null
+          signed_by_brand_at: string | null
+          status: Database["public"]["Enums"]["contract_status"]
+          timeline: string | null
+          title: string
+          updated_at: string
+          usage_rights: string | null
+        }
+        Insert: {
+          athlete_id: string
+          brand_id: string
+          campaign_id?: string | null
+          cancellation_terms?: string | null
+          compensation_amount?: number
+          created_at?: string
+          deliverables?: string | null
+          exclusivity?: string | null
+          id?: string
+          payment_schedule?: string | null
+          plain_summary?: string | null
+          platform_fee_pct?: number
+          proposal_id?: string | null
+          signed_by_athlete_at?: string | null
+          signed_by_brand_at?: string | null
+          status?: Database["public"]["Enums"]["contract_status"]
+          timeline?: string | null
+          title: string
+          updated_at?: string
+          usage_rights?: string | null
+        }
+        Update: {
+          athlete_id?: string
+          brand_id?: string
+          campaign_id?: string | null
+          cancellation_terms?: string | null
+          compensation_amount?: number
+          created_at?: string
+          deliverables?: string | null
+          exclusivity?: string | null
+          id?: string
+          payment_schedule?: string | null
+          plain_summary?: string | null
+          platform_fee_pct?: number
+          proposal_id?: string | null
+          signed_by_athlete_at?: string | null
+          signed_by_brand_at?: string | null
+          status?: Database["public"]["Enums"]["contract_status"]
+          timeline?: string | null
+          title?: string
+          updated_at?: string
+          usage_rights?: string | null
+        }
+        Relationships: []
+      }
+      disputes: {
+        Row: {
+          admin_notes: string | null
+          contract_id: string | null
+          created_at: string
+          details: string | null
+          id: string
+          proposal_id: string | null
+          reason: string
+          reporter_id: string
+          status: Database["public"]["Enums"]["dispute_status"]
+          target_user_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          contract_id?: string | null
+          created_at?: string
+          details?: string | null
+          id?: string
+          proposal_id?: string | null
+          reason: string
+          reporter_id: string
+          status?: Database["public"]["Enums"]["dispute_status"]
+          target_user_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          contract_id?: string | null
+          created_at?: string
+          details?: string | null
+          id?: string
+          proposal_id?: string | null
+          reason?: string
+          reporter_id?: string
+          status?: Database["public"]["Enums"]["dispute_status"]
+          target_user_id?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       matches: {
         Row: {
           athlete_id: string
@@ -300,28 +411,154 @@ export type Database = {
       }
       messages: {
         Row: {
+          attachment_url: string | null
           body: string
+          contract_id: string | null
           created_at: string
           id: string
+          proposal_id: string | null
           read_at: string | null
           recipient_id: string
           sender_id: string
+          system_event: string | null
         }
         Insert: {
+          attachment_url?: string | null
           body: string
+          contract_id?: string | null
           created_at?: string
           id?: string
+          proposal_id?: string | null
           read_at?: string | null
           recipient_id: string
           sender_id: string
+          system_event?: string | null
         }
         Update: {
+          attachment_url?: string | null
           body?: string
+          contract_id?: string | null
           created_at?: string
           id?: string
+          proposal_id?: string | null
           read_at?: string | null
           recipient_id?: string
           sender_id?: string
+          system_event?: string | null
+        }
+        Relationships: []
+      }
+      notifications: {
+        Row: {
+          body: string | null
+          created_at: string
+          id: string
+          kind: string
+          link: string | null
+          read_at: string | null
+          title: string
+          user_id: string
+        }
+        Insert: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind: string
+          link?: string | null
+          read_at?: string | null
+          title: string
+          user_id: string
+        }
+        Update: {
+          body?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          link?: string | null
+          read_at?: string | null
+          title?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      payments: {
+        Row: {
+          amount: number
+          athlete_id: string
+          athlete_payout: number
+          brand_id: string
+          contract_id: string
+          created_at: string
+          due_date: string | null
+          id: string
+          milestone_label: string | null
+          platform_fee: number
+          status: Database["public"]["Enums"]["payment_status"]
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          athlete_id: string
+          athlete_payout?: number
+          brand_id: string
+          contract_id: string
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          milestone_label?: string | null
+          platform_fee?: number
+          status?: Database["public"]["Enums"]["payment_status"]
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          athlete_id?: string
+          athlete_payout?: number
+          brand_id?: string
+          contract_id?: string
+          created_at?: string
+          due_date?: string | null
+          id?: string
+          milestone_label?: string | null
+          platform_fee?: number
+          status?: Database["public"]["Enums"]["payment_status"]
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      pricing_profiles: {
+        Row: {
+          athlete_id: string
+          created_at: string
+          description: string | null
+          id: string
+          package_type: string
+          price_max: number | null
+          price_min: number | null
+          unit: string | null
+          updated_at: string
+        }
+        Insert: {
+          athlete_id: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          package_type: string
+          price_max?: number | null
+          price_min?: number | null
+          unit?: string | null
+          updated_at?: string
+        }
+        Update: {
+          athlete_id?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          package_type?: string
+          price_max?: number | null
+          price_min?: number | null
+          unit?: string | null
+          updated_at?: string
         }
         Relationships: []
       }
@@ -414,6 +651,48 @@ export type Database = {
           },
         ]
       }
+      reviews: {
+        Row: {
+          campaign_success: number
+          comment: string | null
+          communication: number
+          contract_id: string
+          created_at: string
+          id: string
+          professionalism: number
+          reliability: number
+          reviewee_id: string
+          reviewer_id: string
+          reviewer_role: Database["public"]["Enums"]["app_role"]
+        }
+        Insert: {
+          campaign_success: number
+          comment?: string | null
+          communication: number
+          contract_id: string
+          created_at?: string
+          id?: string
+          professionalism: number
+          reliability: number
+          reviewee_id: string
+          reviewer_id: string
+          reviewer_role: Database["public"]["Enums"]["app_role"]
+        }
+        Update: {
+          campaign_success?: number
+          comment?: string | null
+          communication?: number
+          contract_id?: string
+          created_at?: string
+          id?: string
+          professionalism?: number
+          reliability?: number
+          reviewee_id?: string
+          reviewer_id?: string
+          reviewer_role?: Database["public"]["Enums"]["app_role"]
+        }
+        Relationships: []
+      }
       saved_athletes: {
         Row: {
           athlete_id: string
@@ -435,6 +714,33 @@ export type Database = {
           created_at?: string
           id?: string
           notes?: string | null
+        }
+        Relationships: []
+      }
+      trust_flags: {
+        Row: {
+          created_at: string
+          created_by: string | null
+          flag_type: string
+          id: string
+          notes: string | null
+          target_user_id: string
+        }
+        Insert: {
+          created_at?: string
+          created_by?: string | null
+          flag_type: string
+          id?: string
+          notes?: string | null
+          target_user_id: string
+        }
+        Update: {
+          created_at?: string
+          created_by?: string | null
+          flag_type?: string
+          id?: string
+          notes?: string | null
+          target_user_id?: string
         }
         Relationships: []
       }
@@ -479,12 +785,23 @@ export type Database = {
     Enums: {
       app_role: "athlete" | "brand" | "admin"
       campaign_status: "draft" | "active" | "paused" | "closed"
+      contract_status:
+        | "draft"
+        | "pending_signature"
+        | "signed"
+        | "active"
+        | "completed"
+        | "cancelled"
+      dispute_status: "open" | "in_review" | "resolved" | "rejected"
+      payment_status: "pending" | "escrow" | "released" | "refunded" | "failed"
       proposal_status:
         | "sent"
         | "viewed"
         | "accepted"
         | "declined"
         | "negotiating"
+        | "counter_offered"
+        | "completed"
       verification_status: "pending" | "in_review" | "verified" | "rejected"
     }
     CompositeTypes: {
@@ -615,12 +932,24 @@ export const Constants = {
     Enums: {
       app_role: ["athlete", "brand", "admin"],
       campaign_status: ["draft", "active", "paused", "closed"],
+      contract_status: [
+        "draft",
+        "pending_signature",
+        "signed",
+        "active",
+        "completed",
+        "cancelled",
+      ],
+      dispute_status: ["open", "in_review", "resolved", "rejected"],
+      payment_status: ["pending", "escrow", "released", "refunded", "failed"],
       proposal_status: [
         "sent",
         "viewed",
         "accepted",
         "declined",
         "negotiating",
+        "counter_offered",
+        "completed",
       ],
       verification_status: ["pending", "in_review", "verified", "rejected"],
     },
