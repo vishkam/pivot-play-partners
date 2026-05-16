@@ -86,6 +86,19 @@ function AthleteOnboarding() {
   const [saving, setSaving] = useState(false);
   const [data, setData] = useState<FormState>(INITIAL);
   const [sportSuggestions, setSportSuggestions] = useState<string[]>(SPORTS);
+  const [verificationFiles, setVerificationFiles] = useState<File[]>([]);
+
+  const disciplineOptions = useMemo(() => getDisciplinesForSport(data.sport), [data.sport]);
+  const selectedDisciplines = useMemo(
+    () => data.discipline.split(",").map((s) => s.trim()).filter(Boolean),
+    [data.discipline],
+  );
+
+  function toggleDiscipline(value: string) {
+    const set = new Set(selectedDisciplines);
+    if (set.has(value)) set.delete(value); else set.add(value);
+    setData((d) => ({ ...d, discipline: Array.from(set).join(", ") }));
+  }
 
   // Load existing draft + dynamic sport suggestions from other athletes
   useEffect(() => {
