@@ -170,3 +170,30 @@ export function MobileTopbar() {
     </div>
   );
 }
+
+export function MobileBottomNav() {
+  const { role } = useAuth();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const items = role ? NAV_BY_ROLE[role].slice(0, 5) : [];
+  if (!items.length) return null;
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 z-40 grid grid-cols-5 border-t border-border bg-cream/95 backdrop-blur lg:hidden">
+      {items.map((it) => {
+        const Icon = it.icon;
+        const active = pathname === it.to;
+        return (
+          <Link
+            key={it.label}
+            to={it.to}
+            className={`flex flex-col items-center gap-0.5 py-2.5 text-[10px] ${
+              active ? "text-plum" : "text-muted-foreground"
+            }`}
+          >
+            <Icon className="h-4 w-4" />
+            <span className="truncate px-1">{it.label}</span>
+          </Link>
+        );
+      })}
+    </nav>
+  );
+}
