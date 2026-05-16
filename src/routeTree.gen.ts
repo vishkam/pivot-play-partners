@@ -24,6 +24,7 @@ import { Route as BrandOnboardingRouteImport } from './routes/brand.onboarding'
 import { Route as BrandMatchesRouteImport } from './routes/brand.matches'
 import { Route as BrandDashboardRouteImport } from './routes/brand.dashboard'
 import { Route as BrandContractsRouteImport } from './routes/brand.contracts'
+import { Route as AthletePricingRouteImport } from './routes/athlete.pricing'
 import { Route as AthleteOpportunitiesRouteImport } from './routes/athlete.opportunities'
 import { Route as AthleteOnboardingRouteImport } from './routes/athlete.onboarding'
 import { Route as AthleteEarningsRouteImport } from './routes/athlete.earnings'
@@ -109,6 +110,11 @@ const BrandContractsRoute = BrandContractsRouteImport.update({
   path: '/brand/contracts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AthletePricingRoute = AthletePricingRouteImport.update({
+  id: '/athlete/pricing',
+  path: '/athlete/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AthleteOpportunitiesRoute = AthleteOpportunitiesRouteImport.update({
   id: '/athlete/opportunities',
   path: '/athlete/opportunities',
@@ -168,6 +174,7 @@ export interface FileRoutesByFullPath {
   '/athlete/earnings': typeof AthleteEarningsRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
+  '/athlete/pricing': typeof AthletePricingRoute
   '/brand/contracts': typeof BrandContractsRoute
   '/brand/dashboard': typeof BrandDashboardRoute
   '/brand/matches': typeof BrandMatchesRoute
@@ -194,6 +201,7 @@ export interface FileRoutesByTo {
   '/athlete/earnings': typeof AthleteEarningsRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
+  '/athlete/pricing': typeof AthletePricingRoute
   '/brand/contracts': typeof BrandContractsRoute
   '/brand/dashboard': typeof BrandDashboardRoute
   '/brand/matches': typeof BrandMatchesRoute
@@ -221,6 +229,7 @@ export interface FileRoutesById {
   '/athlete/earnings': typeof AthleteEarningsRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
+  '/athlete/pricing': typeof AthletePricingRoute
   '/brand/contracts': typeof BrandContractsRoute
   '/brand/dashboard': typeof BrandDashboardRoute
   '/brand/matches': typeof BrandMatchesRoute
@@ -249,6 +258,7 @@ export interface FileRouteTypes {
     | '/athlete/earnings'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
+    | '/athlete/pricing'
     | '/brand/contracts'
     | '/brand/dashboard'
     | '/brand/matches'
@@ -275,6 +285,7 @@ export interface FileRouteTypes {
     | '/athlete/earnings'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
+    | '/athlete/pricing'
     | '/brand/contracts'
     | '/brand/dashboard'
     | '/brand/matches'
@@ -301,6 +312,7 @@ export interface FileRouteTypes {
     | '/athlete/earnings'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
+    | '/athlete/pricing'
     | '/brand/contracts'
     | '/brand/dashboard'
     | '/brand/matches'
@@ -328,6 +340,7 @@ export interface RootRouteChildren {
   AthleteEarningsRoute: typeof AthleteEarningsRoute
   AthleteOnboardingRoute: typeof AthleteOnboardingRoute
   AthleteOpportunitiesRoute: typeof AthleteOpportunitiesRoute
+  AthletePricingRoute: typeof AthletePricingRoute
   BrandContractsRoute: typeof BrandContractsRoute
   BrandDashboardRoute: typeof BrandDashboardRoute
   BrandMatchesRoute: typeof BrandMatchesRoute
@@ -448,6 +461,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrandContractsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/athlete/pricing': {
+      id: '/athlete/pricing'
+      path: '/athlete/pricing'
+      fullPath: '/athlete/pricing'
+      preLoaderRoute: typeof AthletePricingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/athlete/opportunities': {
       id: '/athlete/opportunities'
       path: '/athlete/opportunities'
@@ -539,6 +559,7 @@ const rootRouteChildren: RootRouteChildren = {
   AthleteEarningsRoute: AthleteEarningsRoute,
   AthleteOnboardingRoute: AthleteOnboardingRoute,
   AthleteOpportunitiesRoute: AthleteOpportunitiesRoute,
+  AthletePricingRoute: AthletePricingRoute,
   BrandContractsRoute: BrandContractsRoute,
   BrandDashboardRoute: BrandDashboardRoute,
   BrandMatchesRoute: BrandMatchesRoute,
