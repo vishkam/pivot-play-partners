@@ -265,6 +265,12 @@ function AthleteOnboarding() {
             <Grid>
               <Input label="Your values (comma-separated)" value={data.values} onChange={upd("values")} placeholder="Sustainability, mental health, equity" />
               <Input label="Causes you champion" value={data.causes} onChange={upd("causes")} placeholder="Title IX, climate, youth access" />
+              <Textarea
+                label="Personality — how you show up"
+                value={data.personality}
+                onChange={upd("personality")}
+                placeholder="Bold, analytical, playful, quietly competitive… how a brand should expect to work with you."
+              />
             </Grid>
           )}
           {step === 4 && (
@@ -272,13 +278,12 @@ function AthleteOnboarding() {
               <div className="md:col-span-2 rounded-2xl border border-plum/15 bg-plum/5 p-5 text-sm text-foreground/80">
                 <p className="font-display text-base text-foreground">Why we ask</p>
                 <p className="mt-1 text-muted-foreground">
-                  The brands you already trust — and the materials that actually affect your performance (think glide
-                  fabric for swim, super-foam plates for marathon, recycled neoprene for surf) — make our matches
-                  dramatically more relevant. Brands using similar materials will be prioritized.
+                  The brands and gear you already trust — plus the materials that affect your performance and your
+                  sizing — make our matches dramatically more relevant. Brands ship product fit-first, not guess-first.
                 </p>
               </div>
               <Input
-                label="Brands you love (comma-separated)"
+                label="Brands you love overall (comma-separated)"
                 value={data.favorite_brands}
                 onChange={upd("favorite_brands")}
                 placeholder="Speedo, On Running, Patagonia, Oakley"
@@ -298,6 +303,30 @@ function AthleteOnboarding() {
                 placeholder="PBT, carbon plate, ECONYL®, Merino wool…"
                 hint="Comma-separated. Start typing to see suggestions."
               />
+
+              <div className="md:col-span-2 mt-2">
+                <p className="font-display text-base text-foreground">Favorite brands by product category</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  We match brands to the exact product fit you trust — not just the logo.
+                </p>
+              </div>
+              <Input label="Apparel" value={data.brands_apparel} onChange={upd("brands_apparel")} placeholder="Lululemon, Patagonia" />
+              <Input label="Footwear" value={data.brands_footwear} onChange={upd("brands_footwear")} placeholder="Nike, Hoka" />
+              <Input label="Nutrition" value={data.brands_nutrition} onChange={upd("brands_nutrition")} placeholder="Maurten, Skratch" />
+              <Input label="Recovery" value={data.brands_recovery} onChange={upd("brands_recovery")} placeholder="Therabody, Hyperice" />
+              <Input label="Tech & wearables" value={data.brands_tech} onChange={upd("brands_tech")} placeholder="Garmin, Whoop, Oura" />
+              <Input label="Sport-specific equipment" value={data.brands_equipment} onChange={upd("brands_equipment")} placeholder="Speedo, Wilson, Specialized…" />
+
+              <div className="md:col-span-2 mt-2">
+                <p className="font-display text-base text-foreground">Sizing</p>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  Used only to ship product samples. Never shared publicly.
+                </p>
+              </div>
+              <Input label="Top size" value={data.size_top} onChange={upd("size_top")} placeholder="S / M / 38 / 8" />
+              <Input label="Bottom size" value={data.size_bottom} onChange={upd("size_bottom")} placeholder="28 / M / 6" />
+              <Input label="Shoe size" value={data.size_shoe} onChange={upd("size_shoe")} placeholder="US 8 / EU 39" />
+              <Input label="Wetsuit / specialty" value={data.size_wetsuit} onChange={upd("size_wetsuit")} placeholder="MT, women's L…" />
             </Grid>
           )}
           {step === 5 && (
