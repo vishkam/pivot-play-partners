@@ -310,3 +310,73 @@ function ReviewModal({ contractId, athleteId, brandId, onClose }: { contractId: 
     </div>
   );
 }
+
+function LegalEthicalCard({ contract, onSaved, canEdit }: { contract: Contract; onSaved: () => void; canEdit: boolean }) {
+  const [legal, setLegal] = useState(contract.legal_notes ?? "");
+  const [ethical, setEthical] = useState(contract.ethical_notes ?? "");
+  const [busy, setBusy] = useState(false);
+  const [editing, setEditing] = useState(false);
+
+  async function save() {
+    setBusy(true);
+    const { error } = await supabase
+      .from("contracts")
+      .update({ legal_notes: legal.slice(0, 4000), ethical_notes: ethical.slice(0, 4000) })
+      .eq("id", contract.id);
+    setBusy(false);
+    if (error) { toast.error(error.message); return; }
+    toast.success("Notes saved");
+    setEditing(false);
+    onSaved();
+  }
+
+  return (
+    <div className="rounded-2xl border border-border bg-cream p-6 shadow-sm">
+      <div className="flex items-center justify-between">
+        <h3 className="font-display text-xl">Legal & ethical notes</h3>
+        {canEdit && !editing && (
+          <button onClick={() => setEditing(true)} className="text-xs text-plum hover:underline">Edit</button>
+        )}
+      </div>
+      <p className="mt-1 text-xs text-muted-foreground">
+        Compliance commitments, IP, FTC disclosures, ethics guardrails — kept on-record for both parties.
+      </p>
+
+      {editing ? (
+        <div className="mt-4 space-y-4">
+          <label className="block">
+            <span className="mb-1.5 block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Legal notes</span>
+            <textarea value={legal} onChange={(e) => setLegal(e.target.value.slice(0, 4000))} rows={4} maxLength={4000}
+              placeholder="Jurisdiction, IP ownership, FTC #ad disclosure required, indemnity, governing law…"
+              className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm focus:border-plum focus:outline-none" />
+          </label>
+          <label className="block">
+            <span className="mb-1.5 block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Ethical notes</span>
+            <textarea value={ethical} onChange={(e) => setEthical(e.target.value.slice(0, 4000))} rows={4} maxLength={4000}
+              placeholder="No greenwashing claims, no body-image retouching, no anti-LGBTQ partnerships, child-safety clauses…"
+              className="w-full rounded-xl border border-border bg-background px-3 py-2 text-sm focus:border-plum focus:outline-none" />
+          </label>
+          <div className="flex justify-end gap-2">
+            <button onClick={() => { setLegal(contract.legal_notes ?? ""); setEthical(contract.ethical_notes ?? ""); setEditing(false); }}
+              className="rounded-full border border-border px-4 py-1.5 text-xs">Cancel</button>
+            <button onClick={save} disabled={busy}
+              className="rounded-full bg-plum-deep px-4 py-1.5 text-xs font-medium text-cream disabled:opacity-50">
+              {busy ? "Saving…" : "Save notes"}
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="mt-4 grid gap-4 text-sm">
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Legal</p>
+            <p className="mt-1 whitespace-pre-wrap text-foreground/85">{contract.legal_notes || "No legal notes recorded yet."}</p>
+          </div>
+          <div>
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">Ethical</p>
+            <p className="mt-1 whitespace-pre-wrap text-foreground/85">{contract.ethical_notes || "No ethical notes recorded yet."}</p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
