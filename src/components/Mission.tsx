@@ -8,7 +8,7 @@ export function Mission() {
           <span className="block mt-3">We're rewriting that math.</span>
         </h2>
         <p className="mx-auto mt-8 max-w-2xl text-lg text-muted-foreground">
-          Allyance is the partnership infrastructure layer for women's sports — built so that
+          Pegasus is the partnership infrastructure layer for women's sports — built so that
           a national fencer in Lyon, a college soccer captain in Portland, and an Olympic
           climber in Tokyo can all access the same fair, transparent sponsorship economy.
         </p>

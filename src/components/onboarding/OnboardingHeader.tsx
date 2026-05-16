@@ -7,9 +7,9 @@ export function OnboardingHeader() {
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <Link to="/" className="flex items-center gap-2 text-foreground">
           <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-gold text-plum-deep font-display text-base font-semibold">
-            A
+            P
           </span>
-          <span className="font-display text-lg tracking-tight">Allyance</span>
+          <span className="font-display text-lg tracking-tight">Pegasus</span>
         </Link>
         <Link
           to="/"

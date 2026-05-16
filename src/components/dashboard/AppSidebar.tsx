@@ -18,6 +18,8 @@ import {
   Tag,
   KanbanSquare,
   Star,
+  Crown,
+  Flame,
 } from "lucide-react";
 import { useAuth, type AppRole } from "@/hooks/use-auth";
 
@@ -29,12 +31,14 @@ interface NavItem {
 
 const ATHLETE_NAV: NavItem[] = [
   { label: "Overview", to: "/athlete/dashboard", icon: LayoutDashboard },
+  { label: "Deal feed", to: "/athlete/feed", icon: Flame },
   { label: "Opportunities", to: "/athlete/opportunities", icon: Inbox },
   { label: "Open deals", to: "/athlete/deals", icon: Sparkles },
   { label: "Messages", to: "/messages", icon: MessageSquare },
   { label: "Contracts", to: "/athlete/contracts", icon: FileText },
   { label: "Earnings", to: "/athlete/earnings", icon: Wallet },
   { label: "Rate card", to: "/athlete/pricing", icon: Tag },
+  { label: "Subscription", to: "/subscription", icon: Crown },
   { label: "Edit profile", to: "/athlete/onboarding", icon: Sparkles },
 ];
 
@@ -46,6 +50,7 @@ const BRAND_NAV: NavItem[] = [
   { label: "Pipeline", to: "/brand/pipeline", icon: KanbanSquare },
   { label: "Messages", to: "/messages", icon: MessageSquare },
   { label: "Contracts", to: "/brand/contracts", icon: FileText },
+  { label: "Subscription", to: "/subscription", icon: Crown },
   { label: "Settings", to: "/brand/dashboard", icon: Settings },
 ];
 
@@ -83,9 +88,9 @@ export function AppSidebar() {
       <div className="flex items-center gap-2 px-6 py-6">
         <Link to="/" className="flex items-center gap-2">
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-gold text-plum-deep font-display text-lg font-semibold">
-            A
+            P
           </span>
-          <span className="font-display text-xl">Allyance</span>
+          <span className="font-display text-xl">Pegasus</span>
         </Link>
       </div>
 
@@ -148,9 +153,9 @@ export function MobileTopbar() {
     <div className="flex items-center justify-between border-b border-border bg-plum-deep px-4 py-3 text-cream lg:hidden">
       <Link to="/" className="flex items-center gap-2">
         <span className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-gold text-plum-deep font-display text-sm font-semibold">
-          A
+          P
         </span>
-        <span className="font-display">Allyance</span>
+        <span className="font-display">Pegasus</span>
       </Link>
       <div className="flex items-center gap-3">
         <span className="text-xs text-cream/60">{profile?.email}</span>
@@ -163,5 +168,32 @@ export function MobileTopbar() {
         </button>
       </div>
     </div>
+  );
+}
+
+export function MobileBottomNav() {
+  const { role } = useAuth();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const items = role ? NAV_BY_ROLE[role].slice(0, 5) : [];
+  if (!items.length) return null;
+  return (
+    <nav className="fixed bottom-0 left-0 right-0 z-40 grid grid-cols-5 border-t border-border bg-cream/95 backdrop-blur lg:hidden">
+      {items.map((it) => {
+        const Icon = it.icon;
+        const active = pathname === it.to;
+        return (
+          <Link
+            key={it.label}
+            to={it.to}
+            className={`flex flex-col items-center gap-0.5 py-2.5 text-[10px] ${
+              active ? "text-plum" : "text-muted-foreground"
+            }`}
+          >
+            <Icon className="h-4 w-4" />
+            <span className="truncate px-1">{it.label}</span>
+          </Link>
+        );
+      })}
+    </nav>
   );
 }

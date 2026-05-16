@@ -64,7 +64,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Allyance — Where women athletes meet the brands that believe in them" },
+      { title: "Pegasus — Where women athletes meet the brands that believe in them" },
       { name: "description", content: "AI-powered partnership marketplace connecting women athletes with values-aligned brands." },
     ],
     links: [

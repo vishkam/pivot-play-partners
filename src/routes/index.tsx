@@ -14,13 +14,13 @@ import { Footer } from "@/components/Footer";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Allyance — Where women athletes meet the brands that believe in them" },
+      { title: "Pegasus — Where women athletes meet the brands that believe in them" },
       {
         name: "description",
         content:
-          "Allyance is the AI-powered marketplace connecting women athletes with values-aligned brands for authentic, fairly priced partnerships.",
+          "Pegasus is the AI-powered marketplace connecting women athletes with values-aligned brands for authentic, fairly priced partnerships.",
       },
-      { property: "og:title", content: "Allyance — Partnership infrastructure for women's sports" },
+      { property: "og:title", content: "Pegasus — Partnership infrastructure for women's sports" },
       {
         property: "og:description",
         content:

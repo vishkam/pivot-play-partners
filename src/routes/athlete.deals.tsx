@@ -77,7 +77,7 @@ function AthleteDeals() {
                   <div>
                     <p className="text-[10px] uppercase tracking-wider text-muted-foreground">{brand?.industry ?? "Brand"}</p>
                     <h3 className="mt-0.5 font-display text-lg text-foreground">{c.name}</h3>
-                    <p className="mt-1 text-xs text-plum">{brand?.brand_name ?? "Brand on Allyance"}</p>
+                    <p className="mt-1 text-xs text-plum">{brand?.brand_name ?? "Brand on Pegasus"}</p>
                   </div>
                   {(c.budget_min || c.budget_max) && (
                     <span className="rounded-full bg-gradient-gold px-3 py-1 text-[11px] font-medium text-plum-deep">

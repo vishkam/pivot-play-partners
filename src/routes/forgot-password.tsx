@@ -4,7 +4,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/forgot-password")({
-  head: () => ({ meta: [{ title: "Reset password — Allyance" }] }),
+  head: () => ({ meta: [{ title: "Reset password — Pegasus" }] }),
   component: ForgotPasswordPage,
 });
 
@@ -23,7 +23,7 @@ function ForgotPasswordPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-6">
       <div className="w-full max-w-md rounded-3xl bg-cream p-10 shadow-elegant">
-        <Link to="/" className="font-display text-2xl text-plum">Allyance</Link>
+        <Link to="/" className="font-display text-2xl text-plum">Pegasus</Link>
         <h1 className="mt-6 font-display text-3xl">Reset your password</h1>
         {sent ? (
           <p className="mt-4 text-sm text-muted-foreground">

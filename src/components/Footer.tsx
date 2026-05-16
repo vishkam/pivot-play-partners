@@ -5,9 +5,9 @@ export function Footer() {
         <div className="col-span-2">
           <div className="flex items-center gap-2 text-cream">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-gold font-display text-lg font-semibold text-plum-deep">
-              A
+              P
             </span>
-            <span className="font-display text-xl">Allyance</span>
+            <span className="font-display text-xl">Pegasus</span>
           </div>
           <p className="mt-4 max-w-sm text-sm">
             The partnership infrastructure layer for women's sports.
@@ -31,7 +31,7 @@ export function Footer() {
         </div>
       </div>
       <div className="mx-auto mt-12 flex max-w-7xl flex-col items-center justify-between gap-3 border-t border-cream/10 px-6 pt-8 text-xs uppercase tracking-widest text-cream/40 sm:flex-row lg:px-10">
-        <span>© {new Date().getFullYear()} Allyance — Built for women's sport.</span>
+        <span>© {new Date().getFullYear()} Pegasus — Built for women's sport.</span>
         <span>Made with intention.</span>
       </div>
     </footer>

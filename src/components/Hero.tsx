@@ -18,7 +18,7 @@ export function Hero() {
           </h1>
 
           <p className="mt-8 max-w-xl text-lg text-cream/75 lg:text-xl">
-            Allyance is the AI-powered marketplace pairing women athletes —
+            Pegasus is the AI-powered marketplace pairing women athletes —
             from rising stars to Olympians — with values-aligned brands.
             Authentic partnerships. Fair pricing. Zero gatekeeping.
           </p>

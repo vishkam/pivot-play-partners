@@ -211,7 +211,7 @@ function ContractDetail() {
           <Card>
             <h3 className="font-display text-xl">Trust & safety</h3>
             <p className="mt-2 text-xs text-muted-foreground">
-              Spotted something off? File a dispute and Allyance moderators will review within 48h.
+              Spotted something off? File a dispute and Pegasus moderators will review within 48h.
             </p>
             <Link to="/disputes/new" search={{ contract_id: c.id }}
               className="mt-3 inline-flex items-center gap-1.5 text-xs font-medium text-destructive hover:underline">
@@ -281,7 +281,7 @@ function ReviewModal({ contractId, athleteId, brandId, onClose }: { contractId: 
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-plum-deep/50 p-4">
       <div className="w-full max-w-md rounded-3xl border border-border bg-background p-6 shadow-elegant">
         <h3 className="font-display text-2xl">Leave a review</h3>
-        <p className="mt-1 text-xs text-muted-foreground">Help build trust on Allyance.</p>
+        <p className="mt-1 text-xs text-muted-foreground">Help build trust on Pegasus.</p>
         <div className="mt-5 space-y-3">
           {(["professionalism", "communication", "reliability", "campaign_success"] as const).map((k) => (
             <div key={k}>

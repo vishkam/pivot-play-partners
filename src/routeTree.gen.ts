@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SubscriptionRouteImport } from './routes/subscription'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as MessagesRouteImport } from './routes/messages'
 import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
@@ -28,6 +29,7 @@ import { Route as BrandContractsRouteImport } from './routes/brand.contracts'
 import { Route as AthletePricingRouteImport } from './routes/athlete.pricing'
 import { Route as AthleteOpportunitiesRouteImport } from './routes/athlete.opportunities'
 import { Route as AthleteOnboardingRouteImport } from './routes/athlete.onboarding'
+import { Route as AthleteFeedRouteImport } from './routes/athlete.feed'
 import { Route as AthleteEarningsRouteImport } from './routes/athlete.earnings'
 import { Route as AthleteDealsRouteImport } from './routes/athlete.deals'
 import { Route as AthleteDashboardRouteImport } from './routes/athlete.dashboard'
@@ -40,6 +42,11 @@ import { Route as BrandCampaignsNewRouteImport } from './routes/brand.campaigns.
 import { Route as BrandCampaignsIdRouteImport } from './routes/brand.campaigns.$id'
 import { Route as BrandAthletesIdRouteImport } from './routes/brand.athletes.$id'
 
+const SubscriptionRoute = SubscriptionRouteImport.update({
+  id: '/subscription',
+  path: '/subscription',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
   id: '/reset-password',
   path: '/reset-password',
@@ -135,6 +142,11 @@ const AthleteOnboardingRoute = AthleteOnboardingRouteImport.update({
   path: '/athlete/onboarding',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AthleteFeedRoute = AthleteFeedRouteImport.update({
+  id: '/athlete/feed',
+  path: '/athlete/feed',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AthleteEarningsRoute = AthleteEarningsRouteImport.update({
   id: '/athlete/earnings',
   path: '/athlete/earnings',
@@ -198,6 +210,7 @@ export interface FileRoutesByFullPath {
   '/forgot-password': typeof ForgotPasswordRoute
   '/messages': typeof MessagesRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
+  '/subscription': typeof SubscriptionRoute
   '/admin/contracts': typeof AdminContractsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/disputes': typeof AdminDisputesRoute
@@ -206,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/athlete/dashboard': typeof AthleteDashboardRoute
   '/athlete/deals': typeof AthleteDealsRoute
   '/athlete/earnings': typeof AthleteEarningsRoute
+  '/athlete/feed': typeof AthleteFeedRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
   '/athlete/pricing': typeof AthletePricingRoute
@@ -230,6 +244,7 @@ export interface FileRoutesByTo {
   '/forgot-password': typeof ForgotPasswordRoute
   '/messages': typeof MessagesRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
+  '/subscription': typeof SubscriptionRoute
   '/admin/contracts': typeof AdminContractsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/disputes': typeof AdminDisputesRoute
@@ -238,6 +253,7 @@ export interface FileRoutesByTo {
   '/athlete/dashboard': typeof AthleteDashboardRoute
   '/athlete/deals': typeof AthleteDealsRoute
   '/athlete/earnings': typeof AthleteEarningsRoute
+  '/athlete/feed': typeof AthleteFeedRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
   '/athlete/pricing': typeof AthletePricingRoute
@@ -263,6 +279,7 @@ export interface FileRoutesById {
   '/forgot-password': typeof ForgotPasswordRoute
   '/messages': typeof MessagesRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
+  '/subscription': typeof SubscriptionRoute
   '/admin/contracts': typeof AdminContractsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
   '/admin/disputes': typeof AdminDisputesRoute
@@ -271,6 +288,7 @@ export interface FileRoutesById {
   '/athlete/dashboard': typeof AthleteDashboardRoute
   '/athlete/deals': typeof AthleteDealsRoute
   '/athlete/earnings': typeof AthleteEarningsRoute
+  '/athlete/feed': typeof AthleteFeedRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
   '/athlete/pricing': typeof AthletePricingRoute
@@ -297,6 +315,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/messages'
     | '/reset-password'
+    | '/subscription'
     | '/admin/contracts'
     | '/admin/dashboard'
     | '/admin/disputes'
@@ -305,6 +324,7 @@ export interface FileRouteTypes {
     | '/athlete/dashboard'
     | '/athlete/deals'
     | '/athlete/earnings'
+    | '/athlete/feed'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
     | '/athlete/pricing'
@@ -329,6 +349,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/messages'
     | '/reset-password'
+    | '/subscription'
     | '/admin/contracts'
     | '/admin/dashboard'
     | '/admin/disputes'
@@ -337,6 +358,7 @@ export interface FileRouteTypes {
     | '/athlete/dashboard'
     | '/athlete/deals'
     | '/athlete/earnings'
+    | '/athlete/feed'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
     | '/athlete/pricing'
@@ -361,6 +383,7 @@ export interface FileRouteTypes {
     | '/forgot-password'
     | '/messages'
     | '/reset-password'
+    | '/subscription'
     | '/admin/contracts'
     | '/admin/dashboard'
     | '/admin/disputes'
@@ -369,6 +392,7 @@ export interface FileRouteTypes {
     | '/athlete/dashboard'
     | '/athlete/deals'
     | '/athlete/earnings'
+    | '/athlete/feed'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
     | '/athlete/pricing'
@@ -394,6 +418,7 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   MessagesRoute: typeof MessagesRouteWithChildren
   ResetPasswordRoute: typeof ResetPasswordRoute
+  SubscriptionRoute: typeof SubscriptionRoute
   AdminContractsRoute: typeof AdminContractsRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
   AdminDisputesRoute: typeof AdminDisputesRoute
@@ -402,6 +427,7 @@ export interface RootRouteChildren {
   AthleteDashboardRoute: typeof AthleteDashboardRoute
   AthleteDealsRoute: typeof AthleteDealsRoute
   AthleteEarningsRoute: typeof AthleteEarningsRoute
+  AthleteFeedRoute: typeof AthleteFeedRoute
   AthleteOnboardingRoute: typeof AthleteOnboardingRoute
   AthleteOpportunitiesRoute: typeof AthleteOpportunitiesRoute
   AthletePricingRoute: typeof AthletePricingRoute
@@ -421,6 +447,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/subscription': {
+      id: '/subscription'
+      path: '/subscription'
+      fullPath: '/subscription'
+      preLoaderRoute: typeof SubscriptionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/reset-password': {
       id: '/reset-password'
       path: '/reset-password'
@@ -554,6 +587,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AthleteOnboardingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/athlete/feed': {
+      id: '/athlete/feed'
+      path: '/athlete/feed'
+      fullPath: '/athlete/feed'
+      preLoaderRoute: typeof AthleteFeedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/athlete/earnings': {
       id: '/athlete/earnings'
       path: '/athlete/earnings'
@@ -653,6 +693,7 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   MessagesRoute: MessagesRouteWithChildren,
   ResetPasswordRoute: ResetPasswordRoute,
+  SubscriptionRoute: SubscriptionRoute,
   AdminContractsRoute: AdminContractsRoute,
   AdminDashboardRoute: AdminDashboardRoute,
   AdminDisputesRoute: AdminDisputesRoute,
@@ -661,6 +702,7 @@ const rootRouteChildren: RootRouteChildren = {
   AthleteDashboardRoute: AthleteDashboardRoute,
   AthleteDealsRoute: AthleteDealsRoute,
   AthleteEarningsRoute: AthleteEarningsRoute,
+  AthleteFeedRoute: AthleteFeedRoute,
   AthleteOnboardingRoute: AthleteOnboardingRoute,
   AthleteOpportunitiesRoute: AthleteOpportunitiesRoute,
   AthletePricingRoute: AthletePricingRoute,
