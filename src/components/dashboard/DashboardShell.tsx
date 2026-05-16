@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { AppSidebar, MobileTopbar, MobileBottomNav } from "./AppSidebar";
+import { DemoBanner } from "./DemoBanner";
 import { NotificationBell } from "@/components/NotificationBell";
 
 interface DashboardShellProps {
@@ -15,6 +16,7 @@ export function DashboardShell({ title, subtitle, actions, children }: Dashboard
       <AppSidebar />
       <div className="flex min-w-0 flex-1 flex-col">
         <MobileTopbar />
+        <DemoBanner />
         <header className="border-b border-border bg-cream px-6 py-6 lg:px-10 lg:py-8">
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>

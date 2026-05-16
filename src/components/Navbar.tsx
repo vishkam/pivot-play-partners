@@ -17,6 +17,12 @@ export function Navbar() {
         </nav>
         <div className="flex items-center gap-3">
           <Link
+            to="/demo"
+            className="hidden rounded-full border border-gold/40 bg-gold/5 px-4 py-2 text-sm text-gold transition-colors hover:bg-gold/15 sm:inline-block"
+          >
+            Try demo
+          </Link>
+          <Link
             to="/auth"
             search={{ mode: "signin", redirect: "/dashboard" } as never}
             className="hidden rounded-full border border-cream/20 px-5 py-2 text-sm text-cream/90 transition-colors hover:border-gold hover:text-gold sm:inline-block"

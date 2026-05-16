@@ -39,6 +39,12 @@ export function Hero() {
             >
               Discover athletes →
             </Link>
+            <Link
+              to="/demo"
+              className="rounded-full border border-gold/50 bg-gold/10 px-7 py-3.5 font-medium text-gold transition-colors hover:bg-gold/20"
+            >
+              Try the demo →
+            </Link>
           </div>
 
           <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-xs uppercase tracking-widest text-cream/60">
