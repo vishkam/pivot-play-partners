@@ -14,7 +14,7 @@ export function DemoBanner() {
         <span className="hidden text-cream/70 sm:inline">— exploring as {profile?.full_name}</span>
       </span>
       <Link to="/demo" className="rounded-full border border-gold/40 bg-gold/10 px-3 py-1 font-medium text-gold hover:bg-gold/20">
-        Switch role
+        ← Demo hub
       </Link>
     </div>
   );
