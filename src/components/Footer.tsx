@@ -19,6 +19,7 @@ export function Footer() {
             <li><a href="#athletes" className="hover:text-gold">For athletes</a></li>
             <li><a href="#brands" className="hover:text-gold">For brands</a></li>
             <li><a href="#pricing" className="hover:text-gold">Pricing</a></li>
+            <li><a href="/demo" className="text-gold hover:underline">Try the demo</a></li>
           </ul>
         </div>
         <div>
