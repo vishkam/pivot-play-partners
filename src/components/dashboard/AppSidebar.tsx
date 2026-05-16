@@ -18,6 +18,8 @@ import {
   Tag,
   KanbanSquare,
   Star,
+  Crown,
+  Flame,
 } from "lucide-react";
 import { useAuth, type AppRole } from "@/hooks/use-auth";
 
@@ -29,12 +31,14 @@ interface NavItem {
 
 const ATHLETE_NAV: NavItem[] = [
   { label: "Overview", to: "/athlete/dashboard", icon: LayoutDashboard },
+  { label: "Deal feed", to: "/athlete/feed", icon: Flame },
   { label: "Opportunities", to: "/athlete/opportunities", icon: Inbox },
   { label: "Open deals", to: "/athlete/deals", icon: Sparkles },
   { label: "Messages", to: "/messages", icon: MessageSquare },
   { label: "Contracts", to: "/athlete/contracts", icon: FileText },
   { label: "Earnings", to: "/athlete/earnings", icon: Wallet },
   { label: "Rate card", to: "/athlete/pricing", icon: Tag },
+  { label: "Subscription", to: "/subscription", icon: Crown },
   { label: "Edit profile", to: "/athlete/onboarding", icon: Sparkles },
 ];
 
@@ -46,6 +50,7 @@ const BRAND_NAV: NavItem[] = [
   { label: "Pipeline", to: "/brand/pipeline", icon: KanbanSquare },
   { label: "Messages", to: "/messages", icon: MessageSquare },
   { label: "Contracts", to: "/brand/contracts", icon: FileText },
+  { label: "Subscription", to: "/subscription", icon: Crown },
   { label: "Settings", to: "/brand/dashboard", icon: Settings },
 ];
 
