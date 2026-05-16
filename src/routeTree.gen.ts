@@ -24,6 +24,7 @@ import { Route as BrandDashboardRouteImport } from './routes/brand.dashboard'
 import { Route as AthleteOpportunitiesRouteImport } from './routes/athlete.opportunities'
 import { Route as AthleteOnboardingRouteImport } from './routes/athlete.onboarding'
 import { Route as AthleteDashboardRouteImport } from './routes/athlete.dashboard'
+import { Route as AthleteContractsRouteImport } from './routes/athlete.contracts'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as BrandCampaignsNewRouteImport } from './routes/brand.campaigns.new'
 import { Route as BrandCampaignsIdRouteImport } from './routes/brand.campaigns.$id'
@@ -104,6 +105,11 @@ const AthleteDashboardRoute = AthleteDashboardRouteImport.update({
   path: '/athlete/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AthleteContractsRoute = AthleteContractsRouteImport.update({
+  id: '/athlete/contracts',
+  path: '/athlete/contracts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminDashboardRoute = AdminDashboardRouteImport.update({
   id: '/admin/dashboard',
   path: '/admin/dashboard',
@@ -133,6 +139,7 @@ export interface FileRoutesByFullPath {
   '/messages': typeof MessagesRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/athlete/contracts': typeof AthleteContractsRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
@@ -154,6 +161,7 @@ export interface FileRoutesByTo {
   '/messages': typeof MessagesRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/athlete/contracts': typeof AthleteContractsRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
@@ -176,6 +184,7 @@ export interface FileRoutesById {
   '/messages': typeof MessagesRouteWithChildren
   '/reset-password': typeof ResetPasswordRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/athlete/contracts': typeof AthleteContractsRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
@@ -199,6 +208,7 @@ export interface FileRouteTypes {
     | '/messages'
     | '/reset-password'
     | '/admin/dashboard'
+    | '/athlete/contracts'
     | '/athlete/dashboard'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
@@ -220,6 +230,7 @@ export interface FileRouteTypes {
     | '/messages'
     | '/reset-password'
     | '/admin/dashboard'
+    | '/athlete/contracts'
     | '/athlete/dashboard'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
@@ -241,6 +252,7 @@ export interface FileRouteTypes {
     | '/messages'
     | '/reset-password'
     | '/admin/dashboard'
+    | '/athlete/contracts'
     | '/athlete/dashboard'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
@@ -263,6 +275,7 @@ export interface RootRouteChildren {
   MessagesRoute: typeof MessagesRouteWithChildren
   ResetPasswordRoute: typeof ResetPasswordRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
+  AthleteContractsRoute: typeof AthleteContractsRoute
   AthleteDashboardRoute: typeof AthleteDashboardRoute
   AthleteOnboardingRoute: typeof AthleteOnboardingRoute
   AthleteOpportunitiesRoute: typeof AthleteOpportunitiesRoute
@@ -383,6 +396,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AthleteDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/athlete/contracts': {
+      id: '/athlete/contracts'
+      path: '/athlete/contracts'
+      fullPath: '/athlete/contracts'
+      preLoaderRoute: typeof AthleteContractsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/dashboard': {
       id: '/admin/dashboard'
       path: '/admin/dashboard'
@@ -434,6 +454,7 @@ const rootRouteChildren: RootRouteChildren = {
   MessagesRoute: MessagesRouteWithChildren,
   ResetPasswordRoute: ResetPasswordRoute,
   AdminDashboardRoute: AdminDashboardRoute,
+  AthleteContractsRoute: AthleteContractsRoute,
   AthleteDashboardRoute: AthleteDashboardRoute,
   AthleteOnboardingRoute: AthleteOnboardingRoute,
   AthleteOpportunitiesRoute: AthleteOpportunitiesRoute,
