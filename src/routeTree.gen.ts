@@ -31,6 +31,7 @@ import { Route as AthleteOnboardingRouteImport } from './routes/athlete.onboardi
 import { Route as AthleteEarningsRouteImport } from './routes/athlete.earnings'
 import { Route as AthleteDashboardRouteImport } from './routes/athlete.dashboard'
 import { Route as AthleteContractsRouteImport } from './routes/athlete.contracts'
+import { Route as AdminRevenueRouteImport } from './routes/admin.revenue'
 import { Route as AdminDashboardRouteImport } from './routes/admin.dashboard'
 import { Route as AdminContractsRouteImport } from './routes/admin.contracts'
 import { Route as BrandCampaignsNewRouteImport } from './routes/brand.campaigns.new'
@@ -147,6 +148,11 @@ const AthleteContractsRoute = AthleteContractsRouteImport.update({
   path: '/athlete/contracts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRevenueRoute = AdminRevenueRouteImport.update({
+  id: '/admin/revenue',
+  path: '/admin/revenue',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminDashboardRoute = AdminDashboardRouteImport.update({
   id: '/admin/dashboard',
   path: '/admin/dashboard',
@@ -182,6 +188,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof ResetPasswordRoute
   '/admin/contracts': typeof AdminContractsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/revenue': typeof AdminRevenueRoute
   '/athlete/contracts': typeof AthleteContractsRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
   '/athlete/earnings': typeof AthleteEarningsRoute
@@ -211,6 +218,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof ResetPasswordRoute
   '/admin/contracts': typeof AdminContractsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/revenue': typeof AdminRevenueRoute
   '/athlete/contracts': typeof AthleteContractsRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
   '/athlete/earnings': typeof AthleteEarningsRoute
@@ -241,6 +249,7 @@ export interface FileRoutesById {
   '/reset-password': typeof ResetPasswordRoute
   '/admin/contracts': typeof AdminContractsRoute
   '/admin/dashboard': typeof AdminDashboardRoute
+  '/admin/revenue': typeof AdminRevenueRoute
   '/athlete/contracts': typeof AthleteContractsRoute
   '/athlete/dashboard': typeof AthleteDashboardRoute
   '/athlete/earnings': typeof AthleteEarningsRoute
@@ -272,6 +281,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/admin/contracts'
     | '/admin/dashboard'
+    | '/admin/revenue'
     | '/athlete/contracts'
     | '/athlete/dashboard'
     | '/athlete/earnings'
@@ -301,6 +311,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/admin/contracts'
     | '/admin/dashboard'
+    | '/admin/revenue'
     | '/athlete/contracts'
     | '/athlete/dashboard'
     | '/athlete/earnings'
@@ -330,6 +341,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/admin/contracts'
     | '/admin/dashboard'
+    | '/admin/revenue'
     | '/athlete/contracts'
     | '/athlete/dashboard'
     | '/athlete/earnings'
@@ -360,6 +372,7 @@ export interface RootRouteChildren {
   ResetPasswordRoute: typeof ResetPasswordRoute
   AdminContractsRoute: typeof AdminContractsRoute
   AdminDashboardRoute: typeof AdminDashboardRoute
+  AdminRevenueRoute: typeof AdminRevenueRoute
   AthleteContractsRoute: typeof AthleteContractsRoute
   AthleteDashboardRoute: typeof AthleteDashboardRoute
   AthleteEarningsRoute: typeof AthleteEarningsRoute
@@ -536,6 +549,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AthleteContractsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/revenue': {
+      id: '/admin/revenue'
+      path: '/admin/revenue'
+      fullPath: '/admin/revenue'
+      preLoaderRoute: typeof AdminRevenueRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/dashboard': {
       id: '/admin/dashboard'
       path: '/admin/dashboard'
@@ -595,6 +615,7 @@ const rootRouteChildren: RootRouteChildren = {
   ResetPasswordRoute: ResetPasswordRoute,
   AdminContractsRoute: AdminContractsRoute,
   AdminDashboardRoute: AdminDashboardRoute,
+  AdminRevenueRoute: AdminRevenueRoute,
   AthleteContractsRoute: AthleteContractsRoute,
   AthleteDashboardRoute: AthleteDashboardRoute,
   AthleteEarningsRoute: AthleteEarningsRoute,
