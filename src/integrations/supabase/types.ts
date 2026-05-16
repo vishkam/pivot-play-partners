@@ -184,48 +184,60 @@ export type Database = {
           brand_id: string
           budget_max: number | null
           budget_min: number | null
+          content_deliverables: string | null
           created_at: string
           description: string | null
           geographic_reach: string[] | null
           goals: string | null
           id: string
           name: string
+          notes: string | null
           partnership_structure: string | null
           preferred_athlete_types: string[] | null
+          product_category: string | null
           sports: string[] | null
           status: Database["public"]["Enums"]["campaign_status"]
+          timeline: string | null
           updated_at: string
         }
         Insert: {
           brand_id: string
           budget_max?: number | null
           budget_min?: number | null
+          content_deliverables?: string | null
           created_at?: string
           description?: string | null
           geographic_reach?: string[] | null
           goals?: string | null
           id?: string
           name: string
+          notes?: string | null
           partnership_structure?: string | null
           preferred_athlete_types?: string[] | null
+          product_category?: string | null
           sports?: string[] | null
           status?: Database["public"]["Enums"]["campaign_status"]
+          timeline?: string | null
           updated_at?: string
         }
         Update: {
           brand_id?: string
           budget_max?: number | null
           budget_min?: number | null
+          content_deliverables?: string | null
           created_at?: string
           description?: string | null
           geographic_reach?: string[] | null
           goals?: string | null
           id?: string
           name?: string
+          notes?: string | null
           partnership_structure?: string | null
           preferred_athlete_types?: string[] | null
+          product_category?: string | null
           sports?: string[] | null
           status?: Database["public"]["Enums"]["campaign_status"]
+          timeline?: string | null
           updated_at?: string
         }
         Relationships: []
@@ -352,33 +364,45 @@ export type Database = {
       proposals: {
         Row: {
           athlete_id: string
+          athlete_response: string | null
           body: string | null
           brand_id: string
           campaign_id: string | null
           created_at: string
+          deliverables: string | null
           id: string
+          partnership_type: string | null
           proposed_amount: number | null
           status: Database["public"]["Enums"]["proposal_status"]
+          timeline: string | null
         }
         Insert: {
           athlete_id: string
+          athlete_response?: string | null
           body?: string | null
           brand_id: string
           campaign_id?: string | null
           created_at?: string
+          deliverables?: string | null
           id?: string
+          partnership_type?: string | null
           proposed_amount?: number | null
           status?: Database["public"]["Enums"]["proposal_status"]
+          timeline?: string | null
         }
         Update: {
           athlete_id?: string
+          athlete_response?: string | null
           body?: string | null
           brand_id?: string
           campaign_id?: string | null
           created_at?: string
+          deliverables?: string | null
           id?: string
+          partnership_type?: string | null
           proposed_amount?: number | null
           status?: Database["public"]["Enums"]["proposal_status"]
+          timeline?: string | null
         }
         Relationships: [
           {
@@ -389,6 +413,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      saved_athletes: {
+        Row: {
+          athlete_id: string
+          brand_id: string
+          created_at: string
+          id: string
+          notes: string | null
+        }
+        Insert: {
+          athlete_id: string
+          brand_id: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+        }
+        Update: {
+          athlete_id?: string
+          brand_id?: string
+          created_at?: string
+          id?: string
+          notes?: string | null
+        }
+        Relationships: []
       }
       user_roles: {
         Row: {
