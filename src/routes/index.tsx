@@ -5,6 +5,8 @@ import { LogoMarquee } from "@/components/LogoMarquee";
 import { Mission } from "@/components/Mission";
 import { HowItWorks } from "@/components/HowItWorks";
 import { MatchEngine } from "@/components/MatchEngine";
+import { AISponsorshipTeam } from "@/components/AISponsorshipTeam";
+import { PlatformActivity } from "@/components/PlatformActivity";
 import { ForBrands } from "@/components/ForBrands";
 import { Pricing } from "@/components/Pricing";
 import { FAQ } from "@/components/FAQ";
@@ -14,17 +16,17 @@ import { Footer } from "@/components/Footer";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Pegasus — Where women athletes meet the brands that believe in them" },
+      { title: "Pegasus — AI sponsorship infrastructure for women's sports" },
       {
         name: "description",
         content:
-          "Pegasus is the AI-powered marketplace connecting women athletes with values-aligned brands for authentic, fairly priced partnerships.",
+          "Pegasus is the AI-powered sponsorship platform for women athletes and values-aligned brands — intelligent matching, proposals, contracts, payments and growth strategy in one infrastructure layer.",
       },
-      { property: "og:title", content: "Pegasus — Partnership infrastructure for women's sports" },
+      { property: "og:title", content: "Pegasus — Your AI sponsorship manager for women's sports" },
       {
         property: "og:description",
         content:
-          "The two-sided marketplace pairing women athletes with values-led brands. Verified profiles, AI matching, transparent contracts.",
+          "AI matching, proposal generation, legal + escrow, and growth strategy for elite women athletes and values-led brands.",
       },
     ],
   }),
@@ -39,7 +41,9 @@ function Index() {
       <LogoMarquee />
       <Mission />
       <HowItWorks />
+      <AISponsorshipTeam />
       <MatchEngine />
+      <PlatformActivity />
       <ForBrands />
       <Pricing />
       <FAQ />
