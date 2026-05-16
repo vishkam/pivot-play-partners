@@ -118,7 +118,7 @@ async function seedDemoBrand(userId: string) {
       user_id: userId, brand_name: "Lumen Wellness", website: "https://lumenwellness.demo",
       industry: "Health & Nutrition", revenue_stage: "$5M–$25M ARR",
       contact_role: "Head of Brand Partnerships",
-      values: ["Clean ingredients", "Women-led", "Sustainability"],
+      values: ["Clean ingredients", "Women-led", "Sustainability", "Wellness", "Women's health"],
       mission: "Help women athletes recover smarter with clean, science-backed nutrition.",
       esg_priorities: ["Recyclable packaging", "Carbon-neutral shipping"],
       positioning: "Premium recovery nutrition for performance women",
