@@ -88,7 +88,7 @@ export function AppSidebar() {
       <div className="flex items-center gap-2 px-6 py-6">
         <Link to="/" className="flex items-center gap-2">
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-gold text-plum-deep font-display text-lg font-semibold">
-            A
+            P
           </span>
           <span className="font-display text-xl">Pegasus</span>
         </Link>

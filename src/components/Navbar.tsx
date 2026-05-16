@@ -5,7 +5,7 @@ export function Navbar() {
     <header className="absolute top-0 left-0 right-0 z-50">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-6 lg:px-10">
         <Link to="/" className="flex items-center gap-2 text-cream">
-          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-gold text-plum-deep font-display text-lg font-semibold">A</span>
+          <span className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-gold text-plum-deep font-display text-lg font-semibold">P</span>
           <span className="font-display text-xl tracking-tight">Pegasus</span>
         </Link>
         <nav className="hidden items-center gap-10 text-sm text-cream/80 md:flex">
