@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import { Loader2, ArrowLeft, ArrowRight, Check } from "lucide-react";
 import { toast } from "sonner";
 import { RequireAuth } from "@/components/auth/RequireAuth";
+import { OnboardingHeader } from "@/components/onboarding/OnboardingHeader";
 import { useAuth } from "@/hooks/use-auth";
 import { supabase } from "@/integrations/supabase/client";
+import { COUNTRIES, SPORTS, MATERIALS } from "@/lib/onboarding-options";
 
 export const Route = createFileRoute("/athlete/onboarding")({
   component: () => (
@@ -19,6 +21,7 @@ const STEPS = [
   "Athletic",
   "Verification",
   "Values",
+  "Gear & Brands",
   "Social",
   "Media kit",
   "Commercials",
@@ -36,6 +39,9 @@ interface FormState {
   values: string;
   causes: string;
   story: string;
+  favorite_brands: string;
+  favorite_products: string;
+  material_preferences: string;
   instagram: string;
   tiktok: string;
   youtube: string;
@@ -50,6 +56,7 @@ interface FormState {
 const INITIAL: FormState = {
   country: "", sport: "", discipline: "", professional_level: "", team_federation: "",
   rankings: "", achievements: "", certifications: "", values: "", causes: "", story: "",
+  favorite_brands: "", favorite_products: "", material_preferences: "",
   instagram: "", tiktok: "", youtube: "", linkedin: "", followers: "",
   partnership_types: "", pricing_min: "", pricing_max: "", availability: "",
 };
@@ -60,18 +67,23 @@ function AthleteOnboarding() {
   const [step, setStep] = useState(0);
   const [saving, setSaving] = useState(false);
   const [data, setData] = useState<FormState>(INITIAL);
+  const [sportSuggestions, setSportSuggestions] = useState<string[]>(SPORTS);
 
-  // Load existing draft
+  // Load existing draft + dynamic sport suggestions from other athletes
   useEffect(() => {
     if (!user) return;
     (async () => {
-      const { data: ap } = await supabase
-        .from("athlete_profiles")
-        .select("*")
-        .eq("user_id", user.id)
-        .maybeSingle();
-      const { data: pf } = await supabase
-        .from("profiles").select("country").eq("id", user.id).maybeSingle();
+      const [{ data: ap }, { data: pf }, { data: others }] = await Promise.all([
+        supabase.from("athlete_profiles").select("*").eq("user_id", user.id).maybeSingle(),
+        supabase.from("profiles").select("country").eq("id", user.id).maybeSingle(),
+        supabase.from("athlete_profiles").select("sport").not("sport", "is", null).limit(500),
+      ]);
+
+      const dbSports = Array.from(
+        new Set((others ?? []).map((r) => r.sport).filter(Boolean) as string[]),
+      );
+      setSportSuggestions(Array.from(new Set([...dbSports, ...SPORTS])).sort());
+
       if (ap) {
         setData((d) => ({
           ...d,
@@ -86,6 +98,9 @@ function AthleteOnboarding() {
           values: (ap.values ?? []).join(", "),
           causes: (ap.causes ?? []).join(", "),
           story: ap.story ?? "",
+          favorite_brands: (ap.favorite_brands ?? []).join(", "),
+          favorite_products: ap.favorite_products ?? "",
+          material_preferences: (ap.material_preferences ?? []).join(", "),
           instagram: (ap.social_links as Record<string, string> | null)?.instagram ?? "",
           tiktok: (ap.social_links as Record<string, string> | null)?.tiktok ?? "",
           youtube: (ap.social_links as Record<string, string> | null)?.youtube ?? "",
@@ -115,6 +130,9 @@ function AthleteOnboarding() {
         professional_level: data.professional_level, team_federation: data.team_federation,
         rankings: data.rankings, achievements: data.achievements, certifications: data.certifications,
         values: splitList(data.values), causes: splitList(data.causes), story: data.story,
+        favorite_brands: splitList(data.favorite_brands),
+        favorite_products: data.favorite_products,
+        material_preferences: splitList(data.material_preferences),
         social_links: {
           instagram: data.instagram, tiktok: data.tiktok,
           youtube: data.youtube, linkedin: data.linkedin,
@@ -149,6 +167,7 @@ function AthleteOnboarding() {
 
   return (
     <div className="min-h-screen bg-secondary">
+      <OnboardingHeader />
       <div className="mx-auto max-w-3xl px-6 py-12">
         <p className="text-xs uppercase tracking-[0.3em] text-plum">Athlete onboarding</p>
         <h1 className="mt-2 font-display text-4xl text-foreground">Tell us your story</h1>
@@ -169,13 +188,27 @@ function AthleteOnboarding() {
         <div className="mt-8 rounded-3xl border border-border bg-cream p-8 shadow-elegant">
           {step === 0 && (
             <Grid>
-              <Input label="Country" value={data.country} onChange={upd("country")} placeholder="United States" />
+              <Combobox
+                label="Country"
+                value={data.country}
+                onChange={upd("country")}
+                options={COUNTRIES}
+                listId="country-options"
+                placeholder="Start typing — United States, Kenya, Japan…"
+              />
               <Textarea label="Your story" value={data.story} onChange={upd("story")} placeholder="What drives you? What's your journey?" />
             </Grid>
           )}
           {step === 1 && (
             <Grid>
-              <Input label="Sport" value={data.sport} onChange={upd("sport")} placeholder="Track & field" />
+              <Combobox
+                label="Sport"
+                value={data.sport}
+                onChange={upd("sport")}
+                options={sportSuggestions}
+                listId="sport-options"
+                placeholder="Start typing — suggestions from our roster"
+              />
               <Input label="Discipline" value={data.discipline} onChange={upd("discipline")} placeholder="400m hurdles" />
               <Select label="Professional level" value={data.professional_level} onChange={upd("professional_level")}
                 options={["Amateur", "Semi-pro", "Professional", "National team", "Olympic / World"]} />
@@ -200,6 +233,39 @@ function AthleteOnboarding() {
           )}
           {step === 4 && (
             <Grid>
+              <div className="md:col-span-2 rounded-2xl border border-plum/15 bg-plum/5 p-5 text-sm text-foreground/80">
+                <p className="font-display text-base text-foreground">Why we ask</p>
+                <p className="mt-1 text-muted-foreground">
+                  The brands you already trust — and the materials that actually affect your performance (think glide
+                  fabric for swim, super-foam plates for marathon, recycled neoprene for surf) — make our matches
+                  dramatically more relevant. Brands using similar materials will be prioritized.
+                </p>
+              </div>
+              <Input
+                label="Brands you love (comma-separated)"
+                value={data.favorite_brands}
+                onChange={upd("favorite_brands")}
+                placeholder="Speedo, On Running, Patagonia, Oakley"
+              />
+              <Textarea
+                label="Favorite products / gear you currently use"
+                value={data.favorite_products}
+                onChange={upd("favorite_products")}
+                placeholder="Arena Carbon Air2 suit, Nike Vaporfly 3, Hoka Speedgoat 5…"
+              />
+              <Combobox
+                label="Materials & tech that matter to your performance"
+                value={data.material_preferences}
+                onChange={upd("material_preferences")}
+                options={MATERIALS}
+                listId="material-options"
+                placeholder="PBT, carbon plate, ECONYL®, Merino wool…"
+                hint="Comma-separated. Start typing to see suggestions."
+              />
+            </Grid>
+          )}
+          {step === 5 && (
+            <Grid>
               <Input label="Instagram" value={data.instagram} onChange={upd("instagram")} placeholder="@yourhandle" />
               <Input label="TikTok" value={data.tiktok} onChange={upd("tiktok")} placeholder="@yourhandle" />
               <Input label="YouTube" value={data.youtube} onChange={upd("youtube")} placeholder="channel URL" />
@@ -207,7 +273,7 @@ function AthleteOnboarding() {
               <Input label="Total followers (all platforms)" type="number" value={data.followers} onChange={upd("followers")} placeholder="125000" />
             </Grid>
           )}
-          {step === 5 && (
+          {step === 6 && (
             <Grid>
               <div className="rounded-xl border border-dashed border-border bg-background p-6 text-sm text-muted-foreground">
                 <p className="font-medium text-foreground">Media kit assets</p>
@@ -215,7 +281,7 @@ function AthleteOnboarding() {
               </div>
             </Grid>
           )}
-          {step === 6 && (
+          {step === 7 && (
             <Grid>
               <Input label="Partnership types (comma-separated)" value={data.partnership_types} onChange={upd("partnership_types")}
                 placeholder="Sponsorship, ambassadorship, content, appearance" />
@@ -296,6 +362,37 @@ function Select({ label, options, ...rest }: { label: string; options: string[] 
         <option value="">Select…</option>
         {options.map((o) => <option key={o} value={o}>{o}</option>)}
       </select>
+    </label>
+  );
+}
+
+function Combobox({
+  label, value, onChange, options, listId, placeholder, hint,
+}: {
+  label: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  options: string[];
+  listId: string;
+  placeholder?: string;
+  hint?: string;
+}) {
+  return (
+    <label className="block md:col-span-2">
+      <span className="mb-1.5 block text-xs font-medium uppercase tracking-wider text-muted-foreground">{label}</span>
+      <input
+        type="text"
+        value={value}
+        onChange={onChange}
+        list={listId}
+        placeholder={placeholder}
+        autoComplete="off"
+        className="w-full rounded-xl border border-border bg-background px-4 py-2.5 text-sm focus:border-plum focus:outline-none"
+      />
+      <datalist id={listId}>
+        {options.map((o) => <option key={o} value={o} />)}
+      </datalist>
+      {hint && <span className="mt-1.5 block text-xs text-muted-foreground">{hint}</span>}
     </label>
   );
 }
