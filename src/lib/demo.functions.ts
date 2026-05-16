@@ -29,6 +29,19 @@ const EXTRA_ATHLETES = [
     rankings: "IFSC top 15", achievements: "World Cup podium · 2x national champion",
     values: ["Conservation", "Inclusion", "Mental health"], country: "India",
     favorite_brands: ["La Sportiva", "Patagonia", "Black Diamond"], pricing_min: 4500, pricing_max: 38000, completeness: 79 },
+  // UK wellness-friendly micro-tier (age 30–35, IG-ready, £500–£2,000 per post)
+  { email: "demo-a-isla@pegasus.app", full_name: "Isla Thompson", sport: "Swimming", discipline: "Open-water · Masters",
+    rankings: "UK Masters top 5 · 32 yrs", achievements: "British Masters champion · open-water marathon finisher",
+    values: ["Wellness", "Women's health", "Sustainability"], country: "United Kingdom",
+    favorite_brands: ["Speedo", "Lululemon", "Form Goggles"], pricing_min: 500, pricing_max: 2000, completeness: 86 },
+  { email: "demo-a-harriet@pegasus.app", full_name: "Harriet Boateng", sport: "Marathon", discipline: "Road running · Half + full",
+    rankings: "UK sub-elite · 34 yrs", achievements: "London Marathon GFA · 1:18 half PB",
+    values: ["Wellness", "Mental health", "Inclusive fitness"], country: "United Kingdom",
+    favorite_brands: ["Hoka", "Tracksmith", "Form Nutrition"], pricing_min: 600, pricing_max: 1800, completeness: 82 },
+  { email: "demo-a-niamh@pegasus.app", full_name: "Niamh O'Connor", sport: "Trail Running", discipline: "Ultra + trail",
+    rankings: "UK trail series podium · 30 yrs", achievements: "Lakeland 50 podium · UTMB CCC finisher",
+    values: ["Wellness", "Nature", "Women's health"], country: "United Kingdom",
+    favorite_brands: ["Salomon", "Inov-8", "Wild Nutrition"], pricing_min: 750, pricing_max: 2000, completeness: 84 },
 ];
 
 const EXTRA_BRANDS = [
@@ -105,7 +118,7 @@ async function seedDemoBrand(userId: string) {
       user_id: userId, brand_name: "Lumen Wellness", website: "https://lumenwellness.demo",
       industry: "Health & Nutrition", revenue_stage: "$5M–$25M ARR",
       contact_role: "Head of Brand Partnerships",
-      values: ["Clean ingredients", "Women-led", "Sustainability"],
+      values: ["Clean ingredients", "Women-led", "Sustainability", "Wellness", "Women's health"],
       mission: "Help women athletes recover smarter with clean, science-backed nutrition.",
       esg_priorities: ["Recyclable packaging", "Carbon-neutral shipping"],
       positioning: "Premium recovery nutrition for performance women",
@@ -116,7 +129,44 @@ async function seedDemoBrand(userId: string) {
   );
 }
 
-async function seedMarketplace(athleteId: string, brandId: string) {
+async function seedExtraUsers() {
+  const extraAthletes: (SeedUser & { rec: typeof EXTRA_ATHLETES[number] })[] = [];
+  for (const a of EXTRA_ATHLETES) {
+    const id = await upsertAuthUser(a.email, a.full_name, "athlete");
+    await ensureProfile(id, a.email, a.full_name, "athlete", a.country);
+    await supabaseAdmin.from("athlete_profiles").upsert({
+      user_id: id, sport: a.sport, discipline: a.discipline,
+      professional_level: "Pro", rankings: a.rankings, achievements: a.achievements,
+      values: a.values, favorite_brands: a.favorite_brands,
+      pricing_min: a.pricing_min, pricing_max: a.pricing_max,
+      profile_completeness: a.completeness, verification_status: "verified",
+      sponsorship_categories: ["Apparel", "Nutrition", "Wellness"],
+      audience_demographics: {
+        summary: `${a.country} · women 30–34 leaning audience`,
+        female_pct: 60 + Math.floor(Math.random() * 20),
+        age_30_35_pct: 45 + Math.floor(Math.random() * 25),
+      },
+    }, { onConflict: "user_id" });
+    extraAthletes.push({ id, email: a.email, rec: a });
+  }
+  const extraBrands: (SeedUser & { rec: typeof EXTRA_BRANDS[number] })[] = [];
+  for (const b of EXTRA_BRANDS) {
+    const id = await upsertAuthUser(b.email, b.full_name, "brand");
+    await ensureProfile(id, b.email, b.full_name, "brand", "United States");
+    await supabaseAdmin.from("brand_profiles").upsert({
+      user_id: id, brand_name: b.brand_name, industry: b.industry, revenue_stage: b.revenue_stage,
+      values: b.values, mission: b.mission, positioning: b.positioning, verification_status: "verified",
+    }, { onConflict: "user_id" });
+    extraBrands.push({ id, email: b.email, rec: b });
+  }
+  return { extraAthletes, extraBrands };
+}
+
+async function seedMarketplace(
+  athleteId: string, brandId: string,
+  extraAthletes: (SeedUser & { rec: typeof EXTRA_ATHLETES[number] })[],
+  extraBrands: (SeedUser & { rec: typeof EXTRA_BRANDS[number] })[],
+) {
   // Idempotency guard: if any contract already exists between them, assume seeded
   const { data: existingContract } = await supabaseAdmin
     .from("contracts").select("id").eq("athlete_id", athleteId).eq("brand_id", brandId).limit(1).maybeSingle();
@@ -132,33 +182,7 @@ async function seedMarketplace(athleteId: string, brandId: string) {
       description: "Ambassador role, monthly content, event activations, jersey/race-suit branding." },
   ]);
 
-  // Extra athlete & brand auth users
-  const extraAthletes: (SeedUser & { rec: typeof EXTRA_ATHLETES[number] })[] = [];
-  for (const a of EXTRA_ATHLETES) {
-    const id = await upsertAuthUser(a.email, a.full_name, "athlete");
-    await ensureProfile(id, a.email, a.full_name, "athlete", a.country);
-    await supabaseAdmin.from("athlete_profiles").upsert({
-      user_id: id, sport: a.sport, discipline: a.discipline,
-      professional_level: "Pro", rankings: a.rankings, achievements: a.achievements,
-      values: a.values, favorite_brands: a.favorite_brands,
-      pricing_min: a.pricing_min, pricing_max: a.pricing_max,
-      profile_completeness: a.completeness, verification_status: "verified",
-      sponsorship_categories: ["Apparel", "Nutrition"],
-      audience_demographics: { female_pct: 60 + Math.floor(Math.random() * 20), age_18_34_pct: 60 + Math.floor(Math.random() * 25) },
-    }, { onConflict: "user_id" });
-    extraAthletes.push({ id, email: a.email, rec: a });
-  }
 
-  const extraBrands: (SeedUser & { rec: typeof EXTRA_BRANDS[number] })[] = [];
-  for (const b of EXTRA_BRANDS) {
-    const id = await upsertAuthUser(b.email, b.full_name, "brand");
-    await ensureProfile(id, b.email, b.full_name, "brand", "United States");
-    await supabaseAdmin.from("brand_profiles").upsert({
-      user_id: id, brand_name: b.brand_name, industry: b.industry, revenue_stage: b.revenue_stage,
-      values: b.values, mission: b.mission, positioning: b.positioning, verification_status: "verified",
-    }, { onConflict: "user_id" });
-    extraBrands.push({ id, email: b.email, rec: b });
-  }
 
   // Campaigns for demo brand
   const campaignsPayload = [
@@ -366,9 +390,11 @@ export const ensureDemoUser = createServerFn({ method: "POST" })
     await seedDemoAthlete(ids.athlete);
     await seedDemoBrand(ids.brand);
 
-    // Seed the marketplace once (idempotent)
+    // Always provision extra demo athletes/brands (idempotent upserts) so the
+    // marketplace pool reflects the latest seed list, even after first run.
     try {
-      await seedMarketplace(ids.athlete, ids.brand);
+      const { extraAthletes, extraBrands } = await seedExtraUsers();
+      await seedMarketplace(ids.athlete, ids.brand, extraAthletes, extraBrands);
     } catch (e) {
       console.error("[demo seed] marketplace seed failed:", e);
     }

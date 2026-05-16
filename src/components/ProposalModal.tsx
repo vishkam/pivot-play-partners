@@ -14,7 +14,7 @@ interface Props {
   brandName: string;
   campaign?: { id: string; name: string; goals: string | null } | null;
   match: MatchScore;
-  onSent?: () => void;
+  onSent?: (proposalId?: string) => void;
 }
 
 export function ProposalModal({
@@ -54,7 +54,7 @@ export function ProposalModal({
     if (!user) return;
     setSending(true);
     try {
-      const { error } = await supabase.from("proposals").insert({
+      const { data: proposal, error } = await supabase.from("proposals").insert({
         brand_id: user.id,
         athlete_id: athleteId,
         campaign_id: campaign?.id ?? null,
@@ -64,10 +64,29 @@ export function ProposalModal({
         timeline,
         deliverables,
         status: "sent",
-      });
+      }).select("id").single();
       if (error) throw error;
-      toast.success("Proposal sent");
-      onSent?.();
+
+      // Notify the athlete + drop a message thread entry so the demo feels live
+      await Promise.all([
+        supabase.from("notifications").insert({
+          user_id: athleteId,
+          kind: "proposal",
+          title: `New proposal from ${brandName}`,
+          body: `${campaign?.name ?? "Partnership"} · $${Number(amount || 0).toLocaleString()}`,
+          link: "/athlete/opportunities",
+        }),
+        supabase.from("messages").insert({
+          sender_id: user.id,
+          recipient_id: athleteId,
+          body: `Proposal sent: ${campaign?.name ?? "Partnership"} — $${Number(amount || 0).toLocaleString()}. Review in your opportunities inbox.`,
+          proposal_id: proposal?.id ?? null,
+          system_event: "proposal_sent",
+        }),
+      ]).catch((e) => console.warn("notify athlete failed", e));
+
+      toast.success("Proposal sent · Athlete notified");
+      onSent?.(proposal?.id);
       onClose();
     } catch (e) {
       console.error(e);

@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { Sparkles, ArrowLeft } from "lucide-react";
 import { toast } from "sonner";
@@ -26,6 +26,7 @@ interface AthleteRow extends AthleteForMatch {
 function CampaignDetail() {
   const { id } = Route.useParams();
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [campaign, setCampaign] = useState<(CampaignForMatch & { name: string; description: string | null; status: string }) | null>(null);
   const [brand, setBrand] = useState<BrandForMatch & { brand_name: string | null }>({ brand_name: null });
   const [athletes, setAthletes] = useState<AthleteRow[]>([]);
@@ -150,6 +151,7 @@ function CampaignDetail() {
           brandName={brand.brand_name ?? "Your brand"}
           campaign={{ id: id, name: campaign.name, goals: campaign.goals ?? null }}
           match={proposeFor.match}
+          onSent={() => navigate({ to: "/brand/proposals" })}
         />
       )}
     </DashboardShell>
