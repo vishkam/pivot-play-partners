@@ -37,8 +37,16 @@ function NewCampaign() {
   const [saving, setSaving] = useState(false);
   const [matching, setMatching] = useState(false);
   const [missingFields, setMissingFields] = useState<Set<keyof F>>(new Set());
-  const upd = <K extends keyof F>(k: K) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
-    setD((s) => ({ ...s, [k]: e.target.value }));
+  const upd = <K extends keyof F>(k: K) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const value = e.target.value;
+    setD((s) => ({ ...s, [k]: value }));
+    setMissingFields((current) => {
+      if (!current.has(k) || !value.trim()) return current;
+      const next = new Set(current);
+      next.delete(k);
+      return next;
+    });
+  };
 
   const requiredForLaunch: Array<keyof F> = [
     "name", "goals", "description", "audience", "values", "sports", "geo",
@@ -111,18 +119,18 @@ function NewCampaign() {
       <div className="space-y-5">
         <Section icon={<FileText className="h-4 w-4" />} title="Campaign basics" hint="What you're launching and why.">
           <Grid>
-            <Input label="Campaign name" required value={d.name} onChange={upd("name")} placeholder="Spring Recovery Launch" />
-            <Input label="Goal" required value={d.goals} onChange={upd("goals")} placeholder="Brand awareness, launch, advocacy…" />
-            <Textarea label="Short description" value={d.description} onChange={upd("description")} placeholder="One sentence your team and athletes can both rally around." />
+            <Input label="Campaign name" required invalid={missingFields.has("name")} value={d.name} onChange={upd("name")} placeholder="Spring Recovery Launch" />
+            <Input label="Goal" required invalid={missingFields.has("goals")} value={d.goals} onChange={upd("goals")} placeholder="Brand awareness, launch, advocacy…" />
+            <Textarea label="Short description" required invalid={missingFields.has("description")} value={d.description} onChange={upd("description")} placeholder="One sentence your team and athletes can both rally around." />
           </Grid>
         </Section>
 
         <Section icon={<Users className="h-4 w-4" />} title="Audience & values" hint="Pegasus matches on values overlap first.">
           <Grid>
-            <Input label="Target audience" value={d.audience} onChange={upd("audience")} placeholder="Women 18–34, urban, fitness-curious" />
-            <Input label="Brand values (comma)" value={d.values} onChange={upd("values")} placeholder="Sustainability, equity, women's health" />
-            <Input label="Preferred sports (comma)" value={d.sports} onChange={upd("sports")} placeholder="Climbing, rowing, ultra-running" />
-            <Input label="Geographic markets (comma)" value={d.geo} onChange={upd("geo")} placeholder="US, UK, EU" />
+            <Input label="Target audience" required invalid={missingFields.has("audience")} value={d.audience} onChange={upd("audience")} placeholder="Women 30–35, wellness, Instagram" />
+            <Input label="Brand values (comma)" required invalid={missingFields.has("values")} value={d.values} onChange={upd("values")} placeholder="Wellness, women's health" />
+            <Input label="Preferred sports (comma)" required invalid={missingFields.has("sports")} value={d.sports} onChange={upd("sports")} placeholder="Swimming, Marathon, Trail Running" />
+            <Input label="Geographic markets (comma)" required invalid={missingFields.has("geo")} value={d.geo} onChange={upd("geo")} placeholder="United Kingdom, UK" />
           </Grid>
         </Section>
 
@@ -130,20 +138,22 @@ function NewCampaign() {
           <Grid>
             <Select
               label="Partnership type"
+              required
+              invalid={missingFields.has("partnership_structure")}
               value={d.partnership_structure}
               onChange={upd("partnership_structure")}
               options={["Ambassador deal", "Single campaign", "Long-term partnership", "Content series", "Event appearance"]}
             />
-            <Input label="Product category" value={d.product_category} onChange={upd("product_category")} placeholder="Apparel, wellness, nutrition…" />
+            <Input label="Product category" required invalid={missingFields.has("product_category")} value={d.product_category} onChange={upd("product_category")} placeholder="Wellness, nutrition…" />
             <Textarea label="Content deliverables" value={d.deliverables} onChange={upd("deliverables")} placeholder="3 IG posts, 1 reel, 1 event…" />
-            <Input label="Timeline" value={d.timeline} onChange={upd("timeline")} placeholder="6 weeks · launches Q2" />
+            <Input label="Timeline" required invalid={missingFields.has("timeline")} value={d.timeline} onChange={upd("timeline")} placeholder="2 weeks" />
           </Grid>
         </Section>
 
         <Section icon={<Wallet className="h-4 w-4" />} title="Budget & notes" hint="Used to score affordability and shortlist depth.">
           <Grid>
-            <Input label="Budget min ($)" required type="number" value={d.budget_min} onChange={upd("budget_min")} placeholder="25000" />
-            <Input label="Budget max ($)" required type="number" value={d.budget_max} onChange={upd("budget_max")} placeholder="120000" />
+            <Input label="Budget min ($)" required invalid={missingFields.has("budget_min")} type="number" value={d.budget_min} onChange={upd("budget_min")} placeholder="500" />
+            <Input label="Budget max ($)" required invalid={missingFields.has("budget_max")} type="number" value={d.budget_max} onChange={upd("budget_max")} placeholder="2000" />
             <Textarea label="Internal notes" value={d.notes} onChange={upd("notes")} placeholder="Anything the AI team should know — exclusions, must-haves, references." />
           </Grid>
         </Section>
@@ -157,17 +167,17 @@ function NewCampaign() {
             <button
               onClick={() => launch("draft")}
               disabled={saving}
-              className="rounded-full border border-plum px-5 py-2.5 text-sm font-medium text-plum hover:bg-secondary"
+              className="rounded-full border border-plum px-5 py-2.5 text-sm font-medium text-plum hover:bg-secondary disabled:cursor-not-allowed disabled:opacity-50"
             >
-              Save as draft
+              {saving && !matching ? "Saving…" : "Save as draft"}
             </button>
             <button
               onClick={() => launch("active")}
               disabled={saving}
-              className="inline-flex items-center gap-2 rounded-full bg-gradient-hero px-6 py-2.5 text-sm font-semibold text-cream shadow-elegant hover:opacity-95"
+              className="inline-flex items-center gap-2 rounded-full bg-gradient-hero px-6 py-2.5 text-sm font-semibold text-cream shadow-elegant hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
             >
               {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Rocket className="h-4 w-4" />}
-              Launch & match
+              {matching ? "Launching AI match…" : "Launch & match"}
             </button>
           </div>
         </div>
