@@ -156,9 +156,19 @@ function AthleteOnboarding() {
         professional_level: data.professional_level, team_federation: data.team_federation,
         rankings: data.rankings, achievements: data.achievements, certifications: data.certifications,
         values: splitList(data.values), causes: splitList(data.causes), story: data.story,
+        personality: data.personality,
         favorite_brands: splitList(data.favorite_brands),
         favorite_products: data.favorite_products,
         material_preferences: splitList(data.material_preferences),
+        brand_categories: {
+          apparel: data.brands_apparel, footwear: data.brands_footwear,
+          nutrition: data.brands_nutrition, recovery: data.brands_recovery,
+          tech: data.brands_tech, equipment: data.brands_equipment,
+        },
+        sizing: {
+          top: data.size_top, bottom: data.size_bottom,
+          shoe: data.size_shoe, wetsuit: data.size_wetsuit,
+        },
         social_links: {
           instagram: data.instagram, tiktok: data.tiktok,
           youtube: data.youtube, linkedin: data.linkedin,
