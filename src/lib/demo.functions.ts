@@ -292,7 +292,7 @@ async function seedMarketplace(athleteId: string, brandId: string) {
   if (activeContract) {
     paymentsPayload.push(
       { contract_id: activeContract.id, brand_id: brandId, athlete_id: athleteId, amount: 7000,
-        platform_fee: 700, athlete_payout: 6300, status: "paid" as const,
+        platform_fee: 700, athlete_payout: 6300, status: "released" as const,
         milestone_label: "Signature deposit",
         due_date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 10).toISOString().slice(0, 10) },
       { contract_id: activeContract.id, brand_id: brandId, athlete_id: athleteId, amount: 7000,
@@ -304,7 +304,7 @@ async function seedMarketplace(athleteId: string, brandId: string) {
   if (completedContract) {
     paymentsPayload.push({
       contract_id: completedContract.id, brand_id: brandId, athlete_id: extraAthletes[2].id,
-      amount: 22000, platform_fee: 2200, athlete_payout: 19800, status: "paid" as const,
+      amount: 22000, platform_fee: 2200, athlete_payout: 19800, status: "released" as const,
       milestone_label: "Final payment",
       due_date: new Date(Date.now() - 1000 * 60 * 60 * 24 * 60).toISOString().slice(0, 10),
     });
