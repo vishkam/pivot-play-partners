@@ -129,7 +129,44 @@ async function seedDemoBrand(userId: string) {
   );
 }
 
-async function seedMarketplace(athleteId: string, brandId: string) {
+async function seedExtraUsers() {
+  const extraAthletes: (SeedUser & { rec: typeof EXTRA_ATHLETES[number] })[] = [];
+  for (const a of EXTRA_ATHLETES) {
+    const id = await upsertAuthUser(a.email, a.full_name, "athlete");
+    await ensureProfile(id, a.email, a.full_name, "athlete", a.country);
+    await supabaseAdmin.from("athlete_profiles").upsert({
+      user_id: id, sport: a.sport, discipline: a.discipline,
+      professional_level: "Pro", rankings: a.rankings, achievements: a.achievements,
+      values: a.values, favorite_brands: a.favorite_brands,
+      pricing_min: a.pricing_min, pricing_max: a.pricing_max,
+      profile_completeness: a.completeness, verification_status: "verified",
+      sponsorship_categories: ["Apparel", "Nutrition", "Wellness"],
+      audience_demographics: {
+        summary: `${a.country} · women 30–34 leaning audience`,
+        female_pct: 60 + Math.floor(Math.random() * 20),
+        age_30_35_pct: 45 + Math.floor(Math.random() * 25),
+      },
+    }, { onConflict: "user_id" });
+    extraAthletes.push({ id, email: a.email, rec: a });
+  }
+  const extraBrands: (SeedUser & { rec: typeof EXTRA_BRANDS[number] })[] = [];
+  for (const b of EXTRA_BRANDS) {
+    const id = await upsertAuthUser(b.email, b.full_name, "brand");
+    await ensureProfile(id, b.email, b.full_name, "brand", "United States");
+    await supabaseAdmin.from("brand_profiles").upsert({
+      user_id: id, brand_name: b.brand_name, industry: b.industry, revenue_stage: b.revenue_stage,
+      values: b.values, mission: b.mission, positioning: b.positioning, verification_status: "verified",
+    }, { onConflict: "user_id" });
+    extraBrands.push({ id, email: b.email, rec: b });
+  }
+  return { extraAthletes, extraBrands };
+}
+
+async function seedMarketplace(
+  athleteId: string, brandId: string,
+  extraAthletes: (SeedUser & { rec: typeof EXTRA_ATHLETES[number] })[],
+  extraBrands: (SeedUser & { rec: typeof EXTRA_BRANDS[number] })[],
+) {
   // Idempotency guard: if any contract already exists between them, assume seeded
   const { data: existingContract } = await supabaseAdmin
     .from("contracts").select("id").eq("athlete_id", athleteId).eq("brand_id", brandId).limit(1).maybeSingle();
