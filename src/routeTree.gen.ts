@@ -21,6 +21,7 @@ import { Route as BrandProposalsRouteImport } from './routes/brand.proposals'
 import { Route as BrandOnboardingRouteImport } from './routes/brand.onboarding'
 import { Route as BrandMatchesRouteImport } from './routes/brand.matches'
 import { Route as BrandDashboardRouteImport } from './routes/brand.dashboard'
+import { Route as BrandContractsRouteImport } from './routes/brand.contracts'
 import { Route as AthleteOpportunitiesRouteImport } from './routes/athlete.opportunities'
 import { Route as AthleteOnboardingRouteImport } from './routes/athlete.onboarding'
 import { Route as AthleteDashboardRouteImport } from './routes/athlete.dashboard'
@@ -90,6 +91,11 @@ const BrandDashboardRoute = BrandDashboardRouteImport.update({
   path: '/brand/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BrandContractsRoute = BrandContractsRouteImport.update({
+  id: '/brand/contracts',
+  path: '/brand/contracts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AthleteOpportunitiesRoute = AthleteOpportunitiesRouteImport.update({
   id: '/athlete/opportunities',
   path: '/athlete/opportunities',
@@ -143,6 +149,7 @@ export interface FileRoutesByFullPath {
   '/athlete/dashboard': typeof AthleteDashboardRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
+  '/brand/contracts': typeof BrandContractsRoute
   '/brand/dashboard': typeof BrandDashboardRoute
   '/brand/matches': typeof BrandMatchesRoute
   '/brand/onboarding': typeof BrandOnboardingRoute
@@ -165,6 +172,7 @@ export interface FileRoutesByTo {
   '/athlete/dashboard': typeof AthleteDashboardRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
+  '/brand/contracts': typeof BrandContractsRoute
   '/brand/dashboard': typeof BrandDashboardRoute
   '/brand/matches': typeof BrandMatchesRoute
   '/brand/onboarding': typeof BrandOnboardingRoute
@@ -188,6 +196,7 @@ export interface FileRoutesById {
   '/athlete/dashboard': typeof AthleteDashboardRoute
   '/athlete/onboarding': typeof AthleteOnboardingRoute
   '/athlete/opportunities': typeof AthleteOpportunitiesRoute
+  '/brand/contracts': typeof BrandContractsRoute
   '/brand/dashboard': typeof BrandDashboardRoute
   '/brand/matches': typeof BrandMatchesRoute
   '/brand/onboarding': typeof BrandOnboardingRoute
@@ -212,6 +221,7 @@ export interface FileRouteTypes {
     | '/athlete/dashboard'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
+    | '/brand/contracts'
     | '/brand/dashboard'
     | '/brand/matches'
     | '/brand/onboarding'
@@ -234,6 +244,7 @@ export interface FileRouteTypes {
     | '/athlete/dashboard'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
+    | '/brand/contracts'
     | '/brand/dashboard'
     | '/brand/matches'
     | '/brand/onboarding'
@@ -256,6 +267,7 @@ export interface FileRouteTypes {
     | '/athlete/dashboard'
     | '/athlete/onboarding'
     | '/athlete/opportunities'
+    | '/brand/contracts'
     | '/brand/dashboard'
     | '/brand/matches'
     | '/brand/onboarding'
@@ -279,6 +291,7 @@ export interface RootRouteChildren {
   AthleteDashboardRoute: typeof AthleteDashboardRoute
   AthleteOnboardingRoute: typeof AthleteOnboardingRoute
   AthleteOpportunitiesRoute: typeof AthleteOpportunitiesRoute
+  BrandContractsRoute: typeof BrandContractsRoute
   BrandDashboardRoute: typeof BrandDashboardRoute
   BrandMatchesRoute: typeof BrandMatchesRoute
   BrandOnboardingRoute: typeof BrandOnboardingRoute
@@ -375,6 +388,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BrandDashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/brand/contracts': {
+      id: '/brand/contracts'
+      path: '/brand/contracts'
+      fullPath: '/brand/contracts'
+      preLoaderRoute: typeof BrandContractsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/athlete/opportunities': {
       id: '/athlete/opportunities'
       path: '/athlete/opportunities'
@@ -458,6 +478,7 @@ const rootRouteChildren: RootRouteChildren = {
   AthleteDashboardRoute: AthleteDashboardRoute,
   AthleteOnboardingRoute: AthleteOnboardingRoute,
   AthleteOpportunitiesRoute: AthleteOpportunitiesRoute,
+  BrandContractsRoute: BrandContractsRoute,
   BrandDashboardRoute: BrandDashboardRoute,
   BrandMatchesRoute: BrandMatchesRoute,
   BrandOnboardingRoute: BrandOnboardingRoute,
@@ -470,3 +491,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
